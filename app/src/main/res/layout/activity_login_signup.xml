@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backimg"
+    tools:context=".Activities.Activities.LoginSignupActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to\nBook your Boat"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="70sp"
+        android:layout_marginLeft="20sp"
+        android:textColor="#fff"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20sp"
+            android:layout_marginRight="20sp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:id="@+id/btngoogle"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:textAllCaps="false"
+                android:text="Continue With Google"
+                android:background="@drawable/white_roundbtn"/>
+        </FrameLayout>
+           <FrameLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <com.facebook.login.widget.LoginButton
+                   android:id="@+id/login_button"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_horizontal"
+                   android:layout_marginTop="30dp"
+                   android:layout_marginBottom="30dp" />
+               <Button
+                   android:id="@+id/btnFB"
+               android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginTop="20sp"
+                android:textAllCaps="false"
+                android:text="Continue With Facebook"
+                android:background="@drawable/white_roundbtn"/>
+           </FrameLayout>
+            <Button
+                android:id="@+id/btnCreateAccount"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginTop="20sp"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:text="Create Account"
+                android:background="@drawable/white_boundrybtn"/>
+
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20sp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="More Options"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:layout_marginTop="20sp"/>
+
+        <TextView
+            android:layout_marginTop="20sp"
+            android:textColor="#fff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lorem Ipsum is simply dummy text of the\nprinting and typesetting industry."/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textColor="#fff"
+            android:text="Terms Of Services."/>
+        <View
+            android:layout_width="145sp"
+            android:layout_height="1sp"
+            android:background="#fff"/>
+    </LinearLayout>
+</RelativeLayout>

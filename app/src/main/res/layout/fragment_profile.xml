@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#fff"
+    tools:context=".Activities.Fragment.ProfileFragment">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:textSize="25sp"
+        android:textColor="@color/orangecolor"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:layout_marginTop="10sp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="20sp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:src="@drawable/profi"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"
+            android:id="@+id/ivProfile"/>
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30sp"
+            android:text="Username"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:background="#BDBDBD"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="20sp">
+        <TextView
+            android:layout_width="0sp"
+            android:layout_weight="0.8"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adamnoor@gmail.com"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:background="#BDBDBD"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="20sp">
+        <TextView
+            android:layout_width="0sp"
+            android:layout_weight="0.8"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/tvArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Peshawar"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:background="#BDBDBD"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="20sp">
+        <TextView
+            android:layout_width="0sp"
+            android:layout_weight="0.8"
+            android:layout_height="wrap_content"
+            android:text="Change Password"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            />
+       <ImageView
+           android:id="@+id/ivGotoFor"
+           android:layout_width="20sp"
+           android:layout_height="20sp"
+           android:src="@drawable/rightarrow"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:background="#BDBDBD"
+        />
+
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="250sp"
+        android:layout_height="40sp"
+        android:background="@drawable/orangeroundboundry"
+        android:layout_gravity="center"
+        android:layout_marginTop="100sp"
+        android:text="Logout"
+        android:textColor="@color/orangecolor"/>
+
+</LinearLayout>

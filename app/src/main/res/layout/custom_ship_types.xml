@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:id="@+id/f"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivPlaceImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/progile"/>
+
+        <TextView
+            android:id="@+id/tvPlaceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cannes"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_white"
+            android:layout_margin="50sp"/>
+
+
+        <!--<Button-->
+            <!--android:layout_width="180sp"-->
+            <!--android:layout_height="80sp"-->
+            <!--android:layout_margin="20sp"-->
+            <!--android:textSize="20sp"-->
+            <!--android:textColor="@color/color_white"-->
+            <!--android:gravity="center"-->
+            <!--android:background="@drawable/bluebtn"-->
+            <!--android:layout_gravity="bottom"/>-->
+
+    </FrameLayout>
+
+
+</RelativeLayout>

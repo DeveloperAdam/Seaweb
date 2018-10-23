@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/backimg"
+    tools:context=".Activities.Fragment.LoginFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15sp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="21dp"
+            android:layout_height="25sp"
+            android:layout_gravity="center"
+            android:src="@drawable/backicon" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create an account"
+            android:textStyle="bold"
+            android:textColor="@color/color_white"
+            android:textSize="17sp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20sp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_gravity="center">
+        <EditText
+            android:id="@+id/etEmailLogin"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:backgroundTint="#fff"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/color_white"
+            android:textColor="@color/color_white"
+
+            />
+        <EditText
+            android:id="@+id/etPassLogin"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:backgroundTint="#fff"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/color_white"
+            android:textColor="@color/color_white"
+
+            />
+        <TextView
+            android:id="@+id/tvForgotPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:textColor="@color/color_white"
+            android:layout_gravity="right"
+            android:layout_marginTop="20sp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20sp"
+        >
+        <Button
+            android:id="@+id/btnSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:background="@drawable/white_roundbtn"
+            android:text="Login"
+            android:textAllCaps="false"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account?"
+                android:textColor="@color/color_white"
+                android:layout_marginLeft="20sp"/>
+            <TextView
+                android:id="@+id/tvGotoSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Signup"
+                android:textStyle="bold"
+                android:textColor="@color/color_white"
+                android:layout_marginLeft="30sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.Activities.BottomActivity">
+
+
+    <EditText
+        android:id="@+id/svMAin"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginTop="10sp"
+        android:drawableLeft="@drawable/mainscreen_search"
+        android:paddingLeft="20sp"
+        android:text="Type Here The Location"
+        android:drawablePadding="10sp"
+        android:textColor="@color/graycolor"
+        android:background="@drawable/grayroundedboundry"/>
+
+    <android.support.design.widget.TabLayout
+        android:layout_below="@+id/svMAin"
+        android:id="@+id/tabs"
+        android:layout_width="200sp"
+        android:layout_height="50sp"
+        app:tabTextColor="#BDBDBD"
+        app:tabIndicatorColor="@color/orangecolor"
+        app:tabSelectedTextColor="#BDBDBD"
+        app:tabMode="scrollable"
+        app:tabGravity="fill"/>
+
+    <android.support.v4.view.ViewPager
+        android:layout_below="@+id/tabs"
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        app:itemIconTint="@color/graycolor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
+
+</RelativeLayout>
