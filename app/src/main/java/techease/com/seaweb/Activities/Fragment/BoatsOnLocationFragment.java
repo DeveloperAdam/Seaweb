@@ -41,7 +41,7 @@ public class BoatsOnLocationFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String locId;
-    int userId;
+    String userId;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class BoatsOnLocationFragment extends Fragment {
         boatsOnLocationDataModels=new ArrayList<>();
 
         locId=getArguments().getString("placeid");
-        userId=sharedPreferences.getInt("userid",0);
+        userId=sharedPreferences.getString("userid","");
         if (alertDialog == null) {
             alertDialog = AlertsUtils.createProgressDialog(getActivity());
             alertDialog.show();
@@ -86,7 +86,7 @@ public class BoatsOnLocationFragment extends Fragment {
 
     private void apiCall() {
         ApiService services = ApiClient.getClient().create(ApiService.class);
-        Call<BoatsOnLocationResponseModel> call = services.boatsOnLocation(locId,String.valueOf(userId));
+        Call<BoatsOnLocationResponseModel> call = services.boatsOnLocation(locId,userId);
         call.enqueue(new Callback<BoatsOnLocationResponseModel>() {
             @Override
             public void onResponse(Call<BoatsOnLocationResponseModel> call, Response<BoatsOnLocationResponseModel> response) {

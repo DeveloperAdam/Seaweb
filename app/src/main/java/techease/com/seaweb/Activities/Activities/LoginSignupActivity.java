@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -57,7 +58,7 @@ public class LoginSignupActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String socialToken,name,email,provider,device_id;
-    int user_id;
+    String user_id;
     String fullname,strEmail,strLoc,img;
     boolean flag=false;
     android.support.v7.app.AlertDialog alertDialog;
@@ -90,64 +91,76 @@ public class LoginSignupActivity extends AppCompatActivity {
             }
         });
 
+        accessToken = AccessToken.getCurrentAccessToken();
+
 
         UpperFbbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnfb.performClick();
-                flag=true;
-                callbackManager = CallbackManager.Factory.create();
-                LoginManager.getInstance().logInWithReadPermissions(LoginSignupActivity.this, Arrays.asList("email"));
-                LoginManager.getInstance().registerCallback(callbackManager,
-                        new FacebookCallback<LoginResult>() {
-                            @Override
-                            public void onSuccess(LoginResult loginResult) {
-                                final GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-
-                                    @Override
-                                    public void onCompleted(JSONObject object, GraphResponse response) {
-                                        Log.d("zmaFbRes", String.valueOf(response));
 
 
-                                        try {
-                                            socialToken=object.getString("id");
-                                            name=object.getString("first_name")+object.getString("last_name");
-                                            email=object.getString("email");
-                                            provider="Facebook";
+                if (accessToken!=null)
+                {
+                    startActivity(new Intent(LoginSignupActivity.this,BottomActivity.class));
+                    finish();
+                }
+                else {
+                    btnfb.performClick();
+                    flag=true;
+                    callbackManager = CallbackManager.Factory.create();
+                    LoginManager.getInstance().logInWithReadPermissions(LoginSignupActivity.this, Arrays.asList("email"));
+                    LoginManager.getInstance().registerCallback(callbackManager,
+                            new FacebookCallback<LoginResult>() {
+                                @Override
+                                public void onSuccess(LoginResult loginResult) {
+                                    final GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
-                                            Bundle bundle=getFacebookData(object);
-                                            Log.d("zmaSocialDetail",socialToken+name+email+provider+device_id);
-
-                                            socialLoginApiCall();
-
+                                        @Override
+                                        public void onCompleted(JSONObject object, GraphResponse response) {
+                                            Log.d("zmaFbRes", String.valueOf(response));
 
 
+                                            try {
+                                                socialToken=object.getString("id");
+                                                name=object.getString("first_name")+object.getString("last_name");
+                                                email=object.getString("email");
+                                                provider="Facebook";
 
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                            Log.d("zmaFbE",e.getMessage().toString());
+                                                Bundle bundle=getFacebookData(object);
+                                                Log.d("zmaSocialDetail",socialToken+name+email+provider+device_id);
+
+                                                socialLoginApiCall();
+
+
+
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                                Log.d("zmaFbE",e.getMessage().toString());
+                                            }
+
                                         }
+                                    });
+                                    Bundle parameters = new Bundle();
+                                    parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");                         request.setParameters(parameters);
+                                    request.setParameters(parameters);
+                                    request.executeAsync();
+                                    // App code
+                                }
 
-                                    }
-                                });
-                                Bundle parameters = new Bundle();
-                                parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location");                         request.setParameters(parameters);
-                                request.setParameters(parameters);
-                                request.executeAsync();
-                                // App code
-                            }
+                                @Override
+                                public void onCancel() {
+                                    // App code
+                                }
 
-                            @Override
-                            public void onCancel() {
-                                // App code
-                            }
+                                @Override
+                                public void onError(FacebookException exception) {
+                                    Log.d("zmaFbE",exception.getMessage().toString());
+                                    // App code
+                                }
+                            });
 
-                            @Override
-                            public void onError(FacebookException exception) {
-                                Log.d("zmaFbE",exception.getMessage().toString());
-                                // App code
-                            }
-                        });
+                }
 
             }
         });
@@ -246,12 +259,12 @@ public class LoginSignupActivity extends AppCompatActivity {
                     name=response.body().getUser().getFullName();
                     email=response.body().getUser().getEmail();
                     socialToken=response.body().getUser().getToken();
-                    user_id=response.body().getUser().getUserId();
+                    user_id=response.body().getUser().getUserId().toString();
 
 
                     editor.putString("name",name).commit();
                     editor.putString("email",email).commit();
-                    editor.putInt("userid",user_id).commit();
+                    editor.putString("userid",user_id).commit();
                     editor.putString("token",socialToken).commit();
                     editor.putString("login","login").commit();
                     editor.putString("deviceid",device_id).commit();

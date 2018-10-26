@@ -38,7 +38,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     String type;
     EditText etfname,etLname,etArea,etCpass,etPass,etEmail;
     String email,fname,lname,area,pass,fullName,token,cpass;
-    int user_id;
+    String user_id;
     android.support.v7.app.AlertDialog alertDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -169,13 +169,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     fullName=response.body().getUser().getFullName();
                     email=response.body().getUser().getEmail();
                     token=response.body().getUser().getToken();
-                    user_id=response.body().getUser().getUserId();
+                    user_id=response.body().getUser().getUserId().toString();
 
                     Toast.makeText(getActivity(), email, Toast.LENGTH_SHORT).show();
 
                     editor.putString("username",fullName).commit();
                     editor.putString("email",email).commit();
-                    editor.putInt("userid",user_id).commit();
+                    editor.putString("userid",user_id).commit();
                     editor.putString("token",token).commit();
                     editor.putString("device_id",device_id).commit();
                     editor.putString("login","login").commit();

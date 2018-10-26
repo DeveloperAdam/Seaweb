@@ -32,7 +32,7 @@ public class LoginFragment extends Fragment {
     ImageView ivBack;
     EditText etEmail,etPass;
     String pass,email,fullName,token;
-    int user_id;
+    String user_id;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -126,13 +126,13 @@ public class LoginFragment extends Fragment {
                     fullName=response.body().getUser().getFullName();
                     email=response.body().getUser().getEmail();
                     token=response.body().getUser().getToken();
-                    user_id=response.body().getUser().getUserId();
+                    user_id=response.body().getUser().getUserId().toString();
 
 
 
                     editor.putString("username",fullName).commit();
                     editor.putString("email",email).commit();
-                    editor.putInt("userid",user_id).commit();
+                    editor.putString("userid",user_id).commit();
                     editor.putString("token",token).commit();
                     editor.putString("login","login").commit();
 

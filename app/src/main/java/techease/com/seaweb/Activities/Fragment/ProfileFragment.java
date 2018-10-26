@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.facebook.login.LoginManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import techease.com.seaweb.Activities.Activities.LoginSignupActivity;
@@ -69,7 +70,11 @@ public class ProfileFragment extends Fragment {
 
                 editor.putString("login","logout").commit();
                 editor.putString("token","").commit();
-                editor.clear();
+                editor.remove("login").commit();
+                editor.remove("userid").commit();
+                editor.clear().commit();
+
+                LoginManager.getInstance().logOut();
 
                 startActivity(new Intent(getActivity(), LoginSignupActivity.class));
                 getActivity().finish();

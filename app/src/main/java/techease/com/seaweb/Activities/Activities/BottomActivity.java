@@ -1,14 +1,18 @@
 package techease.com.seaweb.Activities.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -35,8 +39,9 @@ public class BottomActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.home:
-                     fragment = new ListOfPlacesFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+
+                    startActivity(new Intent(BottomActivity.this,BottomActivity.class));
+                    finish();
                     return true;
                 case R.id.favrt:
                      fragment = new FavoriteFragment();
@@ -66,54 +71,82 @@ public class BottomActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tabs);
+        viewPager = findViewById(R.id.viewpager);
 
         setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
+       // tabLayout.setupWithViewPager(viewPager);
 
+
+//        fragment = new ListOfPlacesFragment();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
 
 
 
 
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ListOfPlacesFragment(), "CUBA");
-        adapter.addFragment(new ListOfPlacesFragment(), "CANNES");
-        adapter.addFragment(new ListOfPlacesFragment(), "SPLIT");
+    private void setupViewPager(final ViewPager viewPager) {
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        tabLayout.addTab(tabLayout.newTab().setText("CUBA"));
+        tabLayout.addTab(tabLayout.newTab().setText("CANNES"));
+        tabLayout.addTab(tabLayout.newTab().setText("SPLIT"));
+        viewPager.setAdapter(new PagerAdapter(((FragmentActivity)this).getSupportFragmentManager(), tabLayout.getTabCount()));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
-        viewPager.setAdapter(adapter);
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
+    public class PagerAdapter extends FragmentStatePagerAdapter {
+        int mNumOfTabs;
 
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
+        public PagerAdapter(android.support.v4.app.FragmentManager fm, int NumOfTabs) {
+            super(fm);
+            this.mNumOfTabs = NumOfTabs;
         }
 
+
+
         @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
+        public android.support.v4.app.Fragment getItem(int position) {
+
+            switch (position) {
+                case 0:
+                    fragment=new ListOfPlacesFragment();
+                    return fragment;
+                case 1:
+                    fragment=new ListOfPlacesFragment();
+                    return fragment;
+                case 2:
+                    fragment=new ListOfPlacesFragment();
+                    return fragment;
+
+                default:
+                    return null;
+            }
         }
 
         @Override
         public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
+            return mNumOfTabs;
         }
     }
 }

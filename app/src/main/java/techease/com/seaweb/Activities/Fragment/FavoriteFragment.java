@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,14 +86,15 @@ public class FavoriteFragment extends Fragment {
                         alertDialog.dismiss();
                     Log.d("zmaFavrtBoats",response.toString());
 
+                    dataModelList.addAll(response.body().getData());
+
                     if (dataModelList.size()>0)
                     {
-                        dataModelList.addAll(response.body().getData());
+                        favrtAdapter=new FavrtAdapter(getActivity(),dataModelList);
+                        recyclerView.setAdapter(favrtAdapter);
+                        favrtAdapter.notifyDataSetChanged();
                     }
 
-
-                    favrtAdapter=new FavrtAdapter(getActivity(),dataModelList);
-                    recyclerView.setAdapter(favrtAdapter);
 
 
                 }

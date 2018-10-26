@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
         token=sharedPreferences.getString("login","");
 
-        getHasKey();
+      //  getHasKey();
         Thread timer = new Thread() {
             public void run() {
                 try {

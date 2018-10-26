@@ -5,6 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".Activities.Activities.BottomActivity">
 
 
@@ -44,14 +45,17 @@
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
-        app:itemIconTint="@color/graycolor"
+        android:layout_alignParentBottom="true"
+        android:focusableInTouchMode="false"
+        app:itemIconTint="#BDBDBD"
+        app:itemTextColor="#BDBDBD"
+        android:background="#FFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/navigation" />
+        app:menu="@menu/navigation"/>
 
 </RelativeLayout>
