@@ -61,13 +61,14 @@ public class ListOfPlacesFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         dataModelList=new ArrayList<>();
         svSuggestions=new ArrayList<>();
-
-//
+        
 
         if (alertDialog == null) {
             alertDialog = AlertsUtils.createProgressDialog(getActivity());
             alertDialog.show();
         }
+        getAllPlacesAdapter=new GetAllPlacesAdapter(getActivity(),dataModelList);
+        recyclerView.setAdapter(getAllPlacesAdapter);
         apiCall();
 
         return view;
@@ -87,8 +88,7 @@ public class ListOfPlacesFragment extends Fragment {
                     Log.d("zmagetAllPlace",response.toString());
 
                     dataModelList.addAll(response.body().getData());
-                    getAllPlacesAdapter=new GetAllPlacesAdapter(getActivity(),dataModelList);
-                    recyclerView.setAdapter(getAllPlacesAdapter);
+
                     getAllPlacesAdapter.notifyDataSetChanged();
                     if (alertDialog != null)
                         alertDialog.dismiss();

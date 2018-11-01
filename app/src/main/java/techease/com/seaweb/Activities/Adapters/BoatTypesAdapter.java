@@ -47,7 +47,8 @@ public class BoatTypesAdapter extends RecyclerView.Adapter<BoatTypesAdapter.View
 
         BoatTypeDataModel model = boatTypeDataModelList.get(position);
 
-        holder.radioButton.setText(model.getBoatType());
+//
+//        holder.radioButton.setText(model.getBoatType());
         holder.radioButton.setChecked(position == lastCheckedPosition);
 
         holder.textView.setText(model.getBoatType());
@@ -70,13 +71,13 @@ public class BoatTypesAdapter extends RecyclerView.Adapter<BoatTypesAdapter.View
             sharedPreferences = activity.getSharedPreferences("abc", Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
             radioButton = itemView.findViewById(R.id.radio);
-           // textView = itemView.findViewById(R.id.tvBoatname);
+            textView = itemView.findViewById(R.id.tvBoatname);
             radioButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     lastCheckedPosition = getAdapterPosition();
                         boatType = textView.getText().toString();
-                        editor.putString("boattype",boatType).commit();
+                        editor.putString("type",boatType).commit();
 
                     notifyDataSetChanged();
                 }

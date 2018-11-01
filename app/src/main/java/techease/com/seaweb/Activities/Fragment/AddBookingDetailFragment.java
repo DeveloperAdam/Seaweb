@@ -77,6 +77,7 @@ public class AddBookingDetailFragment extends Fragment implements View.OnClickLi
         ivAddChildren=view.findViewById(R.id.ivAddChildren);
         ivMinusChildren=view.findViewById(R.id.ivMinusChildren);
         btnBook=view.findViewById(R.id.btnBook);
+        ivBack = view.findViewById(R.id.ivCrossBack);
 
          sdf = new SimpleDateFormat("yyyy/MM/dd");
 

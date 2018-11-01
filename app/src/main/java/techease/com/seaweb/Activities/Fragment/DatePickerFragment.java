@@ -1,12 +1,14 @@
 package techease.com.seaweb.Activities.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView;
@@ -15,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import techease.com.seaweb.Activities.Activities.BottomActivity;
 import techease.com.seaweb.R;
 
 
@@ -23,7 +26,7 @@ public class DatePickerFragment extends Fragment {
     DateRangeCalendarView  dateRangeCalendarView;
 
     String sDate,eDate;
-
+    ImageView ivBack;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -37,7 +40,7 @@ public class DatePickerFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-
+        ivBack = view.findViewById(R.id.ivBackDate);
         dateRangeCalendarView = view.findViewById(R.id.calendar);
 
         dateRangeCalendarView.setCalendarListener(new DateRangeCalendarView.CalendarListener() {
@@ -58,7 +61,14 @@ public class DatePickerFragment extends Fragment {
 
 
 
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                startActivity(new Intent(getActivity(), BottomActivity.class));
+                getActivity().finish();
+            }
+        });
         return view;
     }
 
@@ -69,9 +79,8 @@ public class DatePickerFragment extends Fragment {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = format1.format(calendar.getTime());
         System.out.println(formatted);
-        Toast.makeText(getActivity(), formatted, Toast.LENGTH_SHORT).show();
         sDate = formatted;
-        editor.putString("sDate",sDate).commit();
+        editor.putString("startdate",sDate).commit();
         try {
             System.out.println(format1.parse(formatted));
         } catch (ParseException e) {
@@ -85,9 +94,8 @@ public class DatePickerFragment extends Fragment {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = format1.format(endDate.getTime());
         System.out.println(formatted);
-        Toast.makeText(getActivity(), formatted, Toast.LENGTH_SHORT).show();
         eDate = formatted;
-        editor.putString("eDate",eDate).commit();
+        editor.putString("enddate",eDate).commit();
         try {
             System.out.println(format1.parse(formatted));
         } catch (ParseException e) {

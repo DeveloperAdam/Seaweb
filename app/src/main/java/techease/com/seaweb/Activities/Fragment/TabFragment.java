@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -39,11 +41,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import techease.com.seaweb.Activities.Activities.BottomActivity;
+import techease.com.seaweb.Activities.Adapters.BoatDetailsAdapter;
 import techease.com.seaweb.Activities.Adapters.GetAllPlacesAdapter;
 import techease.com.seaweb.Activities.Models.GetAllPlacesDataModel;
 import techease.com.seaweb.Activities.Models.GetAllPlacesResponseModel;
+import techease.com.seaweb.Activities.Models.ImageModelBoatDetails;
 import techease.com.seaweb.Activities.Utils.ApiClient;
 import techease.com.seaweb.Activities.Utils.ApiService;
+import techease.com.seaweb.Activities.Utils.CircleIndicator;
 import techease.com.seaweb.R;
 
 
@@ -52,9 +57,11 @@ public class TabFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     Fragment fragment;
-    EditText etSearch;
+    AutoCompleteTextView etSearch;
     List<String> places;
     List<GetAllPlacesDataModel> dataModelList;
+    ArrayList<String> suggestions;
+
    public static boolean searchFlag = false ;
 
     @Override
@@ -73,6 +80,8 @@ public class TabFragment extends Fragment {
         etSearch = view.findViewById(R.id.autoCompleteTextView1);
         etSearch.setSelection(0);
         dataModelList = new ArrayList<>();
+        suggestions = new ArrayList<>();
+       // apiCall();
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -105,6 +114,16 @@ public class TabFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tabs);
         viewPager = view.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
+
+
+//        etSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.select_dialog_singlechoice, suggestions);
+//                etSearch.setThreshold(1);
+//                etSearch.setAdapter(adapter);
+//            }
+//        });
 
         places=new ArrayList<>();
 
@@ -140,31 +159,53 @@ public class TabFragment extends Fragment {
     }
 
     private void apiCall() {
-        ApiService services = ApiClient.getClient().create(ApiService.class);
-        Call<GetAllPlacesResponseModel> call = services.getAllPlaces();
-        call.enqueue(new Callback<GetAllPlacesResponseModel>() {
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://divergense.com/boat/App/getSuggestionLocations"
+                , new com.android.volley.Response.Listener<String>() {
             @Override
-            public void onResponse(Call<GetAllPlacesResponseModel> call, Response<GetAllPlacesResponseModel> response) {
+            public void onResponse(String response) {
+                Log.d("ZmaImages", response);
 
-                if (response.isSuccessful())
-                {
-                    Log.d("zmagetAllPlace",response.toString());
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i =0 ; i<jsonArray.length(); i++)
+                    {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        suggestions.add(object.getString("location_name"));
+                    }
 
-                    dataModelList.addAll(response.body().getData());
 
-                }
-                else
-                {
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
             }
 
+        }, new com.android.volley.Response.ErrorListener() {
             @Override
-            public void onFailure(Call<GetAllPlacesResponseModel> call, Throwable t) {
+            public void onErrorResponse(VolleyError error) {
 
+                Log.d("error", String.valueOf(error.getCause()));
             }
-        });
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded;charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                return params;
+            }
+        };
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        mRequestQueue.add(stringRequest);
     }
     public class PagerAdapter extends FragmentStatePagerAdapter {
         int mNumOfTabs;

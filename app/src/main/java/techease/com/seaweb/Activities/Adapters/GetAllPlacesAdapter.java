@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -49,23 +50,19 @@ public class GetAllPlacesAdapter extends RecyclerView.Adapter<GetAllPlacesAdapte
         final GetAllPlacesDataModel model=dataModelList.get(i);
 
 
-        Glide.with(activity).load(model.getPicture()).into(viewHolder.imageView);
+        Picasso.get().load(model.getPicture()).into(viewHolder.imageView);
         viewHolder.tvPlacename.setText(model.getName());
          viewHolder.placeId=model.getId();
         viewHolder.editor.putString("placeid",viewHolder.placeId).commit();
-
 
         viewHolder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (TabFragment.searchFlag == true)
-                {
-
-                }
                 viewHolder.placeId=model.getId();
                 Intent intent=new Intent(activity, FullscreenActivity.class);
                 intent.putExtra("placeid",viewHolder.placeId);
+                viewHolder.editor.putString("placeid",viewHolder.placeId).commit();
                 activity.startActivity(intent);
                 activity.finish();
 

@@ -109,8 +109,9 @@ public interface ApiService {
                                                @Field("trans_code") String trans_code,
                                                @Field("message") String msg);
 
+
     @FormUrlEncoded
-    @POST("App/bookboat")
+    @POST("App/searchBoats")
     Call<SearchedBoatsResponseModel> getSearchedBoats(@Field("location") String location,
                                                       @Field("type") String type,
                                                       @Field("start_date") String start_date,
