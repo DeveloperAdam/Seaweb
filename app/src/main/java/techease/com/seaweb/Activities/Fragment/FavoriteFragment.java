@@ -39,7 +39,7 @@ public class FavoriteFragment extends Fragment {
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    int userId;
+    String userId;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class FavoriteFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         ivBack=view.findViewById(R.id.ivBackFvrtBoats);
-        userId=sharedPreferences.getInt("userid",0);
+        userId=sharedPreferences.getString("userid","");
         recyclerView=view.findViewById(R.id.rvFavrt);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         dataModelList=new ArrayList<>();

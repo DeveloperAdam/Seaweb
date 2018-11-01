@@ -3,9 +3,11 @@ package techease.com.seaweb.Activities.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.File;
+import java.util.List;
+
 
 public class BoatDetailsDataModel {
-
     @SerializedName("pid")
     @Expose
     private Integer pid;
@@ -50,7 +52,7 @@ public class BoatDetailsDataModel {
     private String isFavorite;
     @SerializedName("files")
     @Expose
-    private BoatDetailsFileModel files;
+    private List<File> files = null;
 
     public Integer getPid() {
         return pid;
@@ -164,11 +166,11 @@ public class BoatDetailsDataModel {
         this.isFavorite = isFavorite;
     }
 
-    public BoatDetailsFileModel getFiles() {
+    public List<File> getFiles() {
         return files;
     }
 
-    public void setFiles(BoatDetailsFileModel files) {
+    public void setFiles(List<File> files) {
         this.files = files;
     }
 

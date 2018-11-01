@@ -1,9 +1,12 @@
 package techease.com.seaweb.Activities.Models;
 
+
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BoatDetailsResponseModel {
+
+public class BookedBoatsResponseModel {
 
     @SerializedName("success")
     @Expose
@@ -16,7 +19,7 @@ public class BoatDetailsResponseModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private BoatDetailsDataModel data;
+    private List<BookedBoatsDataModel> data = null;
 
     public Boolean getSuccess() {
         return success;
@@ -42,12 +45,11 @@ public class BoatDetailsResponseModel {
         this.message = message;
     }
 
-    public BoatDetailsDataModel getData() {
+    public List<BookedBoatsDataModel> getData() {
         return data;
     }
 
-    public void setData(BoatDetailsDataModel data) {
+    public void setData(List<BookedBoatsDataModel> data) {
         this.data = data;
     }
-
 }

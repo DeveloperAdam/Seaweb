@@ -1,9 +1,7 @@
 package techease.com.seaweb.Activities.Fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,85 +21,87 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import techease.com.seaweb.Activities.Activities.BottomActivity;
-import techease.com.seaweb.Activities.Adapters.BookedBoatsAdapter;
-import techease.com.seaweb.Activities.Adapters.FavrtAdapter;
-import techease.com.seaweb.Activities.Models.BookedBoatsDataModel;
-import techease.com.seaweb.Activities.Models.BookedBoatsResponseModel;
-import techease.com.seaweb.Activities.Models.FavrtResponseModel;
+import techease.com.seaweb.Activities.Adapters.BoatTypesAdapter;
+import techease.com.seaweb.Activities.Models.BoatTypeDataModel;
+import techease.com.seaweb.Activities.Models.BoatTypeResponseModel;
 import techease.com.seaweb.Activities.Utils.AlertsUtils;
 import techease.com.seaweb.Activities.Utils.ApiClient;
 import techease.com.seaweb.Activities.Utils.ApiService;
 import techease.com.seaweb.R;
 
+public class BoatTypeFragment extends Fragment {
 
-public class BookedBoatsFragment extends Fragment {
-
-    RecyclerView recyclerView;
+    Button btnSave;
     ImageView ivBack;
-    List<BookedBoatsDataModel> bookedBoatsDataModelList;
-    BookedBoatsAdapter adapter;
+    RecyclerView recyclerView;
+    List<BoatTypeDataModel> boatTypeDataModelList;
+    BoatTypesAdapter adapter;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    String userId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_booked_boats, container, false);
+        View view = inflater.inflate(R.layout.fragment_boat_type, container, false);
 
-
-        sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        userId=sharedPreferences.getString("userid","");
-
-        recyclerView=view.findViewById(R.id.rvBooking);
-        ivBack=view.findViewById(R.id.ivBackBookedBoats);
+        recyclerView = view.findViewById(R.id.rvBoatTypes);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        bookedBoatsDataModelList = new ArrayList<>();
+        boatTypeDataModelList = new ArrayList<>();
+        ivBack = view.findViewById(R.id.ivBackBoatTypes);
+        btnSave = view.findViewById(R.id.btnSaveBoatType);
 
         if (alertDialog == null) {
             alertDialog = AlertsUtils.createProgressDialog(getActivity());
             alertDialog.show();
         }
+        adapter=new BoatTypesAdapter(getActivity(),boatTypeDataModelList);
+        recyclerView.setAdapter(adapter);
         apiCall();
 
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (BoatTypesAdapter.boatType != null)
+                {
+                    Fragment fragment = new BoatSearchFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Please select one of the boat type", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
 
                 startActivity(new Intent(getActivity(), BottomActivity.class));
                 getActivity().finish();
             }
         });
 
+
         return view;
     }
-
     private void apiCall() {
-        Toast.makeText(getActivity(), userId, Toast.LENGTH_SHORT).show();
         ApiService services = ApiClient.getClient().create(ApiService.class);
-        Call<BookedBoatsResponseModel> call = services.getBookedBoats(userId);
-        call.enqueue(new Callback<BookedBoatsResponseModel>() {
+        Call<BoatTypeResponseModel> call = services.getBoatTypes();
+        call.enqueue(new Callback<BoatTypeResponseModel>() {
             @Override
-            public void onResponse(Call<BookedBoatsResponseModel> call, Response<BookedBoatsResponseModel> response) {
+            public void onResponse(Call<BoatTypeResponseModel> call, Response<BoatTypeResponseModel> response) {
 
                 if (response.isSuccessful())
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
                     Log.d("zmaFavrtBoats",response.toString());
-
-                    bookedBoatsDataModelList.addAll(response.body().getData());
-
-                    if (bookedBoatsDataModelList.size()>0)
-                    {
-                        adapter=new BookedBoatsAdapter(getActivity(),bookedBoatsDataModelList);
-                        recyclerView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                    }
-
+                    boatTypeDataModelList.addAll(response.body().getData()) ;
+                    adapter.notifyDataSetChanged();
 
 
                 }
@@ -110,15 +111,16 @@ public class BookedBoatsFragment extends Fragment {
                     if (alertDialog != null)
                         alertDialog.dismiss();
                 }
+
             }
 
             @Override
-            public void onFailure(Call<BookedBoatsResponseModel> call, Throwable t) {
+            public void onFailure(Call<BoatTypeResponseModel> call, Throwable t) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
+
+
             }
         });
     }
-
-
 }

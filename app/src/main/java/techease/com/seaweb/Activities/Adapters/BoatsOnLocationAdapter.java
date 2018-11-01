@@ -82,10 +82,9 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
             @Override
             public void onClick(View v) {
                 boatid=model.getPid().toString();
-                Bundle bundle = new Bundle();
-                bundle.putString("boatid",boatid);
+                viewHolder.editor.putString("boatid",boatid).commit();
                 Fragment fragment = new BoatDetailFragment();
-                fragment.setArguments(bundle);
+
                 ((AppCompatActivity)activity).getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("abc").commit();
 
 

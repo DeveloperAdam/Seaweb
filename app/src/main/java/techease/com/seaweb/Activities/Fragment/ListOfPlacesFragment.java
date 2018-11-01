@@ -32,9 +32,9 @@ import techease.com.seaweb.R;
 public class ListOfPlacesFragment extends Fragment {
 
 
-    RecyclerView recyclerView;
+    public  static RecyclerView recyclerView;
     List<GetAllPlacesDataModel> dataModelList;
-    GetAllPlacesAdapter getAllPlacesAdapter;
+    public  static GetAllPlacesAdapter getAllPlacesAdapter;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -54,7 +54,11 @@ public class ListOfPlacesFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         recyclerView=view.findViewById(R.id.rvPlaces);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,true));
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        linearLayoutManager.setStackFromEnd(false);
+        recyclerView.setLayoutManager(linearLayoutManager);
         dataModelList=new ArrayList<>();
         svSuggestions=new ArrayList<>();
 
@@ -79,15 +83,15 @@ public class ListOfPlacesFragment extends Fragment {
 
                 if (response.isSuccessful())
                 {
-                    if (alertDialog != null)
-                    alertDialog.dismiss();
+
                     Log.d("zmagetAllPlace",response.toString());
 
                     dataModelList.addAll(response.body().getData());
                     getAllPlacesAdapter=new GetAllPlacesAdapter(getActivity(),dataModelList);
                     recyclerView.setAdapter(getAllPlacesAdapter);
                     getAllPlacesAdapter.notifyDataSetChanged();
-
+                    if (alertDialog != null)
+                        alertDialog.dismiss();
                 }
                 else
                 {

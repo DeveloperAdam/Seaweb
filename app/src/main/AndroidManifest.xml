@@ -67,7 +67,8 @@
 
         <activity
             android:name=".Activities.Activities.BottomActivity"
-            android:label="@string/title_activity_bottom"></activity>
+            android:label="@string/title_activity_bottom"
+            android:windowSoftInputMode="adjustNothing"></activity>
     </application>
 
 </manifest>

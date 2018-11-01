@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activities.Fragment.DatePickerFragment">
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivBackDate"
+            android:layout_width="17dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10sp"
+            android:src="@drawable/cross" />
+
+        <ImageView
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_marginLeft="30sp"
+            android:layout_gravity="center"
+            android:src="@drawable/boat"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Boat Types"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_marginLeft="10sp"/>
+    </LinearLayout>
+    <com.archit.calendardaterangepicker.customviews.DateRangeCalendarView
+        android:id="@+id/calendar"
+        android:layout_below="@id/ll1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        custom:disable_date_color="#ABABAB"
+        custom:range_color="#FFAB80"
+        custom:selected_date_circle_color="@color/orangecolor"
+        custom:title_color="@color/orangecolor">
+    </com.archit.calendardaterangepicker.customviews.DateRangeCalendarView>
+
+    <Button
+        android:id="@+id/btnSaveDate"
+        android:layout_width="200sp"
+        android:layout_height="40sp"
+        android:background="@drawable/orangeroundboundry"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:textColor="@color/orangecolor"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20sp"/>
+</RelativeLayout>

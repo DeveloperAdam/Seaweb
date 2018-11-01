@@ -8,6 +8,32 @@
     android:background="@color/color_white"
     tools:context=".Activities.Fragment.BoatDetailFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivCrossBack"
+            android:layout_width="18dp"
+            android:layout_height="18sp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20sp"
+            android:src="@drawable/grayback" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:focusable="false"
+            android:text="Boat Details"
+            android:textColor="#BDBDBD"
+            android:textSize="17sp"
+            android:layout_marginLeft="30sp"/>
+
+    </LinearLayout>
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -34,6 +60,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="200sp"
+                        android:layoutDirection="ltr"
                         android:id="@+id/rvBoatDetailsImage">
                     </android.support.v7.widget.RecyclerView>
                     <ImageView
@@ -66,7 +93,7 @@
                             android:id="@+id/profile_image"
                             android:layout_width="50sp"
                             android:layout_height="50sp"
-                            android:src="@drawable/profi" />
+                            android:src="@drawable/profile" />
                         <!--app:civ_border_width="2dp"-->
                         <!--&lt;!&ndash;app:civ_border_color="#FF000000"/>&ndash;&gt;-->
 
@@ -121,11 +148,13 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:text="Price List"/>
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="15sp"
+                                android:layout_height="15sp"
                                 android:layout_marginLeft="5sp"
+                                android:layout_gravity="center"
                                 android:src="@drawable/forward"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -252,7 +281,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2sp"
+            android:layout_height="1sp"
             android:layout_marginRight="20sp"
             android:layout_marginLeft="20sp"
             android:background="@color/graycolor"/>
@@ -260,28 +289,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Equipments"
+            android:text="Boat Type"
             android:textStyle="bold"
             android:layout_marginLeft="20sp"
             android:layout_marginTop="10sp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20sp"
-            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/tvBoatTypeBoatDetails"
-                android:layout_width="0sp"
-                android:layout_weight="0.8"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_gravity="center"
+                android:focusable="false"
+                android:gravity="center|start"
+                android:layout_marginRight="20sp"
+                android:layout_marginLeft="20sp"
                 android:text="Lipsum"
                 />
-            <ImageView
-                android:layout_width="17sp"
-                android:layout_height="17sp"
-                android:layout_gravity="center"
-                android:src="@drawable/downarrow"/>
-        </LinearLayout>
+
 
         <View
             android:layout_width="match_parent"
@@ -289,52 +313,44 @@
             android:layout_marginRight="20sp"
             android:layout_marginLeft="20sp"
             android:background="@color/graycolor"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20sp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0sp"
-                android:layout_weight="0.8"
-                android:layout_height="wrap_content"
-                android:text="Without Skipper"
-                />
-            <ImageView
-                android:layout_width="17sp"
-                android:layout_height="17sp"
-                android:layout_gravity="center"
-                android:src="@drawable/downarrow"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2sp"
-            android:layout_marginRight="20sp"
-            android:layout_marginLeft="20sp"
-            android:background="@color/graycolor"/>
-
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="20sp"
-            android:layout_gravity="center">
+            android:text="Description"
+            android:textStyle="bold"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="10sp"/>
+
+        <TextView
+            android:id="@+id/tvDes"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:layout_gravity="center"
+            android:focusable="false"
+            android:gravity="center|start"
+            android:layout_marginRight="20sp"
+            android:layout_marginLeft="20sp"
+            android:text="Des"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2sp"
+            android:layout_marginRight="20sp"
+            android:layout_marginLeft="20sp"
+            android:background="@color/graycolor"/>
             <Button
+                android:id="@+id/btnGotoAddBookDetail"
                 android:layout_width="200sp"
                 android:layout_height="40sp"
                 android:text="Book Now"
+                android:layout_marginBottom="55sp"
                 android:textAllCaps="false"
+                android:layout_margin="20sp"
+                android:layout_gravity="center"
                 android:background="@drawable/orangeroundboundry"
                 android:textColor="@color/orangecolor"
                 />
 
-            <ImageView
-                android:layout_width="40sp"
-                android:layout_height="40sp"
-                android:layout_marginLeft="10sp"
-                android:src="@drawable/inbox"/>
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>
 

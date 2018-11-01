@@ -1,13 +1,19 @@
 package techease.com.seaweb.Activities.Utils;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import techease.com.seaweb.Activities.Models.AddToFavrtResponseModel;
+import techease.com.seaweb.Activities.Models.BoatBookingResponseModel;
 import techease.com.seaweb.Activities.Models.BoatDetailsResponseModel;
+import techease.com.seaweb.Activities.Models.BoatTypeDataModel;
+import techease.com.seaweb.Activities.Models.BoatTypeResponseModel;
 import techease.com.seaweb.Activities.Models.BoatsOnLocationResponseModel;
+import techease.com.seaweb.Activities.Models.BookedBoatsResponseModel;
 import techease.com.seaweb.Activities.Models.CodeResponseModel;
 import techease.com.seaweb.Activities.Models.FavrtResponseModel;
 import techease.com.seaweb.Activities.Models.ForgotPassResponseModel;
@@ -15,7 +21,9 @@ import techease.com.seaweb.Activities.Models.GetAllPlacesResponseModel;
 import techease.com.seaweb.Activities.Models.LoginResponseModel;
 import techease.com.seaweb.Activities.Models.RegisterResponseModel;
 import techease.com.seaweb.Activities.Models.ResetPassResponseModel;
+import techease.com.seaweb.Activities.Models.SearchedBoatsResponseModel;
 import techease.com.seaweb.Activities.Models.SocialLoginResponseModel;
+import techease.com.seaweb.Activities.Models.SuggestedPlacesResponseModel;
 
 public interface ApiService {
 
@@ -81,7 +89,38 @@ public interface ApiService {
     Call<AddToFavrtResponseModel> addToFavrt(@Field("pro_id") String pro_id,
                                              @Field("userid") String userid);
 
+    @GET("App/getSuggestionLocations")
+    Call<SuggestedPlacesResponseModel> getSuggestedPlaces();
 
+    @GET("App/getBoatTypes")
+    Call<BoatTypeResponseModel> getBoatTypes();
+
+
+    @FormUrlEncoded
+    @POST("App/bookboat")
+    Call<BoatBookingResponseModel> boatBooking(@Field("pro_id") String pro_id,
+                                               @Field("user_id") String userid,
+                                               @Field("start_date") String start_date,
+                                               @Field("end_date") String end_date,
+                                               @Field("adults") String adults,
+                                               @Field("childs") String childs,
+                                               @Field("price") String price,
+                                               @Field("whole_booking") String whole_booking,
+                                               @Field("trans_code") String trans_code,
+                                               @Field("message") String msg);
+
+    @FormUrlEncoded
+    @POST("App/bookboat")
+    Call<SearchedBoatsResponseModel> getSearchedBoats(@Field("location") String location,
+                                                      @Field("type") String type,
+                                                      @Field("start_date") String start_date,
+                                                      @Field("end_date") String end_date);
+
+
+
+    @FormUrlEncoded
+    @POST("App/booked")
+    Call<BookedBoatsResponseModel> getBookedBoats(@Field("user_id") String userid);
 
 
 

@@ -2,7 +2,6 @@ package techease.com.seaweb.Activities.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,10 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -23,13 +21,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.kingfisher.easyviewindicator.RecyclerViewIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,15 +36,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import techease.com.seaweb.Activities.Adapters.BoatDetailsAdapter;
-import techease.com.seaweb.Activities.Adapters.FavrtAdapter;
-import techease.com.seaweb.Activities.Models.BoatDetailsDataModel;
-import techease.com.seaweb.Activities.Models.BoatDetailsFileModel;
 import techease.com.seaweb.Activities.Models.BoatDetailsResponseModel;
-import techease.com.seaweb.Activities.Models.FavrtResponseModel;
 import techease.com.seaweb.Activities.Models.ImageModelBoatDetails;
 import techease.com.seaweb.Activities.Utils.AlertsUtils;
 import techease.com.seaweb.Activities.Utils.ApiClient;
 import techease.com.seaweb.Activities.Utils.ApiService;
+import techease.com.seaweb.Activities.Utils.CircleIndicator;
 import techease.com.seaweb.R;
 
 
@@ -55,8 +50,9 @@ public class BoatDetailFragment extends Fragment {
     RecyclerView recyclerViewImages;
     TextView tvTitle,tvPrice,tvBirths,tvCabinets,tvSkipper,tvBoattype,tvPlace,tvPeople;
     String userId;
+    Button btnGotoAddBookDetail;
     ImageView ivfvrt;
-    String boatid,births,title,price,place,people,cabinets,skipper,boattype,isFvrt;
+    String boatid,births,title,price,place,people,cabinets,skipper,boattype,isFvrt,proid;
     List<ImageModelBoatDetails> boatDetailsDataModelList;
     BoatDetailsAdapter adapter;
     android.support.v7.app.AlertDialog alertDialog;
@@ -71,7 +67,7 @@ public class BoatDetailFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         userId=sharedPreferences.getString("userid","");
-        boatid=getArguments().getString("boatid","");
+        boatid=sharedPreferences.getString("boatid","");
         ivfvrt=view.findViewById(R.id.ivFvrtBdetails);
         recyclerViewImages=view.findViewById(R.id.rvBoatDetailsImage);
         tvTitle=view.findViewById(R.id.tvBoatDetailsTitle);
@@ -82,8 +78,12 @@ public class BoatDetailFragment extends Fragment {
         tvBoattype=view.findViewById(R.id.tvBoatTypeBoatDetails);
         tvPlace=view.findViewById(R.id.tvBoatDetailsPlace);
         tvPeople =view.findViewById(R.id.tvPeopleBoatDetails);
+        btnGotoAddBookDetail=view.findViewById(R.id.btnGotoAddBookDetail);
 
-        recyclerViewImages.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayout.HORIZONTAL,true));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        linearLayoutManager.setStackFromEnd(false);
+        recyclerViewImages.setLayoutManager(linearLayoutManager);
         boatDetailsDataModelList=new ArrayList<>();
         if (alertDialog == null) {
             alertDialog = AlertsUtils.createProgressDialog(getActivity());
@@ -91,6 +91,18 @@ public class BoatDetailFragment extends Fragment {
         }
         apicall();
         imageCall();
+
+        btnGotoAddBookDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("proid",proid);
+                Fragment fragment = new AddBookingDetailFragment();
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+            }
+        });
         return view;
     }
 
@@ -104,15 +116,17 @@ public class BoatDetailFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONObject object = jsonObject.getJSONObject("data");
-                    JSONObject getFilesv = object.getJSONObject("files");
-                    for (int i=0; i<=getFilesv.length(); i++)
+                    JSONArray getFilesv = object.getJSONArray("files");
+                    for (int i=0; i<getFilesv.length(); i++)
                     {
+                        JSONObject obj = getFilesv.getJSONObject(i);
                         ImageModelBoatDetails model = new ImageModelBoatDetails();
-                        model.setFile(getFilesv.getString("file"+i));
+                        model.setFile(obj.getString("file"));
                         boatDetailsDataModelList.add(model);
                     }
                     adapter = new BoatDetailsAdapter(getActivity(),boatDetailsDataModelList);
                     recyclerViewImages.setAdapter(adapter);
+                    recyclerViewImages.addItemDecoration(new CircleIndicator());
                     adapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
@@ -175,7 +189,7 @@ public class BoatDetailFragment extends Fragment {
                     cabinets=response.body().getData().getCabinats();
                     boattype=response.body().getData().getType();
                     isFvrt=response.body().getData().getIsFavorite();
-
+                    proid=response.body().getData().getPid().toString();
 
                     if (isFvrt.equals("true"))
                     {
@@ -188,7 +202,7 @@ public class BoatDetailFragment extends Fragment {
 
                     tvTitle.setText(title);
                     tvPeople.setText("People "+people);
-                    tvPrice.setText(price);
+                    tvPrice.setText("From "+price+" per day");
                     tvPlace.setText(place);
                     tvBirths.setText("Births "+births);
                     tvBoattype.setText(boattype);

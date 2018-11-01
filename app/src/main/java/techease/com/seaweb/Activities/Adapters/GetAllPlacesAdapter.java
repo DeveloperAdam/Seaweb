@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import techease.com.seaweb.Activities.Activities.FullscreenActivity;
+import techease.com.seaweb.Activities.Fragment.TabFragment;
 import techease.com.seaweb.Activities.Models.GetAllPlacesDataModel;
 import techease.com.seaweb.R;
 
@@ -58,6 +59,10 @@ public class GetAllPlacesAdapter extends RecyclerView.Adapter<GetAllPlacesAdapte
             @Override
             public void onClick(View v) {
 
+                if (TabFragment.searchFlag == true)
+                {
+
+                }
                 viewHolder.placeId=model.getId();
                 Intent intent=new Intent(activity, FullscreenActivity.class);
                 intent.putExtra("placeid",viewHolder.placeId);

@@ -1,10 +1,9 @@
 package techease.com.seaweb.Activities.Activities;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +15,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import techease.com.seaweb.Activities.Fragment.BoatDetailFragment;
 import techease.com.seaweb.Activities.Fragment.BoatsOnLocationFragment;
+import techease.com.seaweb.Activities.Fragment.DatePickerFragment;
 import techease.com.seaweb.Activities.Fragment.LoginFragment;
+import techease.com.seaweb.Activities.Fragment.TabFragment;
 import techease.com.seaweb.R;
 
 /**
@@ -32,6 +34,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private static final boolean AUTO_HIDE = true;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+   public static boolean flag =false;
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
@@ -92,21 +95,34 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ((AppCompatActivity) this).getSupportActionBar().hide();
         setContentView(R.layout.activity_fullscreen);
 
         sharedPreferences = this.getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
         String token=sharedPreferences.getString("login","");
+        if (TabFragment.searchFlag == true)
+        {
+            android.support.v4.app.Fragment fragment=new DatePickerFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+        }
+        else
+        if (flag == true)
+        {
+            String boatid=getIntent().getExtras().getString("boatid");
+            Bundle bundle=new Bundle();
+            bundle.putString("boatid",boatid);
+            android.support.v4.app.Fragment fragment=new BoatDetailFragment();
+            fragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+        }
+        else
         if (token.equals("login"))
         {
             String placeid=getIntent().getExtras().getString("placeid");
             Bundle bundle=new Bundle();
             bundle.putString("placeid",placeid);
-            Fragment fragment=new BoatsOnLocationFragment();
+            android.app.Fragment fragment=new BoatsOnLocationFragment();
             fragment.setArguments(bundle);
             getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
 
@@ -114,9 +130,10 @@ public class FullscreenActivity extends AppCompatActivity {
         else
         {
 
-            Fragment fragment=new LoginFragment();
-            getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+            android.support.v4.app.Fragment fragment=new LoginFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
         }
+
 
 
 
