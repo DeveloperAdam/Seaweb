@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
@@ -49,7 +50,7 @@ public class GetAllPlacesAdapter extends RecyclerView.Adapter<GetAllPlacesAdapte
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         final GetAllPlacesDataModel model=dataModelList.get(i);
 
-
+        Toast.makeText(activity, model.getPicture().toString(), Toast.LENGTH_SHORT).show();
         Picasso.get().load(model.getPicture()).into(viewHolder.imageView);
         viewHolder.tvPlacename.setText(model.getName());
          viewHolder.placeId=model.getId();

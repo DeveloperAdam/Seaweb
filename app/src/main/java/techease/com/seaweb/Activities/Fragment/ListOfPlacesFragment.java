@@ -61,7 +61,7 @@ public class ListOfPlacesFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         dataModelList=new ArrayList<>();
         svSuggestions=new ArrayList<>();
-        
+
 
         if (alertDialog == null) {
             alertDialog = AlertsUtils.createProgressDialog(getActivity());
@@ -84,7 +84,8 @@ public class ListOfPlacesFragment extends Fragment {
 
                 if (response.isSuccessful())
                 {
-
+                    if (alertDialog != null)
+                        alertDialog.dismiss();
                     Log.d("zmagetAllPlace",response.toString());
 
                     dataModelList.addAll(response.body().getData());

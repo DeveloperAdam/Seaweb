@@ -46,6 +46,7 @@ import techease.com.seaweb.Activities.Adapters.GetAllPlacesAdapter;
 import techease.com.seaweb.Activities.Models.GetAllPlacesDataModel;
 import techease.com.seaweb.Activities.Models.GetAllPlacesResponseModel;
 import techease.com.seaweb.Activities.Models.ImageModelBoatDetails;
+import techease.com.seaweb.Activities.Utils.AlertsUtils;
 import techease.com.seaweb.Activities.Utils.ApiClient;
 import techease.com.seaweb.Activities.Utils.ApiService;
 import techease.com.seaweb.Activities.Utils.CircleIndicator;
@@ -58,9 +59,11 @@ public class TabFragment extends Fragment {
     private ViewPager viewPager;
     Fragment fragment;
     AutoCompleteTextView etSearch;
-    List<String> places;
+    ArrayList<String> places;
     List<GetAllPlacesDataModel> dataModelList;
     ArrayList<String> suggestions;
+    String[] some;
+    android.support.v7.app.AlertDialog alertDialog;
 
    public static boolean searchFlag = false ;
 
@@ -69,6 +72,7 @@ public class TabFragment extends Fragment {
         super.onStart();
 
         placesCall();
+
     }
 
     @Override
@@ -81,7 +85,7 @@ public class TabFragment extends Fragment {
         etSearch.setSelection(0);
         dataModelList = new ArrayList<>();
         suggestions = new ArrayList<>();
-       // apiCall();
+        places = new ArrayList<>();
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -133,51 +137,65 @@ public class TabFragment extends Fragment {
     private void setupViewPager(final ViewPager viewPager) {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        tabLayout.addTab(tabLayout.newTab().setText("CUBA"));
-        tabLayout.addTab(tabLayout.newTab().setText("CANNES"));
-        tabLayout.addTab(tabLayout.newTab().setText("SPLIT"));
-        viewPager.setAdapter(new PagerAdapter(((FragmentActivity)getActivity()).getSupportFragmentManager(), tabLayout.getTabCount()));
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        if (alertDialog == null) {
+            alertDialog = AlertsUtils.createProgressDialog(getActivity());
+            alertDialog.show();
+        }
+        tabApiCall();
 
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
     }
 
-    private void apiCall() {
-        final StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://divergense.com/boat/App/getSuggestionLocations"
+    private void tabApiCall() {
+
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://divergense.com/boat/App/getAllLocations"
                 , new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("ZmaImages", response);
-
+                if (alertDialog != null)
+                    alertDialog.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i =0 ; i<jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        suggestions.add(object.getString("location_name"));
+                        places.add(object.getString("name"));
+                        some = new String[] {object.getString("name").toString()};
+                       // Toast.makeText(getActivity(), String.valueOf(places.indexOf(0)), Toast.LENGTH_SHORT).show();
+                        for(int z = 0; z<some.length; z++)
+                        {
+                            tabLayout.addTab(tabLayout.newTab().setText(some[z].toString()));
+                        }
+                        viewPager.setAdapter(new PagerAdapter(((FragmentActivity)getActivity()).getSupportFragmentManager(), tabLayout.getTabCount()));
+                        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+                        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+                        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+                            @Override
+                            public void onTabSelected(TabLayout.Tab tab) {
+                                viewPager.setCurrentItem(tab.getPosition());
+                            }
+
+                            @Override
+                            public void onTabUnselected(TabLayout.Tab tab) {
+
+                            }
+
+                            @Override
+                            public void onTabReselected(TabLayout.Tab tab) {
+
+                            }
+                        });
                     }
 
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    if (alertDialog != null)
+                        alertDialog.dismiss();
                 }
 
             }
@@ -206,7 +224,11 @@ public class TabFragment extends Fragment {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         mRequestQueue.add(stringRequest);
+
     }
+
+
+
     public class PagerAdapter extends FragmentStatePagerAdapter {
         int mNumOfTabs;
 
@@ -241,58 +263,6 @@ public class TabFragment extends Fragment {
             return mNumOfTabs;
         }
 
-        private void apiCall() {
-            final StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://divergense.com/boat/App/getSuggestionLocations"
-                    , new com.android.volley.Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.d("ZmaFilter", response);
-
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = jsonObject.getJSONArray("data");
-                        for( int i=0; i<jsonArray.length(); i++)
-                        {
-                            JSONObject object = jsonArray.getJSONObject(i);
-                            places.add(object.getString("location_name").toString()) ;
-
-                            Toast.makeText(getActivity(), String.valueOf(places.indexOf(i)), Toast.LENGTH_SHORT).show();
-
-                        }
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-
-            }, new com.android.volley.Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("error", String.valueOf(error.getCause()));
-                }
-            }) {
-                @Override
-                public String getBodyContentType() {
-                    return "application/x-www-form-urlencoded;charset=UTF-8";
-                }
-
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    return params;
-                }
-            };
-            RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
-            stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            mRequestQueue.add(stringRequest);
-
-
-        }
 
     }
 
@@ -306,22 +276,28 @@ public class TabFragment extends Fragment {
 
                 if (response.isSuccessful())
                 {
-
+                    if (alertDialog != null)
+                        alertDialog.dismiss();
                     Log.d("zmagetAllPlace",response.toString());
 
                     dataModelList.addAll(response.body().getData());
+                    places.add(response.body().getData().toString());
+
+
 
                 }
                 else
                 {
-
+                    if (alertDialog != null)
+                        alertDialog.dismiss();
                 }
 
             }
 
             @Override
             public void onFailure(Call<GetAllPlacesResponseModel> call, Throwable t) {
-
+                if (alertDialog != null)
+                    alertDialog.dismiss();
             }
         });
     }
