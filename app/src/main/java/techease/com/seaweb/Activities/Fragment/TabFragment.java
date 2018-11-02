@@ -59,7 +59,6 @@ public class TabFragment extends Fragment {
     private ViewPager viewPager;
     Fragment fragment;
     AutoCompleteTextView etSearch;
-    ArrayList<String> places;
     List<GetAllPlacesDataModel> dataModelList;
     ArrayList<String> suggestions;
     String[] some;
@@ -85,7 +84,7 @@ public class TabFragment extends Fragment {
         etSearch.setSelection(0);
         dataModelList = new ArrayList<>();
         suggestions = new ArrayList<>();
-        places = new ArrayList<>();
+
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -129,7 +128,6 @@ public class TabFragment extends Fragment {
 //            }
 //        });
 
-        places=new ArrayList<>();
 
         return view;
     }
@@ -161,9 +159,7 @@ public class TabFragment extends Fragment {
                     for (int i =0 ; i<jsonArray.length(); i++)
                     {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        places.add(object.getString("name"));
                         some = new String[] {object.getString("name").toString()};
-                       // Toast.makeText(getActivity(), String.valueOf(places.indexOf(0)), Toast.LENGTH_SHORT).show();
                         for(int z = 0; z<some.length; z++)
                         {
                             tabLayout.addTab(tabLayout.newTab().setText(some[z].toString()));
@@ -247,11 +243,11 @@ public class TabFragment extends Fragment {
                     fragment=new ListOfPlacesFragment();
                     return fragment;
                 case 1:
-                    fragment=new ListOfPlacesFragment();
-                    return fragment;
+//                    fragment=new ListOfPlacesFragment();
+                    return null;
                 case 2:
-                    fragment=new ListOfPlacesFragment();
-                    return fragment;
+                  //  fragment=new ListOfPlacesFragment();
+                    return null;
 
                 default:
                     return null;
@@ -281,9 +277,6 @@ public class TabFragment extends Fragment {
                     Log.d("zmagetAllPlace",response.toString());
 
                     dataModelList.addAll(response.body().getData());
-                    places.add(response.body().getData().toString());
-
-
 
                 }
                 else
