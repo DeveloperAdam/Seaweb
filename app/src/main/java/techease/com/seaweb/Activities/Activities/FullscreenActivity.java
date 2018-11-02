@@ -18,6 +18,7 @@ import android.widget.Toast;
 import techease.com.seaweb.Activities.Fragment.BoatDetailFragment;
 import techease.com.seaweb.Activities.Fragment.BoatsOnLocationFragment;
 import techease.com.seaweb.Activities.Fragment.DatePickerFragment;
+import techease.com.seaweb.Activities.Fragment.ListOfPlacesFragment;
 import techease.com.seaweb.Activities.Fragment.LoginFragment;
 import techease.com.seaweb.Activities.Fragment.TabFragment;
 import techease.com.seaweb.R;
@@ -101,7 +102,7 @@ public class FullscreenActivity extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         String token=sharedPreferences.getString("login","");
-        if (TabFragment.searchFlag == true)
+        if (ListOfPlacesFragment.searchFlag == true)
         {
             android.support.v4.app.Fragment fragment=new DatePickerFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();

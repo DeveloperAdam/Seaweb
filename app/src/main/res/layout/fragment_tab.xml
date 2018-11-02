@@ -10,24 +10,7 @@
 
 
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView1"
-        android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:drawableLeft="@drawable/mainscreen_search"
-        android:paddingLeft="20sp"
-        android:drawablePadding="20sp"
-        android:layout_marginLeft="20sp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_marginRight="20sp"
-        android:layout_marginTop="10sp"
-        android:textColor="#BDBDBD"
-        android:textColorHint="#BDBDBD"
-        android:background="@drawable/grayroundedboundry"
-        android:hint="Type Here The Location" />
+
 
 
     <android.support.design.widget.TabLayout

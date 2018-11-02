@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import techease.com.seaweb.Activities.Adapters.GetAllPlacesAdapter;
+import techease.com.seaweb.Activities.Adapters.ListOfPlacesNamesAdapter;
 import techease.com.seaweb.Activities.Models.GetAllPlacesDataModel;
 import techease.com.seaweb.Activities.Models.GetAllPlacesResponseModel;
 import techease.com.seaweb.Activities.Utils.AlertsUtils;
@@ -32,13 +36,16 @@ import techease.com.seaweb.R;
 public class ListOfPlacesFragment extends Fragment {
 
 
-    public  static RecyclerView recyclerView;
+    public  static RecyclerView recyclerView,rvNames;
     List<GetAllPlacesDataModel> dataModelList;
     public  static GetAllPlacesAdapter getAllPlacesAdapter;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     ArrayList<String> svSuggestions;
+    ListOfPlacesNamesAdapter namesAdapter;
+    AutoCompleteTextView etSearch;
+    public static boolean searchFlag = false ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,12 +60,23 @@ public class ListOfPlacesFragment extends Fragment {
 
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+        etSearch = view.findViewById(R.id.autoCompleteTextView1);
+        etSearch.setSelection(0);
         recyclerView=view.findViewById(R.id.rvPlaces);
+        rvNames=view.findViewById(R.id.rvListOfPlaces);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         linearLayoutManager.setStackFromEnd(false);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity());
+        linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
+        linearLayoutManager2.setStackFromEnd(false);
+        rvNames.setLayoutManager(linearLayoutManager2);
+
+
         dataModelList=new ArrayList<>();
         svSuggestions=new ArrayList<>();
 
@@ -69,7 +87,41 @@ public class ListOfPlacesFragment extends Fragment {
         }
         getAllPlacesAdapter=new GetAllPlacesAdapter(getActivity(),dataModelList);
         recyclerView.setAdapter(getAllPlacesAdapter);
+
+        namesAdapter = new ListOfPlacesNamesAdapter(getActivity(),dataModelList);
+        rvNames.setAdapter(namesAdapter);
         apiCall();
+
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence query, int start, int before, int count) {
+
+                query = query.toString().toLowerCase();
+                List<GetAllPlacesDataModel> newData = new ArrayList<>();
+                for (int j = 0; j < dataModelList.size(); j++) {
+                    final String test2 = dataModelList.get(j).getName().toLowerCase();
+                    if (test2.startsWith(String.valueOf(query))) {
+                        newData.add(dataModelList.get(j));
+                        searchFlag = true;
+                    }
+                }
+                ListOfPlacesFragment.getAllPlacesAdapter = new GetAllPlacesAdapter(getActivity(), newData);
+                ListOfPlacesFragment.recyclerView.setAdapter(ListOfPlacesFragment.getAllPlacesAdapter);
+                ListOfPlacesFragment.getAllPlacesAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         return view;
 
@@ -91,6 +143,7 @@ public class ListOfPlacesFragment extends Fragment {
                     dataModelList.addAll(response.body().getData());
 
                     getAllPlacesAdapter.notifyDataSetChanged();
+                    namesAdapter.notifyDataSetChanged();
                     if (alertDialog != null)
                         alertDialog.dismiss();
                 }

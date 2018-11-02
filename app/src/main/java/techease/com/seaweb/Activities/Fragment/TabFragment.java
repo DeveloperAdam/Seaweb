@@ -58,13 +58,13 @@ public class TabFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     Fragment fragment;
-    AutoCompleteTextView etSearch;
+
     List<GetAllPlacesDataModel> dataModelList;
     ArrayList<String> suggestions;
     String[] some;
     android.support.v7.app.AlertDialog alertDialog;
 
-   public static boolean searchFlag = false ;
+
 
     @Override
     public void onStart() {
@@ -80,40 +80,10 @@ public class TabFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab, container, false);
 
-        etSearch = view.findViewById(R.id.autoCompleteTextView1);
-        etSearch.setSelection(0);
         dataModelList = new ArrayList<>();
         suggestions = new ArrayList<>();
 
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence query, int start, int before, int count) {
-
-                query = query.toString().toLowerCase();
-                List<GetAllPlacesDataModel> newData = new ArrayList<>();
-                for (int j = 0; j < dataModelList.size(); j++) {
-                    final String test2 = dataModelList.get(j).getName().toLowerCase();
-                    if (test2.startsWith(String.valueOf(query))) {
-                        newData.add(dataModelList.get(j));
-                        searchFlag = true;
-                    }
-                }
-                ListOfPlacesFragment.getAllPlacesAdapter = new GetAllPlacesAdapter(getActivity(), newData);
-                ListOfPlacesFragment.recyclerView.setAdapter(ListOfPlacesFragment.getAllPlacesAdapter);
-                ListOfPlacesFragment.getAllPlacesAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         tabLayout = view.findViewById(R.id.tabs);
         viewPager = view.findViewById(R.id.viewpager);
         setupViewPager(viewPager);

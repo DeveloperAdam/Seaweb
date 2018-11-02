@@ -50,7 +50,6 @@ public class GetAllPlacesAdapter extends RecyclerView.Adapter<GetAllPlacesAdapte
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         final GetAllPlacesDataModel model=dataModelList.get(i);
 
-        Toast.makeText(activity, model.getPicture().toString(), Toast.LENGTH_SHORT).show();
         Picasso.get().load(model.getPicture()).into(viewHolder.imageView);
         viewHolder.tvPlacename.setText(model.getName());
          viewHolder.placeId=model.getId();
