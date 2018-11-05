@@ -110,6 +110,7 @@ public class FullscreenActivity extends AppCompatActivity {
         else
         if (flag == true)
         {
+
             String boatid=getIntent().getExtras().getString("boatid");
             Bundle bundle=new Bundle();
             bundle.putString("boatid",boatid);
@@ -120,12 +121,12 @@ public class FullscreenActivity extends AppCompatActivity {
         else
         if (token.equals("login"))
         {
-            String placeid=getIntent().getExtras().getString("placeid");
+            String placeid=sharedPreferences.getString("placeid","");
             Bundle bundle=new Bundle();
             bundle.putString("placeid",placeid);
-            android.app.Fragment fragment=new BoatsOnLocationFragment();
+            Fragment fragment=new BoatsOnLocationFragment();
             fragment.setArguments(bundle);
-            getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
 
         }
         else

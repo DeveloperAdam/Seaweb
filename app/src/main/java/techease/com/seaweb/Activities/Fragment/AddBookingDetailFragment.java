@@ -50,7 +50,7 @@ public class AddBookingDetailFragment extends Fragment implements View.OnClickLi
     long difference;
     Date date1,date2;
     SimpleDateFormat sdf;
-    int day,month,year,days;
+    int day,month,year;
     DatePickerDialog datePickerDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -64,7 +64,7 @@ public class AddBookingDetailFragment extends Fragment implements View.OnClickLi
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         userid=sharedPreferences.getString("userid","");
-        pro_id = sharedPreferences.getString("proid","");
+        pro_id = sharedPreferences.getString("boatid","");
         ivBack=view.findViewById(R.id.ivCrossBack);
         etMessage=view.findViewById(R.id.etMessage);
         tvStartDate=view.findViewById(R.id.tvStartDate);

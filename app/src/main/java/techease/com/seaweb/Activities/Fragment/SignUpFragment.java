@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,10 +34,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String device_id;
+    View view;
+    private RadioGroup radioSexGroup;
+    private RadioButton radioSexButton;
     ImageView ivback;
-    TextView tvOwner,tvUser,tvAlreadyHaveAnAccount;
+    TextView tvAlreadyHaveAnAccount;
     Button btnRegister;
-    String type;
+    String type,message;
     EditText etfname,etLname,etArea,etCpass,etPass,etEmail;
     String email,fname,lname,area,pass,fullName,token,cpass;
     String user_id;
@@ -44,16 +49,16 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        view = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
 
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         device_id=sharedPreferences.getString("device-id","");
 
+
+        radioSexGroup = view.findViewById(R.id.radioSex);
         ivback=view.findViewById(R.id.ivBackSignUp);
-        tvOwner=view.findViewById(R.id.tvOwner);
-        tvUser=view.findViewById(R.id.tvUser);
         tvAlreadyHaveAnAccount=view.findViewById(R.id.tvGotoLogin);
         btnRegister=view.findViewById(R.id.btnSignUp);
         etArea=view.findViewById(R.id.etAreaname);
@@ -62,9 +67,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         etEmail=view.findViewById(R.id.etEmail);
         etCpass=view.findViewById(R.id.etCpass);
         etPass=view.findViewById(R.id.etPass);
-
-        tvOwner.setOnClickListener(this);
-        tvUser.setOnClickListener(this);
         tvAlreadyHaveAnAccount.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
 
@@ -89,12 +91,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
         switch (id)
         {
-            case R.id.tvOwner:
-                type="Owner";
-                break;
-            case R.id.tvUser:
-                type="User";
-                break;
             case R.id.tvGotoLogin:
              Fragment fragment=new LoginFragment();
              getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
@@ -123,21 +119,28 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     etLname.setError("Please fill this field");
                 }
                 else
-                if (email.isEmpty() || !email.contains("@") && !email.contains(".com"))
+                if (email.isEmpty() || !email.contains("@") && !email.contains(".com") )
                 {
                     etEmail.setError("Please enter the valid email");
                 }
                 else
-                if (pass.isEmpty() ||  !pass.equals(cpass))
+                if (pass.isEmpty() || pass.length() < 6)
                 {
-                    etCpass.setError("Password does not match");
+                    etPass.setError("Please enter the valid password more than 6 characters");
                 }
+                else if (  !pass.equals(cpass) ) {
+                        etCpass.setError("Password does not match");
+                    }
                 else
                 if (cpass.isEmpty() || !cpass.equals(pass))
                 {
                     etCpass.setError("Password does not match");
                 }
                 else{
+
+                    int selectedId = radioSexGroup.getCheckedRadioButtonId();
+                    radioSexButton = view.findViewById(selectedId);
+                    type = radioSexButton.getText().toString();
 
                     if (alertDialog == null) {
                         alertDialog = AlertsUtils.createProgressDialog(getActivity());
@@ -166,22 +169,31 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     alertDialog.dismiss();
                     Log.d("zmaRegisterResp",response.toString());
 
-                    fullName=response.body().getUser().getFullName();
-                    email=response.body().getUser().getEmail();
-                    token=response.body().getUser().getToken();
-                    user_id=response.body().getUser().getUserId().toString();
+                    message = response.body().getMessage();
+                    if (message.equals("Registered Successfully"))
+                    {
+                        fullName=response.body().getUser().getFullName();
+                        email=response.body().getUser().getEmail();
+                        token=response.body().getUser().getToken();
+                        user_id=response.body().getUser().getUserId().toString();
 
-                    Toast.makeText(getActivity(), email, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), email, Toast.LENGTH_SHORT).show();
 
-                    editor.putString("username",fullName).commit();
-                    editor.putString("email",email).commit();
-                    editor.putString("userid",user_id).commit();
-                    editor.putString("token",token).commit();
-                    editor.putString("device_id",device_id).commit();
-                    editor.putString("login","login").commit();
+                        editor.putString("username",fullName).commit();
+                        editor.putString("email",email).commit();
+                        editor.putString("userid",user_id).commit();
+                        editor.putString("token",token).commit();
+                        editor.putString("device_id",device_id).commit();
+                        editor.putString("login","login").commit();
 
-                    startActivity(new Intent(getActivity(), BottomActivity.class));
-                    getActivity().finish();
+                        startActivity(new Intent(getActivity(), BottomActivity.class));
+                        getActivity().finish();
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 else
                 {

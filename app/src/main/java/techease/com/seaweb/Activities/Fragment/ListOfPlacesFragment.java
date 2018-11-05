@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +97,10 @@ public class ListOfPlacesFragment extends Fragment {
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                View decorView = getActivity().getWindow().getDecorView();
+                int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN;
+                decorView.setSystemUiVisibility(uiOptions);
 
             }
 
@@ -108,6 +113,7 @@ public class ListOfPlacesFragment extends Fragment {
                     final String test2 = dataModelList.get(j).getName().toLowerCase();
                     if (test2.startsWith(String.valueOf(query))) {
                         newData.add(dataModelList.get(j));
+                        Toast.makeText(getActivity(), "aya", Toast.LENGTH_SHORT).show();
                         searchFlag = true;
                     }
                 }

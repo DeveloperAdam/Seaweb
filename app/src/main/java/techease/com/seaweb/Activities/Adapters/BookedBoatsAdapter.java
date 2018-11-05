@@ -67,8 +67,6 @@ public class BookedBoatsAdapter extends RecyclerView.Adapter<BookedBoatsAdapter.
                 intent.putExtra("boatid",boatid);
                 activity.startActivity(intent);
 
-//                Fragment fragment = new BoatDetailFragment();
-//                ((AppCompatActivity)activity).getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("abc").commit();
             }
         });
 

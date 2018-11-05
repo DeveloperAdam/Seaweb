@@ -58,6 +58,8 @@ public class FavoriteFragment extends Fragment {
             alertDialog = AlertsUtils.createProgressDialog(getActivity());
             alertDialog.show();
         }
+        favrtAdapter=new FavrtAdapter(getActivity(),dataModelList);
+        recyclerView.setAdapter(favrtAdapter);
         apiCall();
 
 
@@ -86,14 +88,16 @@ public class FavoriteFragment extends Fragment {
                         alertDialog.dismiss();
                     Log.d("zmaFavrtBoats",response.toString());
 
-                    dataModelList.addAll(response.body().getData());
-
-                    if (dataModelList.size()>0)
+                    if(response.body().getData() != null)
                     {
-                        favrtAdapter=new FavrtAdapter(getActivity(),dataModelList);
-                        recyclerView.setAdapter(favrtAdapter);
-                        favrtAdapter.notifyDataSetChanged();
+                        dataModelList.addAll(response.body().getData());
                     }
+                    else
+                    {
+                        Toast.makeText(getActivity(), "NO FAVOURITES", Toast.LENGTH_SHORT).show();
+                    }
+
+                    favrtAdapter.notifyDataSetChanged();
 
 
 

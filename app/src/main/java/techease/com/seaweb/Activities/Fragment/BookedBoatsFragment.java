@@ -63,6 +63,8 @@ public class BookedBoatsFragment extends Fragment {
             alertDialog = AlertsUtils.createProgressDialog(getActivity());
             alertDialog.show();
         }
+        adapter=new BookedBoatsAdapter(getActivity(),bookedBoatsDataModelList);
+        recyclerView.setAdapter(adapter);
         apiCall();
 
 
@@ -79,7 +81,7 @@ public class BookedBoatsFragment extends Fragment {
     }
 
     private void apiCall() {
-        Toast.makeText(getActivity(), userId, Toast.LENGTH_SHORT).show();
+
         ApiService services = ApiClient.getClient().create(ApiService.class);
         Call<BookedBoatsResponseModel> call = services.getBookedBoats(userId);
         call.enqueue(new Callback<BookedBoatsResponseModel>() {
@@ -92,14 +94,17 @@ public class BookedBoatsFragment extends Fragment {
                         alertDialog.dismiss();
                     Log.d("zmaFavrtBoats",response.toString());
 
-                    bookedBoatsDataModelList.addAll(response.body().getData());
-
-                    if (bookedBoatsDataModelList.size()>0)
+                    if (response.body().getData() !=null)
                     {
-                        adapter=new BookedBoatsAdapter(getActivity(),bookedBoatsDataModelList);
-                        recyclerView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
+                        bookedBoatsDataModelList.addAll(response.body().getData());
                     }
+                    else
+                    {
+                        Toast.makeText(getActivity(), "NO BOOKED BOATS", Toast.LENGTH_SHORT).show();
+                    }
+
+                        adapter.notifyDataSetChanged();
+
 
 
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -77,7 +78,7 @@ public class FavrtAdapter extends RecyclerView.Adapter<FavrtAdapter.ViewHolder> 
             tvTitle=itemView.findViewById(R.id.tvTitle);
             tvPrice=itemView.findViewById(R.id.tvPrice);
             tvLocation=itemView.findViewById(R.id.tvLoc);
-            ivFvrt=itemView.findViewById(R.id.ivBoatOnLocImage);
+            ivFvrt=itemView.findViewById(R.id.ivFvrt);
 
         }
     }

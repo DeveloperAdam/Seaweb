@@ -51,7 +51,7 @@ public class BoatDetailFragment extends Fragment {
     TextView tvTitle,tvPrice,tvBirths,tvCabinets,tvSkipper,tvBoattype,tvPlace,tvPeople;
     String userId;
     Button btnGotoAddBookDetail;
-    ImageView ivfvrt;
+    ImageView ivfvrt,ivBack;
     String boatid,births,title,price,place,people,cabinets,skipper,boattype,isFvrt,proid;
     List<ImageModelBoatDetails> boatDetailsDataModelList;
     BoatDetailsAdapter adapter;
@@ -69,6 +69,7 @@ public class BoatDetailFragment extends Fragment {
         userId=sharedPreferences.getString("userid","");
         boatid=sharedPreferences.getString("boatid","");
         ivfvrt=view.findViewById(R.id.ivFvrtBdetails);
+        ivBack = view.findViewById(R.id.ivB);
         recyclerViewImages=view.findViewById(R.id.rvBoatDetailsImage);
         tvTitle=view.findViewById(R.id.tvBoatDetailsTitle);
         tvPrice=view.findViewById(R.id.tvPriceBoatDetails);
@@ -100,6 +101,16 @@ public class BoatDetailFragment extends Fragment {
                 bundle.putString("proid",proid);
                 Fragment fragment = new AddBookingDetailFragment();
                 fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+            }
+        });
+
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Fragment fragment = new BoatsOnLocationFragment();
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
         });

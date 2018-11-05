@@ -42,24 +42,29 @@
         android:layout_marginRight="20sp"
 
         >
-        <TextView
-            android:id="@+id/tvOwner"
+        <RadioGroup
+            android:id="@+id/radioSex"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="I am Boat Owner"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:textColor="@color/color_white"/>
-        <TextView
-            android:id="@+id/tvUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
-            android:text="I want to Hire Excursion or Boat"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:textColor="@color/color_white"/>
+            android:layout_height="wrap_content" >
 
+            <RadioButton
+                android:id="@+id/radioMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I am boat owner"
+                android:checked="true"
+                android:textColor="#fff"
+                android:buttonTint="#fff" />
+
+            <RadioButton
+                android:id="@+id/radioFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:buttonTint="#fff"
+                android:text="I want to hire excursion or boat" />
+
+        </RadioGroup>
 
 
         <EditText

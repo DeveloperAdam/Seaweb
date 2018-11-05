@@ -41,7 +41,7 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
     android.support.v7.app.AlertDialog alertDialog;
     String boatid,isFvrt;
     boolean flag=false;
-    int userid;
+    String userid;
     Activity activity;
     List<BoatsOnLocationDataModel> boatsOnLocationDataModels;
 
@@ -72,6 +72,7 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
         isFvrt=model.getIsFavorite();
         if (isFvrt.equals("true"))
         {
+            Toast.makeText(activity, "aya", Toast.LENGTH_SHORT).show();
             viewHolder.ivFavrt.setBackgroundResource(R.drawable.fillheart);
         }
         else
@@ -96,7 +97,7 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
             @Override
             public void onClick(View v) {
                 isFvrt=model.getIsFavorite();
-                userid=viewHolder.sharedPreferences.getInt("userid",0);
+                userid=viewHolder.sharedPreferences.getString("userid","");
                 boatid=model.getPid().toString();
                 if (alertDialog == null) {
                    alertDialog = AlertsUtils.createProgressDialog(activity);

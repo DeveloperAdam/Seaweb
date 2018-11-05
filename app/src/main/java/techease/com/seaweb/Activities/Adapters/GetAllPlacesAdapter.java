@@ -53,13 +53,13 @@ public class GetAllPlacesAdapter extends RecyclerView.Adapter<GetAllPlacesAdapte
         Picasso.get().load(model.getPicture()).into(viewHolder.imageView);
         viewHolder.tvPlacename.setText(model.getName());
          viewHolder.placeId=model.getId();
-        viewHolder.editor.putString("placeid",viewHolder.placeId).commit();
 
         viewHolder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 viewHolder.placeId=model.getId();
+                viewHolder.editor.putString("placeid",viewHolder.placeId).commit();
+
                 Intent intent=new Intent(activity, FullscreenActivity.class);
                 intent.putExtra("placeid",viewHolder.placeId);
                 viewHolder.editor.putString("placeid",viewHolder.placeId).commit();

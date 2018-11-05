@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,7 +32,7 @@ public class LoginFragment extends Fragment {
     Button btnsignIn;
     ImageView ivBack;
     EditText etEmail,etPass;
-    String pass,email,fullName,token;
+    String pass,email,fullName,token,message;
     String user_id;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
@@ -88,7 +89,7 @@ public class LoginFragment extends Fragment {
                 pass=etPass.getText().toString();
 
 
-                if (email.isEmpty() || !email.contains("@") || !email.contains(".com"))
+                if (email.isEmpty() || !email.contains("@") || !email.contains(".com") || email.length() < 6)
                 {
                     etEmail.setError("please enter the valid email");
                 }
@@ -119,29 +120,37 @@ public class LoginFragment extends Fragment {
 
                 if (response.isSuccessful())
                 {
-                                    if (alertDialog != null)
+                    if (alertDialog != null)
                     alertDialog.dismiss();
                     Log.d("zmaLoginResp",response.toString());
+                    message = response.body().getMessage().toString();
+                    if (message.equals("Logged in"))
+                    {
+                        fullName=response.body().getUser().getFullName();
+                        email=response.body().getUser().getEmail();
+                        token=response.body().getUser().getToken();
+                        user_id=response.body().getUser().getUserId().toString();
 
-                    fullName=response.body().getUser().getFullName();
-                    email=response.body().getUser().getEmail();
-                    token=response.body().getUser().getToken();
-                    user_id=response.body().getUser().getUserId().toString();
 
 
+                        editor.putString("username",fullName).commit();
+                        editor.putString("email",email).commit();
+                        editor.putString("userid",user_id).commit();
+                        editor.putString("token",token).commit();
+                        editor.putString("login","login").commit();
 
-                    editor.putString("username",fullName).commit();
-                    editor.putString("email",email).commit();
-                    editor.putString("userid",user_id).commit();
-                    editor.putString("token",token).commit();
-                    editor.putString("login","login").commit();
+                        startActivity(new Intent(getActivity(), BottomActivity.class));
+                        getActivity().finish();
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
 
-                    startActivity(new Intent(getActivity(), BottomActivity.class));
-                    getActivity().finish();
                 }
                 else
                 {
-                                    if (alertDialog != null)
+                    if (alertDialog != null)
                     alertDialog.dismiss();
                 }
             }
