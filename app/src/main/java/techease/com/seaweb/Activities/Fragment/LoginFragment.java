@@ -59,7 +59,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
 
            Fragment fragment=new SignUpFragment();
-           getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+           getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
 
             }
         });
@@ -69,7 +69,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
 
                 Fragment fragment=new ForgotPassFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
             }
         });
 

@@ -9,7 +9,7 @@
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="50sp"
-
+       android:layout_marginTop="20sp"
        android:layout_alignParentTop="true"
        android:layout_marginLeft="15sp"
        android:orientation="horizontal">
@@ -23,7 +23,7 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Favourite"
+          android:text="Favourites"
           android:textStyle="bold"
           android:textColor="@color/color_white"
           android:textSize="17sp"

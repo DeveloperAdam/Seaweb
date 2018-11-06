@@ -16,14 +16,15 @@
 
         <ImageView
             android:id="@+id/ivBack"
-            android:layout_width="21dp"
-            android:layout_height="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
             android:layout_gravity="center"
             android:src="@drawable/backicon" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create an account"
+            android:text="LOGIN"
             android:textStyle="bold"
             android:textColor="@color/color_white"
             android:textSize="17sp"
@@ -43,7 +44,7 @@
         <EditText
             android:id="@+id/etEmailLogin"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
+            android:layout_height="50sp"
             android:backgroundTint="#fff"
             android:hint="Email"
             android:inputType="textEmailAddress"
@@ -54,7 +55,7 @@
         <EditText
             android:id="@+id/etPassLogin"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
+            android:layout_height="50sp"
             android:backgroundTint="#fff"
             android:hint="Password"
             android:inputType="textPassword"

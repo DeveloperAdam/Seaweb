@@ -99,6 +99,13 @@ public class CodeFragment extends Fragment {
 
                     Toast.makeText(getActivity(), code, Toast.LENGTH_SHORT).show();
 
+                    if (code.equals("Verified"))
+                    {
+                        Fragment fragment = new ResetPassFragment();
+                        getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
+                    }
+
+
 
                 }
                 else

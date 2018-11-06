@@ -49,7 +49,7 @@ public class ForgotPassFragment extends Fragment {
             public void onClick(View v) {
 
                 Fragment fragment=new LoginFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
             }
         });
 
@@ -94,7 +94,7 @@ public class ForgotPassFragment extends Fragment {
                     email=response.body().getMessage();
 
                     Fragment fragment=new CodeFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
 
 
                 }

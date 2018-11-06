@@ -1,8 +1,10 @@
 package techease.com.seaweb.Activities.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -12,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,6 +39,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,32 +71,33 @@ public class BottomActivity extends AppCompatActivity {
 
     Fragment fragment;
     BottomNavigationView navigation;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.home:
-                    fragment = new ListOfPlacesFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
-                    return true;
-                case R.id.favrt:
-                     fragment = new FavoriteFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
-                    return true;
-                case R.id.booked:
-                    fragment = new BookedBoatsFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
-                    return true;
-                case R.id.profile:
-                    fragment = new ProfileFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
-                    return true;
-            }
-            return false;
-        }
-    };
+    AHBottomNavigation ahBottomNavigation;
+//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+//
+//        @Override
+//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//            switch (item.getItemId()) {
+//                case R.id.home:
+//                    fragment = new ListOfPlacesFragment();
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+//                    return true;
+//                case R.id.favrt:
+//                     fragment = new FavoriteFragment();
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+//                    return true;
+//                case R.id.booked:
+//                    fragment = new BookedBoatsFragment();
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+//                    return true;
+//                case R.id.profile:
+//                    fragment = new ProfileFragment();
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+//                    return true;
+//            }
+//            return false;
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,18 +105,63 @@ public class BottomActivity extends AppCompatActivity {
         ((AppCompatActivity) this).getSupportActionBar().hide();
         setContentView(R.layout.activity_bottom);
 
+        ahBottomNavigation = findViewById(R.id.bottom_navigation);
 
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        BottomNavigationHelper.disableShiftMode(navigation);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem("", R.drawable.home);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("", R.drawable.hrt);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem("", R.drawable.label);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem("", R.drawable.profi);
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        ahBottomNavigation.addItem(item1);
+        ahBottomNavigation.addItem(item2);
+        ahBottomNavigation.addItem(item3);
+        ahBottomNavigation.addItem(item4);
 
         fragment = new ListOfPlacesFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+        ahBottomNavigation.setCurrentItem(0);
+
+        ahBottomNavigation.setDefaultBackgroundColor(Color.WHITE);
+        ahBottomNavigation.setAccentColor(fetchColor(R.color.orangecolor));
+        ahBottomNavigation.setInactiveColor(fetchColor(R.color.graycolor));
 
 
+        ahBottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int position, boolean wasSelected) {
 
+                if (position == 0)
+                {
+                    fragment = new ListOfPlacesFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+                }
+                else
+                    if (position == 1)
+                    {
+                        fragment = new FavoriteFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+                    }
+                    else
+                    if (position == 2)
+                    {
+                        fragment = new BookedBoatsFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+                    }
+                    else
+                    if (position == 3)
+                    {
+                        fragment = new ProfileFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+                    }
+            }
+        });
+
+
+    }
+
+
+    private int fetchColor(@ColorRes int color) {
+        return ContextCompat.getColor(this, color);
     }
 
 }

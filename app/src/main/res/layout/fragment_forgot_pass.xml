@@ -16,14 +16,14 @@
 
         <ImageView
             android:id="@+id/ivbackForgot"
-            android:layout_width="25sp"
-            android:layout_height="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/backicon"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="Password Reset"
             android:textStyle="bold"
             android:textColor="@color/color_white"
             android:textSize="17sp"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,149 +7,168 @@
     android:background="@drawable/backimg"
     tools:context=".Activities.Fragment.SignUpFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_marginLeft="15sp"
-        android:orientation="horizontal">
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/ivBackSignUp"
-            android:layout_width="25sp"
-            android:layout_height="25sp"
-            android:layout_gravity="center"
-            android:src="@drawable/backicon"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:textStyle="bold"
-            android:textColor="@color/color_white"
-            android:textSize="17sp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20sp"/>
-    </LinearLayout>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+      <ImageView
+          android:id="@+id/ivBackSignUp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="15sp"
+          android:layout_marginLeft="10sp"
+          android:layout_gravity="center"
+          android:src="@drawable/backicon"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="50sp"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Sign Up"
+          android:textStyle="bold"
+          android:layout_marginTop="15sp"
+          android:layout_toRightOf="@+id/ivBackSignUp"
+          android:textColor="@color/color_white"
+          android:textSize="17sp"
+          android:layout_marginLeft="20sp"/>
 
-        >
-        <RadioGroup
-            android:id="@+id/radioSex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+      <RadioGroup
+          android:id="@+id/radioSex"
+          android:layout_below="@+id/ivBackSignUp"
+          android:layout_marginLeft="20sp"
+          android:layout_marginTop="50sp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" >
 
-            <RadioButton
-                android:id="@+id/radioMale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="I am boat owner"
-                android:checked="true"
-                android:textColor="#fff"
-                android:buttonTint="#fff" />
+          <RadioButton
+              android:id="@+id/radioMale"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="I am boat owner"
+              android:checked="true"
+              android:textColor="#fff"
+              android:buttonTint="#fff" />
 
-            <RadioButton
-                android:id="@+id/radioFemale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:buttonTint="#fff"
-                android:text="I want to hire excursion or boat" />
+          <RadioButton
+              android:id="@+id/radioFemale"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="#fff"
+              android:buttonTint="#fff"
+              android:text="I want to hire excursion or boat" />
 
-        </RadioGroup>
+      </RadioGroup>
+      <EditText
+          android:id="@+id/etFirstname"
+          android:layout_width="match_parent"
+          android:layout_height="50sp"
+          android:layout_below="@+id/radioSex"
+          android:layout_marginTop="20sp"
+          android:maxLines="1"
+          android:inputType="textPersonName"
+          android:layout_marginLeft="20sp"
+          android:layout_marginRight="20sp"
+          android:hint="First Name"
+          android:backgroundTint="@color/color_white"
+          android:textColorHint="@color/color_white"
+          android:textColor="@color/color_white"/>
+      <EditText
+          android:id="@+id/etLastname"
+          android:layout_width="match_parent"
+          android:layout_height="50sp"
+          android:layout_below="@+id/etFirstname"
+          android:hint="Last Name"
+          android:inputType="textPersonName"
+          android:layout_marginRight="20sp"
+          android:layout_marginLeft="20sp"
+          android:layout_marginTop="10sp"
+          android:backgroundTint="@color/color_white"
+          android:textColorHint="@color/color_white"
+          android:textColor="@color/color_white"/>
 
+      <EditText
+          android:id="@+id/etAreaname"
+          android:layout_width="match_parent"
+          android:layout_height="50sp"
+          android:hint="Area Name"
+          android:inputType="textPostalAddress"
+          android:layout_below="@+id/etLastname"
+          android:layout_marginTop="10sp"
+          android:layout_marginLeft="20sp"
+          android:layout_marginRight="20sp"
+          android:backgroundTint="@color/color_white"
+          android:textColorHint="@color/color_white"
+          android:textColor="@color/color_white"/>
+      <EditText
+          android:id="@+id/etEmail"
+          android:layout_width="match_parent"
+          android:layout_height="50sp"
+          android:hint="Email"
+          android:layout_marginRight="20sp"
+          android:layout_marginLeft="20sp"
+          android:layout_below="@+id/etAreaname"
+          android:inputType="textEmailAddress"
+          android:layout_marginTop="10sp"
+          android:backgroundTint="@color/color_white"
+          android:textColorHint="@color/color_white"
+          android:textColor="@color/color_white"/>
+      <EditText
+          android:id="@+id/etPass"
+          android:layout_width="match_parent"
+          android:layout_height="50sp"
+          android:hint="Password"
+          android:layout_marginTop="10sp"
+          android:layout_marginLeft="20sp"
+          android:layout_marginRight="20sp"
+          android:layout_below="@+id/etEmail"
+          android:inputType="textPassword"
+          android:backgroundTint="@color/color_white"
+          android:textColorHint="@color/color_white"
+          android:textColor="@color/color_white"/>
+      <EditText
+          android:id="@+id/etCpass"
+          android:layout_width="match_parent"
+          android:layout_height="50sp"
+          android:layout_below="@+id/etPass"
+          android:hint="Confirm Password"
+          android:layout_marginTop="10sp"
+          android:layout_marginRight="20sp"
+          android:layout_marginLeft="20sp"
+          android:inputType="textPassword"
+          android:backgroundTint="@color/color_white"
+          android:textColorHint="@color/color_white"
+          android:textColor="@color/color_white"/>
 
-        <EditText
-            android:id="@+id/etFirstname"
-            android:layout_marginTop="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:hint="First Name"
-            android:backgroundTint="@color/color_white"
-            android:textColorHint="@color/color_white"
-            android:textColor="@color/color_white"/>
-        <EditText
-            android:id="@+id/etLastname"
-            android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:hint="Last Name"
-            android:backgroundTint="@color/color_white"
-            android:textColorHint="@color/color_white"
-            android:textColor="@color/color_white"/>
-        <EditText
-            android:id="@+id/etAreaname"
-            android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:hint="Area Name"
-            android:backgroundTint="@color/color_white"
-            android:textColorHint="@color/color_white"
-            android:textColor="@color/color_white"/>
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:backgroundTint="@color/color_white"
-            android:textColorHint="@color/color_white"
-            android:textColor="@color/color_white"/>
-        <EditText
-            android:id="@+id/etPass"
-            android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:backgroundTint="@color/color_white"
-            android:textColorHint="@color/color_white"
-            android:textColor="@color/color_white"/>
-        <EditText
-            android:id="@+id/etCpass"
-            android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:hint="Confirm Password"
-            android:inputType="textPassword"
-            android:backgroundTint="@color/color_white"
-            android:textColorHint="@color/color_white"
-            android:textColor="@color/color_white"/>
+      <Button
+          android:id="@+id/btnSignUp"
+          android:layout_width="match_parent"
+          android:layout_height="50sp"
+          android:layout_below="@+id/etCpass"
+          android:layout_margin="20sp"
+          android:background="@drawable/white_roundbtn"
+          android:text="Sign Up"
+          android:textAllCaps="false"
+          />
 
+      <TextView
+          android:id="@+id/id"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Already have an account?"
+          android:layout_below="@+id/btnSignUp"
+          android:textColor="@color/color_white"
+          android:layout_marginLeft="20sp"/>
+      <TextView
+          android:id="@+id/tvGotoLogin"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Login"
+          android:layout_toRightOf="@+id/id"
+          android:textStyle="bold"
+          android:layout_marginBottom="150sp"
+          android:layout_below="@+id/btnSignUp"
+          android:textColor="@color/color_white"
+          android:layout_marginLeft="30sp"/>
 
-        <Button
-            android:id="@+id/btnSignUp"
-            android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:layout_margin="20sp"
-            android:background="@drawable/white_roundbtn"
-            android:text="Sign Up"
-            android:textAllCaps="false"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20sp"
-            android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Already have an account?"
-            android:textColor="@color/color_white"
-            android:layout_marginLeft="20sp"/>
-            <TextView
-                android:id="@+id/tvGotoLogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Login"
-                android:textStyle="bold"
-                android:textColor="@color/color_white"
-                android:layout_marginLeft="30sp"/>
-        </LinearLayout>
-    </LinearLayout>
+  </RelativeLayout>
+
 </ScrollView>
-</LinearLayout>

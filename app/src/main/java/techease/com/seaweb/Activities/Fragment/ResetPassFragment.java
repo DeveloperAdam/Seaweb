@@ -113,7 +113,7 @@ public class ResetPassFragment extends Fragment {
                 else
 
                 {
-                                    if (alertDialog != null)
+                    if (alertDialog != null)
                     alertDialog.dismiss();
                 }
             }

@@ -75,8 +75,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getActivity(), LoginSignupActivity.class));
-                getActivity().finish();
+               Fragment fragment = new LoginFragment();
+               getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
             }
         });
 

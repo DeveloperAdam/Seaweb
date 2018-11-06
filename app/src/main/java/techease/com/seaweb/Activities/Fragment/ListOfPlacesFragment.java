@@ -113,7 +113,6 @@ public class ListOfPlacesFragment extends Fragment {
                     final String test2 = dataModelList.get(j).getName().toLowerCase();
                     if (test2.startsWith(String.valueOf(query))) {
                         newData.add(dataModelList.get(j));
-                        Toast.makeText(getActivity(), "aya", Toast.LENGTH_SHORT).show();
                         searchFlag = true;
                     }
                 }

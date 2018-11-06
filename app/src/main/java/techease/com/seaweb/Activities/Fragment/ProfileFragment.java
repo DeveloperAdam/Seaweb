@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import techease.com.seaweb.Activities.Activities.FullscreenActivity;
 import techease.com.seaweb.Activities.Activities.LoginSignupActivity;
 import techease.com.seaweb.R;
 
@@ -24,6 +26,7 @@ import techease.com.seaweb.R;
 public class ProfileFragment extends Fragment {
 
     ImageView ivProfile;
+    LinearLayout changePassword;
     TextView tvLoc,tvEmail,tvUsername;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
@@ -39,6 +42,7 @@ public class ProfileFragment extends Fragment {
 
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        changePassword = view.findViewById(R.id.llChnagePass);
         userName=sharedPreferences.getString("username","");
         email=sharedPreferences.getString("email","");
       //  loc=sharedPreferences.getString("loc","");
@@ -61,7 +65,14 @@ public class ProfileFragment extends Fragment {
 
 
 
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Fragment fragment = new ForgotPassFragment();
+                getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
+            }
+        });
 
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +85,8 @@ public class ProfileFragment extends Fragment {
                 editor.remove("userid").commit();
                 editor.clear().commit();
 
+                ListOfPlacesFragment.searchFlag = false;
+                FullscreenActivity.flag = false;
                 LoginManager.getInstance().logOut();
 
                 startActivity(new Intent(getActivity(), LoginSignupActivity.class));
@@ -81,6 +94,9 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+
+
+
 
         return view;
     }

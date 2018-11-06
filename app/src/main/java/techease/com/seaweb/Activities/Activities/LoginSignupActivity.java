@@ -87,7 +87,7 @@ public class LoginSignupActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 startActivity(new Intent(LoginSignupActivity.this,FullscreenActivity.class));
-                finish();
+
             }
         });
 

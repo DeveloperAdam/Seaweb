@@ -72,7 +72,6 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
         isFvrt=model.getIsFavorite();
         if (isFvrt.equals("true"))
         {
-            Toast.makeText(activity, "aya", Toast.LENGTH_SHORT).show();
             viewHolder.ivFavrt.setBackgroundResource(R.drawable.fillheart);
         }
         else
