@@ -69,8 +69,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Fragment fragment = new ForgotPassFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
+
             }
         });
 

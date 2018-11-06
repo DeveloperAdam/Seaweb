@@ -78,6 +78,10 @@ public class BoatsOnLocationFragment extends Fragment {
             alertDialog = AlertsUtils.createProgressDialog(getActivity());
             alertDialog.show();
         }
+
+        boatsOnLocationAdapter=new BoatsOnLocationAdapter(getActivity(),boatsOnLocationDataModels);
+        recyclerView.setAdapter(boatsOnLocationAdapter);
+
         apiCall();
 
 
@@ -139,10 +143,12 @@ public class BoatsOnLocationFragment extends Fragment {
                         alertDialog.dismiss();
                     Log.d("zmaPlaceBoats",response.toString());
 
-                    boatsOnLocationDataModels.addAll(response.body().getData());
+                    if (response.body().getData() != null)
+                    {
+                        boatsOnLocationDataModels.addAll(response.body().getData());
+                    }
 
-                    boatsOnLocationAdapter=new BoatsOnLocationAdapter(getActivity(),boatsOnLocationDataModels);
-                    recyclerView.setAdapter(boatsOnLocationAdapter);
+
                     boatsOnLocationAdapter.notifyDataSetChanged();
 
                 }
