@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +53,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
-
+        alertDialog = null;
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         device_id=sharedPreferences.getString("device-id","");
@@ -76,6 +78,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
 
                Fragment fragment = new LoginFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
                getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
             }
         });
@@ -137,7 +141,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     etCpass.setError("Password does not match");
                 }
                 else{
-
+                    type = "I am the owner";
                     int selectedId = radioSexGroup.getCheckedRadioButtonId();
                     radioSexButton = view.findViewById(selectedId);
                     type = radioSexButton.getText().toString();
@@ -167,6 +171,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                 {
                     if (alertDialog != null)
                     alertDialog.dismiss();
+                    alertDialog = null;
                     Log.d("zmaRegisterResp",response.toString());
 
                     message = response.body().getMessage();
@@ -187,6 +192,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                         editor.putString("login","login").commit();
 
                         startActivity(new Intent(getActivity(), BottomActivity.class));
+                        getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                         getActivity().finish();
                     }
                     else
@@ -199,6 +205,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                 {
                     if (alertDialog != null)
                     alertDialog.dismiss();
+                    alertDialog = null;
                 }
             }
 
@@ -206,6 +213,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             public void onFailure(Call<RegisterResponseModel> call, Throwable t) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
+                alertDialog = null;
             }
         });
 

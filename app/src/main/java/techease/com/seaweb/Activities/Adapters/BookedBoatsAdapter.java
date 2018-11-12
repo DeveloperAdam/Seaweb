@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,12 +62,20 @@ public class BookedBoatsAdapter extends RecyclerView.Adapter<BookedBoatsAdapter.
             @Override
             public void onClick(View view) {
 
-                FullscreenActivity.flag = true;
                 boatid=model.getPid().toString();
                 holder.editor.putString("boatid",boatid).commit();
-                Intent intent = new Intent(activity,FullscreenActivity.class);
-                intent.putExtra("boatid",boatid);
-                activity.startActivity(intent);
+                Fragment fragment = new BoatDetailFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
+                ((AppCompatActivity)activity).getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).addToBackStack("abc").commit();
+
+//
+//                FullscreenActivity.flag = true;
+//
+//
+//                Intent intent = new Intent(activity,FullscreenActivity.class);
+//                intent.putExtra("boatid",boatid);
+//                activity.startActivity(intent);
 
             }
         });

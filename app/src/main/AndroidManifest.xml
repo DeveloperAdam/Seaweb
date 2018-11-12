@@ -69,7 +69,6 @@
         <activity
             android:name=".Activities.Activities.BottomActivity"
             android:label="@string/title_activity_bottom"
-            android:theme="@style/MyTheme.TranslucentNavigation"
             android:windowSoftInputMode="adjustPan"/>
     </application>
 

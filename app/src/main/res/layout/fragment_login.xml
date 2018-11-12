@@ -85,6 +85,7 @@
             android:id="@+id/btnSignIn"
             android:layout_width="match_parent"
             android:layout_height="50sp"
+            android:foreground="@drawable/ripple_effect_white_btn"
             android:background="@drawable/white_roundbtn"
             android:text="Login"
             android:textAllCaps="false"

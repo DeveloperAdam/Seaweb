@@ -49,11 +49,10 @@ public class BookedBoatsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_booked_boats, container, false);
 
-
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         userId=sharedPreferences.getString("userid","");
-
+        alertDialog = null;
         recyclerView=view.findViewById(R.id.rvBooking);
         ivBack=view.findViewById(R.id.ivBackBookedBoats);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -73,6 +72,7 @@ public class BookedBoatsFragment extends Fragment {
             public void onClick(View view) {
 
                 startActivity(new Intent(getActivity(), BottomActivity.class));
+                getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                 getActivity().finish();
             }
         });
@@ -92,6 +92,7 @@ public class BookedBoatsFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                     Log.d("zmaFavrtBoats",response.toString());
 
                     if (response.body().getData() !=null)
@@ -114,6 +115,7 @@ public class BookedBoatsFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                 }
             }
 
@@ -121,6 +123,7 @@ public class BookedBoatsFragment extends Fragment {
             public void onFailure(Call<BookedBoatsResponseModel> call, Throwable t) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
+                alertDialog = null;
             }
         });
     }

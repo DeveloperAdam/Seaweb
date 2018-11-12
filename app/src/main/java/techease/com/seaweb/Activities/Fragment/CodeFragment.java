@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +29,8 @@ public class CodeFragment extends Fragment {
 
     EditText etCode;
     Button btnVerify;
-    String code;
+    String code,message;
+    boolean success;
     ImageView ivBack;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
@@ -46,13 +49,15 @@ public class CodeFragment extends Fragment {
         ivBack=view.findViewById(R.id.ivBackCode);
         etCode=view.findViewById(R.id.etCode);
         btnVerify=view.findViewById(R.id.btnVerify);
-
+        alertDialog = null;
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Fragment fragment=new ForgotPassFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
         });
@@ -91,18 +96,24 @@ public class CodeFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                     Log.d("zmaForgotResp",response.toString());
 
-                    code=response.body().getMessage();
-
-                    editor.putString("code",code).commit();
-
-                    Toast.makeText(getActivity(), code, Toast.LENGTH_SHORT).show();
-
-                    if (code.equals("Verified"))
+                    message=response.body().getMessage();
+                    success = response.body().getSuccess();
+                    if (success ==  true)
                     {
+
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                        editor.putString("code",etCode.getText().toString()).commit();
                         Fragment fragment = new ResetPassFragment();
+                        fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                        fragment.setExitTransition(new Slide(Gravity.LEFT));
                         getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -112,6 +123,7 @@ public class CodeFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                 }
             }
 
@@ -119,6 +131,7 @@ public class CodeFragment extends Fragment {
             public void onFailure(Call<CodeResponseModel> call, Throwable t) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
+                alertDialog = null;
             }
         });
 

@@ -343,6 +343,7 @@
                 android:layout_width="200sp"
                 android:layout_height="40sp"
                 android:text="Book Now"
+                android:foreground="@drawable/ripple_effect_orange"
                 android:layout_marginBottom="55sp"
                 android:textAllCaps="false"
                 android:layout_margin="20sp"

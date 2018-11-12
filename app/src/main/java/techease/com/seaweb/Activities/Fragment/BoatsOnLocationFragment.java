@@ -62,6 +62,8 @@ public class BoatsOnLocationFragment extends Fragment {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
+        alertDialog = null;
+
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         etSearch = view.findViewById(R.id.svBoatsList);
@@ -90,7 +92,9 @@ public class BoatsOnLocationFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                ListOfPlacesFragment.searchFlag =  false;
                 startActivity(new Intent(getActivity(), BottomActivity.class));
+                getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                 getActivity().finish();
 
             }
@@ -141,6 +145,7 @@ public class BoatsOnLocationFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                     Log.d("zmaPlaceBoats",response.toString());
 
                     if (response.body().getData() != null)
@@ -156,6 +161,7 @@ public class BoatsOnLocationFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                 }
             }
 
@@ -163,6 +169,7 @@ public class BoatsOnLocationFragment extends Fragment {
             public void onFailure(Call<BoatsOnLocationResponseModel> call, Throwable t) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
+                alertDialog = null;
             }
         });
     }

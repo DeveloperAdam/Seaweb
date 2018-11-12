@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +46,7 @@ public class AddBookingDetailFragment extends Fragment implements View.OnClickLi
     ImageView ivAddAdults,ivMinusAdults,ivAddChildren,ivMinusChildren,ivBack;
     Button btnBook;
     EditText etMessage;
-    String startDate,endDate,adults,children,userid,pro_id,message,resp;
+    String startDate,endDate,adults,children,userid,pro_id,message,resp,whole="0";
     android.support.v7.app.AlertDialog alertDialog;
     Calendar calendar1,calendar2;
     long difference;
@@ -61,6 +63,7 @@ public class AddBookingDetailFragment extends Fragment implements View.OnClickLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_booking_detail, container, false);
 
+        alertDialog = null;
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         userid=sharedPreferences.getString("userid","");
@@ -94,6 +97,8 @@ public class AddBookingDetailFragment extends Fragment implements View.OnClickLi
             public void onClick(View view) {
 
                 Fragment fragment = new BoatDetailFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
         });
@@ -106,6 +111,33 @@ public class AddBookingDetailFragment extends Fragment implements View.OnClickLi
                 adults = tvAdults.getText().toString();
                 children = tvChildren.getText().toString();
 
+                if (message.equals(""))
+                {
+                    Toast.makeText(getActivity(), "Please Type a message ", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    if (startDate.equals(""))
+                    {
+                        Toast.makeText(getActivity(), "Please select the start date", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                        if (endDate.equals(""))
+                        {
+                            Toast.makeText(getActivity(), "Please select the end date", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                            if (adults.equals(""))
+                            {
+                                adults = "0";
+                                whole = "1";
+                            }
+                            else
+                                if (children.equals(""))
+                                {
+                                    children = "0";
+                                    whole = "1";
+
+                                }
                 try {
                     date1 = sdf.parse(startDate);
                     date2 = sdf.parse(endDate);
@@ -156,7 +188,7 @@ public class AddBookingDetailFragment extends Fragment implements View.OnClickLi
     private void apiCall() {
         Log.d("zmaParams",pro_id+" "+userid+" "+startDate+" "+endDate+" "+adults+" "+children+" "+String.valueOf(charges)+" "+message);
         ApiService services = ApiClient.getClient().create(ApiService.class);
-        Call<BoatBookingResponseModel> call = services.boatBooking(pro_id,userid,startDate,endDate,adults,children,String.valueOf(charges),"0","123",message);
+        Call<BoatBookingResponseModel> call = services.boatBooking(pro_id,userid,startDate,endDate,adults,children,String.valueOf(charges),whole,"123",message);
         call.enqueue(new Callback<BoatBookingResponseModel>() {
             @Override
             public void onResponse(Call<BoatBookingResponseModel> call, Response<BoatBookingResponseModel> response) {
@@ -165,6 +197,7 @@ public class AddBookingDetailFragment extends Fragment implements View.OnClickLi
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                     Log.d("zmaBooking",response.toString());
 
                     resp = response.body().getMessage();
@@ -180,6 +213,8 @@ public class AddBookingDetailFragment extends Fragment implements View.OnClickLi
                         tvEndDate.setText("End Date");
 
                         Fragment fragment = new BookedBoatsFragment();
+                        fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                        fragment.setExitTransition(new Slide(Gravity.LEFT));
                         getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
                     }
                 }
@@ -187,6 +222,7 @@ public class AddBookingDetailFragment extends Fragment implements View.OnClickLi
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                 }
             }
 

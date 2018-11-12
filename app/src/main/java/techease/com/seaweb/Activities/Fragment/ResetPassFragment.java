@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import techease.com.seaweb.Activities.Activities.BottomActivity;
 import techease.com.seaweb.Activities.Activities.LoginSignupActivity;
 import techease.com.seaweb.Activities.Models.ResetPassResponseModel;
 import techease.com.seaweb.Activities.Utils.AlertsUtils;
@@ -56,6 +59,8 @@ public class ResetPassFragment extends Fragment {
             public void onClick(View v) {
 
                Fragment fragment=new CodeFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
         });
@@ -106,7 +111,8 @@ public class ResetPassFragment extends Fragment {
 
                     Toast.makeText(getActivity(), code, Toast.LENGTH_SHORT).show();
 
-                   startActivity(new Intent(getActivity(), LoginSignupActivity.class));
+                   startActivity(new Intent(getActivity(), BottomActivity.class));
+                    getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                    getActivity().finish();
                 }
 

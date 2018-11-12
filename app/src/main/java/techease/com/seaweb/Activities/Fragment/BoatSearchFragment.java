@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +50,7 @@ public class BoatSearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_boat_search, container, false);
 
+        alertDialog = null;
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         ivBack = view.findViewById(R.id.ivBackSearchedBoats);
@@ -75,6 +78,8 @@ public class BoatSearchFragment extends Fragment {
             public void onClick(View v) {
 
                Fragment fragment = new BoatTypeFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
         });
@@ -95,15 +100,23 @@ public class BoatSearchFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                     Log.d("zmaSearchedBoats",response.toString());
-                    searchedBoatsDataModelList.addAll(response.body().getData()) ;
-                    Toast.makeText(getActivity(), String.valueOf(searchedBoatsDataModelList.size()), Toast.LENGTH_SHORT).show();
-                    if (searchedBoatsDataModelList.size()<1)
+                    if (response.body().getData() != null)
                     {
-                        Toast.makeText(getActivity(), "No Suggestion", Toast.LENGTH_SHORT).show();
+                        searchedBoatsDataModelList.addAll(response.body().getData()) ;
+                        if (searchedBoatsDataModelList.size()<1)
+                        {
+                            Toast.makeText(getActivity(), "No Suggestion", Toast.LENGTH_SHORT).show();
+                        }
+
+                        adapter.notifyDataSetChanged();
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(), "No Boat Found", Toast.LENGTH_SHORT).show();
                     }
 
-                    adapter.notifyDataSetChanged();
 
 
                 }
@@ -111,6 +124,7 @@ public class BoatSearchFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                     Toast.makeText(getActivity(), "Unsuccessful", Toast.LENGTH_SHORT).show();
                 }
 
@@ -120,6 +134,7 @@ public class BoatSearchFragment extends Fragment {
             public void onFailure(Call<SearchedBoatsResponseModel> call, Throwable t) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
+                alertDialog = null;
                 Toast.makeText(getActivity(), t.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
             }

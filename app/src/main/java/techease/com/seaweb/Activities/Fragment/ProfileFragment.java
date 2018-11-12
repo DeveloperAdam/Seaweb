@@ -40,6 +40,8 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
 
+
+
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         changePassword = view.findViewById(R.id.llChnagePass);
@@ -89,6 +91,7 @@ public class ProfileFragment extends Fragment {
                 LoginManager.getInstance().logOut();
 
                 startActivity(new Intent(getActivity(), LoginSignupActivity.class));
+                getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                 getActivity().finish();
 
             }

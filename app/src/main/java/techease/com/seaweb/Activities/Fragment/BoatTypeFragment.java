@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +48,7 @@ public class BoatTypeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_boat_type, container, false);
 
+        alertDialog = null;
         recyclerView = view.findViewById(R.id.rvBoatTypes);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         boatTypeDataModelList = new ArrayList<>();
@@ -67,6 +70,8 @@ public class BoatTypeFragment extends Fragment {
                 if (BoatTypesAdapter.boatType != null)
                 {
                     Fragment fragment = new BoatSearchFragment();
+                    fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                    fragment.setExitTransition(new Slide(Gravity.LEFT));
                     getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
                 }
                 else
@@ -80,8 +85,10 @@ public class BoatTypeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getActivity(), BottomActivity.class));
-                getActivity().finish();
+               Fragment  fragment = new DatePickerFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
+               getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
         });
 
@@ -99,6 +106,7 @@ public class BoatTypeFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                     Log.d("zmaFavrtBoats",response.toString());
                     boatTypeDataModelList.addAll(response.body().getData()) ;
                     adapter.notifyDataSetChanged();
@@ -110,6 +118,7 @@ public class BoatTypeFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                 }
 
             }
@@ -118,7 +127,7 @@ public class BoatTypeFragment extends Fragment {
             public void onFailure(Call<BoatTypeResponseModel> call, Throwable t) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
-
+                alertDialog = null;
 
             }
         });

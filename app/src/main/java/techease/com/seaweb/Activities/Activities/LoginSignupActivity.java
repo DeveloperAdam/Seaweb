@@ -1,15 +1,20 @@
 package techease.com.seaweb.Activities.Activities;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -70,6 +75,10 @@ public class LoginSignupActivity extends AppCompatActivity {
         ((AppCompatActivity) this).getSupportActionBar().hide();
         setContentView(R.layout.activity_login_signup);
 
+       // setupWindowAnimations();
+
+        alertDialog = null;
+
         sharedPreferences = this.getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -82,15 +91,20 @@ public class LoginSignupActivity extends AppCompatActivity {
         btnfb.setReadPermissions(Arrays.asList(EMAIL));
         btnCreateAcc=findViewById(R.id.btnCreateAccount);
 
+
         btnCreateAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(LoginSignupActivity.this,FullscreenActivity.class));
+//                View sharedView = btnCreateAcc;
+//                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(LoginSignupActivity.this, sharedView, "fade");
+//                startActivity(new Intent(LoginSignupActivity.this,FullscreenActivity.class),transitionActivityOptions.toBundle());
 
+                Intent intent = new Intent(LoginSignupActivity.this,FullscreenActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
             }
         });
-
         accessToken = AccessToken.getCurrentAccessToken();
 
 
@@ -102,6 +116,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                 if (accessToken!=null)
                 {
                     startActivity(new Intent(LoginSignupActivity.this,BottomActivity.class));
+                    overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                     finish();
                 }
                 else {
@@ -199,6 +214,15 @@ public class LoginSignupActivity extends AppCompatActivity {
         //updateUI(account);
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void setupWindowAnimations() {
+        Slide slide = new Slide();
+        slide.setDuration(1000);
+        getWindow().setExitTransition(slide);
+
+    }
+
+
     private Bundle getFacebookData(JSONObject object) {
 
         try {
@@ -271,6 +295,7 @@ public class LoginSignupActivity extends AppCompatActivity {
 
 
                     startActivity(new Intent(LoginSignupActivity.this,BottomActivity.class));
+                    overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                     finish();
                 }
                 else

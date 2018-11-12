@@ -40,6 +40,7 @@ public class FavoriteFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String userId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +54,9 @@ public class FavoriteFragment extends Fragment {
         recyclerView=view.findViewById(R.id.rvFavrt);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         dataModelList=new ArrayList<>();
+
+        alertDialog = null;
+
 
         if (alertDialog == null) {
             alertDialog = AlertsUtils.createProgressDialog(getActivity());
@@ -68,6 +72,7 @@ public class FavoriteFragment extends Fragment {
             public void onClick(View v) {
 
                 startActivity(new Intent(getActivity(), BottomActivity.class));
+                getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                 getActivity().finish();
             }
         });
@@ -86,6 +91,7 @@ public class FavoriteFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                     Log.d("zmaFavrtBoats",response.toString());
 
                     if(response.body().getData() != null)
@@ -107,6 +113,7 @@ public class FavoriteFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                 }
             }
 
@@ -114,6 +121,7 @@ public class FavoriteFragment extends Fragment {
             public void onFailure(Call<FavrtResponseModel> call, Throwable t) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
+                alertDialog = null;
             }
         });
     }

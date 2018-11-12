@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         Log.d("what","if");
                         startActivity(new Intent(MainActivity.this,BottomActivity.class));
+                        overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                         finish();
 
                     }
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         Log.d("what","else");
                         startActivity(new Intent(MainActivity.this,LoginSignupActivity.class));
+                        overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                         finish();
                     }
 

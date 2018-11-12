@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -24,7 +28,7 @@ import techease.com.seaweb.R;
 public class DatePickerFragment extends Fragment {
 
     DateRangeCalendarView  dateRangeCalendarView;
-
+    Button btnSave;
     String sDate,eDate;
     ImageView ivBack;
     SharedPreferences sharedPreferences;
@@ -40,9 +44,21 @@ public class DatePickerFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        btnSave = view.findViewById(R.id.btnSaveDate);
         ivBack = view.findViewById(R.id.ivBackDate);
         dateRangeCalendarView = view.findViewById(R.id.calendar);
 
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Fragment fragment = new BoatTypeFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
+                getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
+            }
+        });
         dateRangeCalendarView.setCalendarListener(new DateRangeCalendarView.CalendarListener() {
             @Override
             public void onFirstDateSelected(Calendar startDate) {
@@ -54,8 +70,6 @@ public class DatePickerFragment extends Fragment {
 
                 convertEndDateToString(endDate);
 
-                Fragment fragment = new BoatTypeFragment();
-                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
         });
 
@@ -64,8 +78,9 @@ public class DatePickerFragment extends Fragment {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ListOfPlacesFragment.searchFlag = false;
                 startActivity(new Intent(getActivity(), BottomActivity.class));
+                getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                 getActivity().finish();
             }
         });

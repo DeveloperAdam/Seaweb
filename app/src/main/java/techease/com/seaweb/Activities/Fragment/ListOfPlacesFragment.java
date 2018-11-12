@@ -47,17 +47,22 @@ public class ListOfPlacesFragment extends Fragment {
     ListOfPlacesNamesAdapter namesAdapter;
     AutoCompleteTextView etSearch;
     public static boolean searchFlag = false ;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_listofplaces, container, false);
 
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+//        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+//        if (view != null) {
+//            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+//        }
+
+        alertDialog = null;
+
 
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -102,6 +107,7 @@ public class ListOfPlacesFragment extends Fragment {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN;
                 decorView.setSystemUiVisibility(uiOptions);
 
+
             }
 
             @Override
@@ -143,6 +149,7 @@ public class ListOfPlacesFragment extends Fragment {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
                     Log.d("zmagetAllPlace",response.toString());
 
                     dataModelList.addAll(response.body().getData());
@@ -156,6 +163,7 @@ public class ListOfPlacesFragment extends Fragment {
                 {
                     if (alertDialog != null)
                     alertDialog.dismiss();
+                    alertDialog = null;
                 }
 
             }
@@ -164,6 +172,7 @@ public class ListOfPlacesFragment extends Fragment {
             public void onFailure(Call<GetAllPlacesResponseModel> call, Throwable t) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
+                alertDialog = null;
             }
         });
     }

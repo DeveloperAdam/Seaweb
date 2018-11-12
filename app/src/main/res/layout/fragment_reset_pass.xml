@@ -45,7 +45,7 @@
         android:backgroundTint="#fff"
         android:hint="New Password"
         android:layout_centerInParent="true"
-        android:inputType="textEmailAddress"
+        android:inputType="textPassword"
         android:layout_margin="20sp"
         android:textColorHint="@color/color_white"
         android:textColor="@color/color_white"/>
@@ -56,7 +56,7 @@
             android:backgroundTint="#fff"
             android:hint="Confirm Password"
             android:layout_centerInParent="true"
-            android:inputType="textEmailAddress"
+            android:inputType="textPassword"
             android:layout_margin="20sp"
             android:textColorHint="@color/color_white"
             android:textColor="@color/color_white"/>
@@ -68,6 +68,7 @@
         android:layout_height="50sp"
         android:layout_marginLeft="20sp"
         android:layout_marginRight="20sp"
+        android:foreground="@drawable/ripple_effect_white_btn"
         android:layout_marginBottom="50sp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/white_roundbtn"

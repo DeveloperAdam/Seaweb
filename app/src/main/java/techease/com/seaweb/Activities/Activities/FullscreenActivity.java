@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -105,7 +107,9 @@ public class FullscreenActivity extends AppCompatActivity {
         if (ListOfPlacesFragment.searchFlag == true)
         {
             android.support.v4.app.Fragment fragment=new DatePickerFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+            fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+            fragment.setExitTransition(new Slide(Gravity.LEFT));
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
         }
         else
         if (flag == true)
@@ -116,6 +120,8 @@ public class FullscreenActivity extends AppCompatActivity {
             bundle.putString("boatid",boatid);
             android.support.v4.app.Fragment fragment=new BoatDetailFragment();
             fragment.setArguments(bundle);
+            fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+            fragment.setExitTransition(new Slide(Gravity.LEFT));
             getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
         }
         else
@@ -126,6 +132,8 @@ public class FullscreenActivity extends AppCompatActivity {
             bundle.putString("placeid",placeid);
             Fragment fragment=new BoatsOnLocationFragment();
             fragment.setArguments(bundle);
+            fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+            fragment.setExitTransition(new Slide(Gravity.LEFT));
             getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
 
         }
@@ -133,6 +141,8 @@ public class FullscreenActivity extends AppCompatActivity {
         {
 
             android.support.v4.app.Fragment fragment=new LoginFragment();
+            fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+            fragment.setExitTransition(new Slide(Gravity.LEFT));
             getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
         }
 

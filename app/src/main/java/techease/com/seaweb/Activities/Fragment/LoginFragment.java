@@ -1,11 +1,16 @@
 package techease.com.seaweb.Activities.Fragment;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,10 +46,14 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        final View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+        setupWindowAnimations();
+        alertDialog = null;
+
 
         tvForgetPass=view.findViewById(R.id.tvForgotPass);
         tvGotoSignUp=view.findViewById(R.id.tvGotoSignUp);
@@ -59,6 +68,8 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
 
            Fragment fragment=new SignUpFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
            getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
 
             }
@@ -68,7 +79,13 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                View sharedView = tvForgetPass;
+                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(), sharedView, "fade");
+
+
                 Fragment fragment=new ForgotPassFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
             }
         });
@@ -77,7 +94,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getActivity(), LoginSignupActivity.class));
+                startActivity(new Intent(getActivity(),LoginSignupActivity.class));
+                getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                 getActivity().finish();
             }
         });
@@ -110,6 +128,15 @@ public class LoginFragment extends Fragment {
         });
         return view;
     }
+
+    private void setupWindowAnimations() {
+        Fade fade = new Fade();
+        fade.setDuration(1000);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getActivity().getWindow().setEnterTransition(fade);
+        }
+    }
+
     private void apiCall() {
         Log.d("zmaLoginData",email+pass);
         ApiService services = ApiClient.getClient().create(ApiService.class);
@@ -122,6 +149,7 @@ public class LoginFragment extends Fragment {
                 {
                     if (alertDialog != null)
                     alertDialog.dismiss();
+                    alertDialog = null;
                     Log.d("zmaLoginResp",response.toString());
                     message = response.body().getMessage().toString();
                     if (message.equals("Logged in"))
@@ -140,6 +168,7 @@ public class LoginFragment extends Fragment {
                         editor.putString("login","login").commit();
 
                         startActivity(new Intent(getActivity(), BottomActivity.class));
+                        getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                         getActivity().finish();
                     }
                     else
@@ -152,6 +181,7 @@ public class LoginFragment extends Fragment {
                 {
                     if (alertDialog != null)
                     alertDialog.dismiss();
+                    alertDialog = null;
                 }
             }
 
@@ -159,6 +189,7 @@ public class LoginFragment extends Fragment {
             public void onFailure(Call<LoginResponseModel> call, Throwable t) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
+                alertDialog = null;
             }
         });
 

@@ -57,19 +57,24 @@ public class GetAllPlacesAdapter extends RecyclerView.Adapter<GetAllPlacesAdapte
         viewHolder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 viewHolder.placeId=model.getId();
                 viewHolder.editor.putString("placeid",viewHolder.placeId).commit();
 
                 Intent intent=new Intent(activity, FullscreenActivity.class);
                 intent.putExtra("placeid",viewHolder.placeId);
                 viewHolder.editor.putString("placeid",viewHolder.placeId).commit();
+                activity.overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                 activity.startActivity(intent);
                 activity.finish();
 
             }
         });
 
+
+
     }
+
 
     @Override
     public int getItemCount() {

@@ -38,6 +38,7 @@
                 android:id="@+id/btngoogle"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
+                android:foreground="@drawable/ripple_effect_white_btn"
                 android:textAllCaps="false"
                 android:text="Continue With Google"
                 android:background="@drawable/white_roundbtn"/>
@@ -58,6 +59,7 @@
                android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_marginTop="20sp"
+                   android:foreground="@drawable/ripple_effect_white_btn"
                 android:textAllCaps="false"
                 android:text="Continue With Facebook"
                 android:background="@drawable/white_roundbtn"/>
@@ -70,7 +72,9 @@
                 android:textAllCaps="false"
                 android:textColor="#fff"
                 android:text="LOGIN WITH EMAIL"
-                android:background="@drawable/white_boundrybtn"/>
+                android:foreground="@drawable/ripple_effect_white_btn"
+                android:shadowColor="@color/graycolor"
+                android:background="@drawable/white_roundboundry"/>
 
 
         </LinearLayout>

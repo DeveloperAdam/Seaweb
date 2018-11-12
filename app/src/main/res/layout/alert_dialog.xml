@@ -35,6 +35,7 @@
         android:layout_marginTop="45dp"
         android:background="@color/colorPrimary"
         android:clickable="false"
+        android:foreground="@drawable/ripple_effect_white_btn"
         android:text="Ok"
         android:textColor="@color/colorAccent"
         android:textSize="15sp" />

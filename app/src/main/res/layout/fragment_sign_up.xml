@@ -144,6 +144,7 @@
           android:layout_height="50sp"
           android:layout_below="@+id/etCpass"
           android:layout_margin="20sp"
+          android:foreground="@drawable/ripple_effect_white_btn"
           android:background="@drawable/white_roundbtn"
           android:text="Sign Up"
           android:textAllCaps="false"

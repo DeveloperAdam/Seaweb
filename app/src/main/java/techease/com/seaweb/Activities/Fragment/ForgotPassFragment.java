@@ -4,13 +4,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,7 +29,8 @@ public class ForgotPassFragment extends Fragment {
 
     EditText etEmail;
     Button btnSentCode;
-    String email;
+    String email,message;
+    boolean success;
     ImageView ivBack;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
@@ -40,6 +44,9 @@ public class ForgotPassFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        alertDialog = null;
+
+
         ivBack=view.findViewById(R.id.ivbackForgot);
         etEmail=view.findViewById(R.id.etEmailForgot);
         btnSentCode=view.findViewById(R.id.btnSentCode);
@@ -49,6 +56,8 @@ public class ForgotPassFragment extends Fragment {
             public void onClick(View v) {
 
                 Fragment fragment=new LoginFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
             }
         });
@@ -87,21 +96,36 @@ public class ForgotPassFragment extends Fragment {
 
                 if (response.isSuccessful())
                 {
-                                    if (alertDialog != null)
+                    if (alertDialog != null)
                     alertDialog.dismiss();
+                    alertDialog = null;
                     Log.d("zmaForgotResp",response.toString());
 
-                    email=response.body().getMessage();
+                    success = response.body().getSuccess();
+                    if (success==true)
+                    {
+                        email=response.body().getMessage();
 
-                    Fragment fragment=new CodeFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
+                        Fragment fragment=new CodeFragment();
+                        fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                        fragment.setExitTransition(new Slide(Gravity.LEFT));
+                        getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
+                    }
+                    else
+                    {
+                        message = response.body().getMessage().toString();
+                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                    }
+
+
 
 
                 }
                 else
                 {
-                                    if (alertDialog != null)
+                    if (alertDialog != null)
                     alertDialog.dismiss();
+                    alertDialog = null;
                 }
             }
 
@@ -109,6 +133,7 @@ public class ForgotPassFragment extends Fragment {
             public void onFailure(Call<ForgotPassResponseModel> call, Throwable t) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
+                alertDialog = null;
             }
         });
 

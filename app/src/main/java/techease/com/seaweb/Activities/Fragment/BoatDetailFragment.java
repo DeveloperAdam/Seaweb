@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,6 +103,8 @@ public class BoatDetailFragment extends Fragment {
                 bundle.putString("proid",proid);
                 Fragment fragment = new AddBookingDetailFragment();
                 fragment.setArguments(bundle);
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
         });
@@ -111,6 +115,8 @@ public class BoatDetailFragment extends Fragment {
             public void onClick(View view) {
 
                 Fragment fragment = new BoatsOnLocationFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
         });
