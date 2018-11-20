@@ -60,6 +60,7 @@ import techease.com.seaweb.Activities.Fragment.BookedBoatsFragment;
 import techease.com.seaweb.Activities.Fragment.FavoriteFragment;
 import techease.com.seaweb.Activities.Fragment.ListOfPlacesFragment;
 import techease.com.seaweb.Activities.Fragment.ProfileFragment;
+import techease.com.seaweb.Activities.Fragment.ReviewFragment;
 import techease.com.seaweb.Activities.Fragment.TabFragment;
 import techease.com.seaweb.Activities.Models.LoginResponseModel;
 import techease.com.seaweb.Activities.Models.SuggestedPlacesResponseModel;
@@ -123,6 +124,8 @@ public class BottomActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigationView);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        BottomNavigationHelper.disableShiftMode(navigation);
+
 
 //        AHBottomNavigationItem item1 = new AHBottomNavigationItem("", R.drawable.home);
 //        AHBottomNavigationItem item2 = new AHBottomNavigationItem("", R.drawable.hrt);
@@ -141,7 +144,7 @@ public class BottomActivity extends AppCompatActivity {
 //        ahBottomNavigation.setAccentColor(fetchColor(R.color.orangecolor));
 //        ahBottomNavigation.setInactiveColor(fetchColor(R.color.graycolor));
 
-        fragment = new ListOfPlacesFragment();
+        fragment = new ReviewFragment();
         fragment.setEnterTransition(new Slide(Gravity.RIGHT));
         fragment.setExitTransition(new Slide(Gravity.LEFT));
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();

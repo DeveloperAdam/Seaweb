@@ -3,6 +3,7 @@ package techease.com.seaweb.Activities.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import techease.com.seaweb.Activities.Adapters.GetAllPlacesAdapter;
 import techease.com.seaweb.Activities.Adapters.ListOfPlacesNamesAdapter;
+import techease.com.seaweb.Activities.Adapters.PlacesAdapter;
 import techease.com.seaweb.Activities.Models.GetAllPlacesDataModel;
 import techease.com.seaweb.Activities.Models.GetAllPlacesResponseModel;
 import techease.com.seaweb.Activities.Utils.AlertsUtils;
@@ -34,7 +43,7 @@ import techease.com.seaweb.Activities.Utils.ApiService;
 import techease.com.seaweb.R;
 
 
-public class ListOfPlacesFragment extends Fragment {
+public class ListOfPlacesFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener{
 
 
     public  static RecyclerView recyclerView,rvNames;
@@ -48,6 +57,9 @@ public class ListOfPlacesFragment extends Fragment {
     AutoCompleteTextView etSearch;
     public static boolean searchFlag = false ;
 
+    GoogleApiClient googleApiClient;
+    PlacesAdapter placesAdapter;
+    private static final LatLngBounds latlng = new LatLngBounds( new LatLng(-40,-168),new LatLng(71,136));
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +72,17 @@ public class ListOfPlacesFragment extends Fragment {
 //            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 //            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 //        }
+
+        googleApiClient = new GoogleApiClient
+                .Builder(getActivity())
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(getActivity(),this)
+                .build();
+
+        placesAdapter = new PlacesAdapter(getActivity(), googleApiClient,latlng,null);
+
+
 
         alertDialog = null;
 
@@ -86,6 +109,7 @@ public class ListOfPlacesFragment extends Fragment {
         dataModelList=new ArrayList<>();
         svSuggestions=new ArrayList<>();
 
+        etSearch.setAdapter(placesAdapter);
 
         if (alertDialog == null) {
             alertDialog = AlertsUtils.createProgressDialog(getActivity());
@@ -137,6 +161,12 @@ public class ListOfPlacesFragment extends Fragment {
         return view;
 
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        googleApiClient.stopAutoManage(getActivity());
+        googleApiClient.disconnect();
+    }
 
     private void apiCall() {
         ApiService services = ApiClient.getClient().create(ApiService.class);
@@ -177,4 +207,8 @@ public class ListOfPlacesFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
 }

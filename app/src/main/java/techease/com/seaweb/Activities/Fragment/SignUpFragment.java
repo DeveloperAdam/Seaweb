@@ -37,8 +37,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     SharedPreferences.Editor editor;
     String device_id;
     View view;
-    private RadioGroup radioSexGroup;
-    private RadioButton radioSexButton;
+   // private RadioGroup radioSexGroup;
+   // private RadioButton radioSexButton;
     ImageView ivback;
     TextView tvAlreadyHaveAnAccount;
     Button btnRegister;
@@ -59,7 +59,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         device_id=sharedPreferences.getString("device-id","");
 
 
-        radioSexGroup = view.findViewById(R.id.radioSex);
+      //  radioSexGroup = view.findViewById(R.id.radioSex);
         ivback=view.findViewById(R.id.ivBackSignUp);
         tvAlreadyHaveAnAccount=view.findViewById(R.id.tvGotoLogin);
         btnRegister=view.findViewById(R.id.btnSignUp);
@@ -123,7 +123,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     etLname.setError("Please fill this field");
                 }
                 else
-                if (email.isEmpty() || !email.contains("@") && !email.contains(".com") )
+                if (email.isEmpty() || !email.contains("@")  )
                 {
                     etEmail.setError("Please enter the valid email");
                 }
@@ -141,10 +141,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     etCpass.setError("Password does not match");
                 }
                 else{
-                    type = "I am the owner";
-                    int selectedId = radioSexGroup.getCheckedRadioButtonId();
-                    radioSexButton = view.findViewById(selectedId);
-                    type = radioSexButton.getText().toString();
+                    type = "User";
+                  //  int selectedId = radioSexGroup.getCheckedRadioButtonId();
+                  //  radioSexButton = view.findViewById(selectedId);
+                  //  type = radioSexButton.getText().toString();
 
                     if (alertDialog == null) {
                         alertDialog = AlertsUtils.createProgressDialog(getActivity());

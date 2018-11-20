@@ -4,8 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash1"
+    android:orientation="vertical"
+    android:background="@drawable/backimg"
     tools:context=".Activities.Activities.MainActivity">
 
+    <ImageView
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:layout_gravity="right"
+        android:layout_margin="70sp"
+        android:src="@drawable/logo"/>
 
 </LinearLayout>

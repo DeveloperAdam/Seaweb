@@ -107,7 +107,7 @@ public class LoginFragment extends Fragment {
                 pass=etPass.getText().toString();
 
 
-                if (email.isEmpty() || !email.contains("@") || !email.contains(".com") || email.length() < 6)
+                if (email.isEmpty() || !email.contains("@")|| email.length() < 6)
                 {
                     etEmail.setError("please enter the valid email");
                 }
@@ -190,6 +190,7 @@ public class LoginFragment extends Fragment {
                 if (alertDialog != null)
                     alertDialog.dismiss();
                 alertDialog = null;
+                Log.d("zmaLoginexp",t.getMessage());
             }
         });
 

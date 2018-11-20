@@ -111,7 +111,7 @@ public class ResetPassFragment extends Fragment {
 
                     Toast.makeText(getActivity(), code, Toast.LENGTH_SHORT).show();
 
-                   startActivity(new Intent(getActivity(), BottomActivity.class));
+                   startActivity(new Intent(getActivity(), LoginSignupActivity.class));
                     getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                    getActivity().finish();
                 }
