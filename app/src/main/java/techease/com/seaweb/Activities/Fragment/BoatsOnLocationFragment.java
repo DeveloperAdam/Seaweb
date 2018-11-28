@@ -17,23 +17,28 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.comix.overwatch.HiveProgressView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import techease.com.seaweb.Activities.Activities.BottomActivity;
 import techease.com.seaweb.Activities.Adapters.BoatsOnLocationAdapter;
-import techease.com.seaweb.Activities.Adapters.GetAllPlacesAdapter;
-import techease.com.seaweb.Activities.Models.BoatsOnLocationDataModel;
-import techease.com.seaweb.Activities.Models.BoatsOnLocationResponseModel;
-import techease.com.seaweb.Activities.Models.GetAllPlacesDataModel;
-import techease.com.seaweb.Activities.Utils.AlertsUtils;
-import techease.com.seaweb.Activities.Utils.ApiClient;
-import techease.com.seaweb.Activities.Utils.ApiService;
+import techease.com.seaweb.Activities.Models.BoatOnLocationModel;
 import techease.com.seaweb.R;
 
 
@@ -41,15 +46,15 @@ public class BoatsOnLocationFragment extends Fragment {
 
     RecyclerView recyclerView;
     ImageView ivback;
-    List<BoatsOnLocationDataModel> boatsOnLocationDataModels;
     BoatsOnLocationAdapter boatsOnLocationAdapter;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String locId;
     String userId;
+    HiveProgressView hiveProgressView;
     AutoCompleteTextView etSearch;
-
+    List<BoatOnLocationModel> boatOnLocationModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,7 +68,7 @@ public class BoatsOnLocationFragment extends Fragment {
         }
 
         alertDialog = null;
-
+        hiveProgressView = view.findViewById(R.id.progress2);
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         etSearch = view.findViewById(R.id.svBoatsList);
@@ -71,17 +76,13 @@ public class BoatsOnLocationFragment extends Fragment {
         ivback=view.findViewById(R.id.ivBackListofBoats);
         recyclerView=view.findViewById(R.id.rvBoatsOnLocation);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        boatsOnLocationDataModels=new ArrayList<>();
-
+        boatOnLocationModel = new ArrayList<>();
 
         locId=sharedPreferences.getString("placeid","");
         userId=sharedPreferences.getString("userid","");
-        if (alertDialog == null) {
-            alertDialog = AlertsUtils.createProgressDialog(getActivity());
-            alertDialog.show();
-        }
 
-        boatsOnLocationAdapter=new BoatsOnLocationAdapter(getActivity(),boatsOnLocationDataModels);
+        hiveProgressView.showContextMenu();
+        boatsOnLocationAdapter=new BoatsOnLocationAdapter(getActivity(),boatOnLocationModel);
         recyclerView.setAdapter(boatsOnLocationAdapter);
 
         apiCall();
@@ -111,12 +112,11 @@ public class BoatsOnLocationFragment extends Fragment {
             public void onTextChanged(CharSequence query, int start, int before, int count) {
 
                 query = query.toString().toLowerCase();
-                List<BoatsOnLocationDataModel> newData = new ArrayList<>();
-                for (int j = 0; j < boatsOnLocationDataModels.size(); j++) {
-                    final String test2 = boatsOnLocationDataModels.get(j).getTitle().toLowerCase();
+                List<BoatOnLocationModel> newData = new ArrayList<>();
+                for (int j = 0; j < boatOnLocationModel.size(); j++) {
+                    final String test2 = boatOnLocationModel.get(j).getTitle().toLowerCase();
                     if (test2.startsWith(String.valueOf(query))) {
-                        newData.add(boatsOnLocationDataModels.get(j));
-                        Toast.makeText(getActivity(), "aya", Toast.LENGTH_SHORT).show();
+                        newData.add(boatOnLocationModel.get(j));
                     }
                 }
                 boatsOnLocationAdapter = new BoatsOnLocationAdapter(getActivity(), newData);
@@ -134,45 +134,78 @@ public class BoatsOnLocationFragment extends Fragment {
         return view;
     }
 
+
     private void apiCall() {
-        ApiService services = ApiClient.getClient().create(ApiService.class);
-        Call<BoatsOnLocationResponseModel> call = services.boatsOnLocation(locId,userId);
-        call.enqueue(new Callback<BoatsOnLocationResponseModel>() {
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://divergense.com/boat/App/getAndroidBoatData"
+                , new com.android.volley.Response.Listener<String>() {
             @Override
-            public void onResponse(Call<BoatsOnLocationResponseModel> call, Response<BoatsOnLocationResponseModel> response) {
+            public void onResponse(String response) {
+                hiveProgressView.setVisibility(View.GONE);
 
-                if (response.isSuccessful())
-                {
-                    if (alertDialog != null)
-                        alertDialog.dismiss();
-                    alertDialog = null;
-                    Log.d("zmaPlaceBoats",response.toString());
+                Log.d("zmaBonLocImg", response);
 
-                    if (response.body().getData() != null)
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i<jsonArray.length(); i++)
                     {
-                        boatsOnLocationDataModels.addAll(response.body().getData());
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        BoatOnLocationModel model = new BoatOnLocationModel();
+                        model.setTitle(object.getString("title"));
+                        model.setLocation(object.getString("location"));
+                        model.setFullPrice(object.getString("fullday_price"));
+                        model.setIs_fvrt(object.getString("is_favorite"));
+                        model.setPid(object.getString("pid"));
+                        model.setFile(object.getString("files"));
+                        model.setUserImg(object.getString("user_picture"));
+                        boatOnLocationModel.add(model);
+
                     }
-
-
                     boatsOnLocationAdapter.notifyDataSetChanged();
 
-                }
-                else
-                {
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                     if (alertDialog != null)
                         alertDialog.dismiss();
                     alertDialog = null;
                 }
+
             }
 
+        }, new com.android.volley.Response.ErrorListener() {
             @Override
-            public void onFailure(Call<BoatsOnLocationResponseModel> call, Throwable t) {
+            public void onErrorResponse(VolleyError error) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
                 alertDialog = null;
+                Log.d("error", String.valueOf(error.getCause()));
             }
-        });
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded;charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("location",locId);
+                params.put("userid",userId);
+                Log.d("zmaParm",params.toString());
+                return params;
+            }
+        };
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        mRequestQueue.add(stringRequest);
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        boatsOnLocationAdapter.notifyDataSetChanged();
+    }
 }

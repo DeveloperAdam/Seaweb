@@ -1,7 +1,5 @@
 package techease.com.seaweb.Activities.Utils;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -9,10 +7,9 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import techease.com.seaweb.Activities.Models.AddToFavrtResponseModel;
 import techease.com.seaweb.Activities.Models.BoatBookingResponseModel;
-import techease.com.seaweb.Activities.Models.BoatDetailsResponseModel;
-import techease.com.seaweb.Activities.Models.BoatTypeDataModel;
+import techease.com.seaweb.Activities.Models.BoatDetail.BoatDetailResponseModel;
+import techease.com.seaweb.Activities.Models.BoatDetail.Facility;
 import techease.com.seaweb.Activities.Models.BoatTypeResponseModel;
-import techease.com.seaweb.Activities.Models.BoatsOnLocationResponseModel;
 import techease.com.seaweb.Activities.Models.BookedBoatsResponseModel;
 import techease.com.seaweb.Activities.Models.CodeResponseModel;
 import techease.com.seaweb.Activities.Models.FavrtResponseModel;
@@ -63,12 +60,6 @@ public interface ApiService {
                                                @Field("password") String password);
 
 
-
-    @FormUrlEncoded
-    @POST("App/getBoatData")
-    Call<BoatsOnLocationResponseModel> boatsOnLocation(@Field("location") String locId,
-                                                     @Field("userid") String userId);
-
     @FormUrlEncoded
     @POST("App/getFavoriteBoatData")
     Call<FavrtResponseModel> favrtBooking(@Field("userid") String userId);
@@ -77,12 +68,6 @@ public interface ApiService {
 
     @GET("App/getAllLocations")
     Call<GetAllPlacesResponseModel> getAllPlaces();
-
-
-    @FormUrlEncoded
-    @POST("App/getBoatDetails")
-    Call<BoatDetailsResponseModel> getBoatDetails(@Field("id") String id,
-                                                  @Field("userid") String userid);
 
     @FormUrlEncoded
     @POST("App/favorite_boat")
@@ -122,6 +107,11 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("App/booked")
     Call<BookedBoatsResponseModel> getBookedBoats(@Field("user_id") String userid);
+
+    @FormUrlEncoded
+    @POST("App/getBoatDetails")
+    Call<Facility> getBoatDetail(@Field("id") String id,
+                                 @Field("userid") String userid);
 
 
 

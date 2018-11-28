@@ -19,6 +19,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.comix.overwatch.HiveProgressView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
@@ -56,7 +57,7 @@ public class ListOfPlacesFragment extends Fragment implements GoogleApiClient.On
     ListOfPlacesNamesAdapter namesAdapter;
     AutoCompleteTextView etSearch;
     public static boolean searchFlag = false ;
-
+    HiveProgressView hiveProgressView;
     GoogleApiClient googleApiClient;
     PlacesAdapter placesAdapter;
     private static final LatLngBounds latlng = new LatLngBounds( new LatLng(-40,-168),new LatLng(71,136));
@@ -90,6 +91,7 @@ public class ListOfPlacesFragment extends Fragment implements GoogleApiClient.On
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        hiveProgressView = view.findViewById(R.id.progress);
         etSearch = view.findViewById(R.id.autoCompleteTextView1);
         etSearch.setSelection(0);
         recyclerView=view.findViewById(R.id.rvPlaces);
@@ -111,10 +113,11 @@ public class ListOfPlacesFragment extends Fragment implements GoogleApiClient.On
 
         etSearch.setAdapter(placesAdapter);
 
-        if (alertDialog == null) {
-            alertDialog = AlertsUtils.createProgressDialog(getActivity());
-            alertDialog.show();
-        }
+//        if (alertDialog == null) {
+//            alertDialog = AlertsUtils.createProgressDialog(getActivity());
+//            alertDialog.show();
+//        }
+        hiveProgressView.showContextMenu();
         getAllPlacesAdapter=new GetAllPlacesAdapter(getActivity(),dataModelList);
         recyclerView.setAdapter(getAllPlacesAdapter);
 
@@ -177,6 +180,8 @@ public class ListOfPlacesFragment extends Fragment implements GoogleApiClient.On
 
                 if (response.isSuccessful())
                 {
+                    hiveProgressView.clearAnimation();
+                    hiveProgressView.setVisibility(View.GONE);
                     if (alertDialog != null)
                         alertDialog.dismiss();
                     alertDialog = null;

@@ -3,9 +3,9 @@ package techease.com.seaweb.Activities.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,12 +15,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -30,9 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import techease.com.seaweb.Activities.Fragment.BoatDetailFragment;
 import techease.com.seaweb.Activities.Models.AddToFavrtResponseModel;
-import techease.com.seaweb.Activities.Models.BoatsOnLocationDataModel;
-import techease.com.seaweb.Activities.Models.BoatsOnLocationResponseModel;
-import techease.com.seaweb.Activities.Models.FavrtResponseModel;
+import techease.com.seaweb.Activities.Models.BoatOnLocationModel;
 import techease.com.seaweb.Activities.Utils.AlertsUtils;
 import techease.com.seaweb.Activities.Utils.ApiClient;
 import techease.com.seaweb.Activities.Utils.ApiService;
@@ -45,13 +41,13 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
     boolean flag=false;
     String userid;
     Activity activity;
-    List<BoatsOnLocationDataModel> boatsOnLocationDataModels;
+    List<BoatOnLocationModel> boatsOnLocationDataModels;
 
 
-    public BoatsOnLocationAdapter(Activity activity, List<BoatsOnLocationDataModel> boatsOnLocationDataModels) {
+    public BoatsOnLocationAdapter(Activity activity, List<BoatOnLocationModel> boatOnLocationModel) {
+        this.activity = activity;
+        this.boatsOnLocationDataModels = boatOnLocationModel;
 
-        this.activity=activity;
-        this.boatsOnLocationDataModels=boatsOnLocationDataModels;
     }
 
 
@@ -65,13 +61,14 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
-        final BoatsOnLocationDataModel model=boatsOnLocationDataModels.get(i);
-
+        final BoatOnLocationModel model=boatsOnLocationDataModels.get(i);
         viewHolder.tvLocation.setText(model.getLocation());
-        Picasso.get().load(model.getBoatImage()).into(viewHolder.ivPlaceImage);
-        viewHolder.tvPrice.setText(model.getPrice());
+        Picasso.get().load(model.getFile()).into(viewHolder.ivPlaceImage);
+        Picasso.get().load(model.getUserImg()).into(viewHolder.ivUserImage);
+
+        viewHolder.tvPrice.setText(model.getFullPrice());
         viewHolder.tvTitle.setText(model.getTitle());
-        isFvrt=model.getIsFavorite();
+        isFvrt=model.getIs_fvrt();
         if (isFvrt.equals("true"))
         {
             viewHolder.ivFavrt.setBackgroundResource(R.drawable.fillheart);
@@ -93,12 +90,12 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
 
             }
         });
-        
+
         
         viewHolder.ivFavrt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isFvrt=model.getIsFavorite();
+                isFvrt=model.getIs_fvrt();
                 userid=viewHolder.sharedPreferences.getString("userid","");
                 boatid=model.getPid().toString();
                 if (alertDialog == null) {
@@ -172,6 +169,7 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
             tvLocation=itemView.findViewById(R.id.tvLoc);
             cardView=itemView.findViewById(R.id.cvBoat);
             ivFavrt= itemView.findViewById(R.id.ivFvrt);
+            ivUserImage= itemView.findViewById(R.id.ivUserImageBoatonLocation);
             sharedPreferences = activity.getSharedPreferences("abc", Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
         }

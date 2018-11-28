@@ -15,6 +15,7 @@ import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -268,6 +269,7 @@ public class LoginSignupActivity extends AppCompatActivity {
         return null;
     }
     private void socialLoginApiCall() {
+        Toast.makeText(LoginSignupActivity.this, "aya", Toast.LENGTH_SHORT).show();
         ApiService services = ApiClient.getClient().create(ApiService.class);
         Call<SocialLoginResponseModel> call = services.socialLogin(email,name,device_id,socialToken,provider);
         call.enqueue(new Callback<SocialLoginResponseModel>() {
@@ -278,6 +280,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                 {
                     if (alertDialog != null)
                     alertDialog.dismiss();
+
                     Log.d("zmaSocialResp",response.toString());
 
                     name=response.body().getUser().getFullName();
@@ -302,6 +305,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                 {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    Log.d("zmaSocialResp",response.toString());
                 }
             }
 
@@ -309,6 +313,7 @@ public class LoginSignupActivity extends AppCompatActivity {
             public void onFailure(Call<SocialLoginResponseModel> call, Throwable t) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
+                Log.d("zmaSocialExp",t.getMessage().toString());
             }
         });
 

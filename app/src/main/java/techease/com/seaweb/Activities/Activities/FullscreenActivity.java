@@ -123,6 +123,7 @@ public class FullscreenActivity extends AppCompatActivity {
             fragment.setEnterTransition(new Slide(Gravity.RIGHT));
             fragment.setExitTransition(new Slide(Gravity.LEFT));
             getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+
         }
         else
         if (token.equals("login"))

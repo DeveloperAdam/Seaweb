@@ -1,11 +1,9 @@
-package techease.com.seaweb.Activities.Models;
+package techease.com.seaweb.Activities.Models.BoatDetail;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-
-public class BoatDetailsFileModel {
-
+public class File {
     @SerializedName("file")
     @Expose
     private String file;

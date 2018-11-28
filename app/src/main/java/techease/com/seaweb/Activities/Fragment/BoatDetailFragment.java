@@ -1,9 +1,11 @@
 package techease.com.seaweb.Activities.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Slide;
@@ -12,9 +14,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -23,7 +29,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.kingfisher.easyviewindicator.RecyclerViewIndicator;
+import com.comix.overwatch.HiveProgressView;
+import com.rbrooks.indefinitepagerindicator.IndefinitePagerIndicator;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,9 +45,18 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import techease.com.seaweb.Activities.Activities.BottomActivity;
 import techease.com.seaweb.Activities.Adapters.BoatDetailsAdapter;
-import techease.com.seaweb.Activities.Models.BoatDetailsResponseModel;
+import techease.com.seaweb.Activities.Adapters.FacilitiesAdapter;
+import techease.com.seaweb.Activities.Models.BoatDetail.BoatDetailResponseModel;
+import techease.com.seaweb.Activities.Models.BoatDetail.Data;
+import techease.com.seaweb.Activities.Models.BoatDetail.Datum;
+import techease.com.seaweb.Activities.Models.BoatDetail.Facility;
+import techease.com.seaweb.Activities.Models.FacilitiesGroupModel;
+import techease.com.seaweb.Activities.Models.FacilitiesModel;
+import techease.com.seaweb.Activities.Models.FacilitiesSubItemModel;
 import techease.com.seaweb.Activities.Models.ImageModelBoatDetails;
+import techease.com.seaweb.Activities.Models.LoginResponseModel;
 import techease.com.seaweb.Activities.Utils.AlertsUtils;
 import techease.com.seaweb.Activities.Utils.ApiClient;
 import techease.com.seaweb.Activities.Utils.ApiService;
@@ -47,31 +64,49 @@ import techease.com.seaweb.Activities.Utils.CircleIndicator;
 import techease.com.seaweb.R;
 
 
-public class BoatDetailFragment extends Fragment {
+public class BoatDetailFragment extends Fragment  {
 
     RecyclerView recyclerViewImages;
+    ExpandableListView expandableListView;
     TextView tvTitle,tvPrice,tvBirths,tvCabinets,tvSkipper,tvBoattype,tvPlace,tvPeople;
-    String userId;
+    String userId,des;
+    LinearLayout llPriceList;
     Button btnGotoAddBookDetail;
-    ImageView ivfvrt,ivBack;
-    String boatid,births,title,price,place,people,cabinets,skipper,boattype,isFvrt,proid;
+    IndefinitePagerIndicator indefinitePagerIndicator;
+    ImageView ivfvrt,ivBack,ivProfile;
+    String boatid,births,title,price,fullDay,halfDay,place,people,cabinets,skipper,boattype,isFvrt,proid,user_Img;
     List<ImageModelBoatDetails> boatDetailsDataModelList;
+    List<FacilitiesModel> facilitiesModels;
+    FacilitiesAdapter facilitiesAdapter;
     BoatDetailsAdapter adapter;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    HiveProgressView hiveProgressView;
+
+    List<FacilitiesGroupModel> facilitiesGroupModels;
+    HashMap<FacilitiesGroupModel, List<FacilitiesSubItemModel>> listDataChild;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_boat_detail, container, false);
 
+        List<String> categories = new ArrayList<String>();
+        categories.add("Price List");
+        categories.add("Full Day");
+        categories.add("Half Day");
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         userId=sharedPreferences.getString("userid","");
         boatid=sharedPreferences.getString("boatid","");
         ivfvrt=view.findViewById(R.id.ivFvrtBdetails);
+       // hiveProgressView = view.findViewById(R.id.progressBoatDetail);
+        expandableListView = view.findViewById(R.id.lvExp);
+        ivProfile = view.findViewById(R.id.profile_image);
         ivBack = view.findViewById(R.id.ivB);
+        indefinitePagerIndicator = view.findViewById(R.id.recyclerview_pager_indicator);
+        llPriceList = view.findViewById(R.id.llPriceList);
         recyclerViewImages=view.findViewById(R.id.rvBoatDetailsImage);
         tvTitle=view.findViewById(R.id.tvBoatDetailsTitle);
         tvPrice=view.findViewById(R.id.tvPriceBoatDetails);
@@ -83,17 +118,23 @@ public class BoatDetailFragment extends Fragment {
         tvPeople =view.findViewById(R.id.tvPeopleBoatDetails);
         btnGotoAddBookDetail=view.findViewById(R.id.btnGotoAddBookDetail);
 
+
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         linearLayoutManager.setStackFromEnd(false);
         recyclerViewImages.setLayoutManager(linearLayoutManager);
         boatDetailsDataModelList=new ArrayList<>();
-        if (alertDialog == null) {
-            alertDialog = AlertsUtils.createProgressDialog(getActivity());
-            alertDialog.show();
-        }
+     //   hiveProgressView.showContextMenu();
+        facilitiesModels = new ArrayList<>();
+        facilitiesGroupModels = new ArrayList<FacilitiesGroupModel>();
+        listDataChild = new HashMap<>();
+        facilitiesAdapter = new FacilitiesAdapter(getActivity(), facilitiesGroupModels, listDataChild);
+        expandableListView.setAdapter(facilitiesAdapter);
+       // imageCall();
         apicall();
-        imageCall();
+
+
 
         btnGotoAddBookDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +150,6 @@ public class BoatDetailFragment extends Fragment {
             }
         });
 
-
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,128 +160,74 @@ public class BoatDetailFragment extends Fragment {
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
         });
+
+        llPriceList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Fragment fragment = new PriceListFragment();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.animator.slide_in_up, R.animator.slide_out_up, R.animator.slide_out_up, R.animator.slide_in_up);
+                transaction.replace(R.id.container, fragment).addToBackStack("back").commit();
+
+            }
+        });
         return view;
     }
+        public  void apicall()
+        {
+            ApiService services = ApiClient.getClient().create(ApiService.class);
+            Call<Facility> call = services.getBoatDetail(boatid,userId);
+            call.enqueue(new Callback<Facility>() {
+                @Override
+                public void onResponse(Call<Facility> call, Response<Facility> response) {
 
-    private void imageCall() {
-        final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://divergense.com/boat/App/getBoatDetails"
-                , new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("ZmaImages", response);
-
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONObject object = jsonObject.getJSONObject("data");
-                    JSONArray getFilesv = object.getJSONArray("files");
-                    for (int i=0; i<getFilesv.length(); i++)
+                    if (response.isSuccessful())
                     {
-                        JSONObject obj = getFilesv.getJSONObject(i);
-                        ImageModelBoatDetails model = new ImageModelBoatDetails();
-                        model.setFile(obj.getString("file"));
-                        boatDetailsDataModelList.add(model);
-                    }
-                    adapter = new BoatDetailsAdapter(getActivity(),boatDetailsDataModelList);
-                    recyclerViewImages.setAdapter(adapter);
-                    recyclerViewImages.addItemDecoration(new CircleIndicator());
-                    adapter.notifyDataSetChanged();
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
+                        alertDialog = null;
+                        Log.d("zma detail",response.toString());
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (alertDialog != null)
-                    alertDialog.dismiss();
-                Log.d("error", String.valueOf(error.getCause()));
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded;charset=UTF-8";
-            }
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("id",boatid);
-                params.put("userid",userId);
-                Log.d("zmaParm",params.toString());
-                return params;
-            }
-        };
-        RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        mRequestQueue.add(stringRequest);
-    }
-
-
-    private void apicall() {
-
-        ApiService services = ApiClient.getClient().create(ApiService.class);
-        Call<BoatDetailsResponseModel> call = services.getBoatDetails(boatid,userId);
-        call.enqueue(new Callback<BoatDetailsResponseModel>() {
-            @Override
-            public void onResponse(Call<BoatDetailsResponseModel> call, Response<BoatDetailsResponseModel> response) {
-
-                if (response.isSuccessful())
-                {
-                    if (alertDialog != null)
-                        alertDialog.dismiss();
-                    Log.d("zmaBoatDetails",response.toString());
-
-                    title=response.body().getData().getTitle();
-                    price=response.body().getData().getWholePrice();
-                    place=response.body().getData().getLocation();
-                    skipper=response.body().getData().getSkipper();
-                    people=response.body().getData().getPeople();
-                    births=response.body().getData().getBirths();
-                    cabinets=response.body().getData().getCabinats();
-                    boattype=response.body().getData().getType();
-                    isFvrt=response.body().getData().getIsFavorite();
-                    proid=response.body().getData().getPid().toString();
-
-                    if (isFvrt.equals("true"))
-                    {
-                        ivfvrt.setBackgroundResource(R.drawable.fillheart);
+                    setGroupChild(response.body().getData());
                     }
                     else
                     {
-                        ivfvrt.setBackgroundResource(R.drawable.white_heart);
+                        Log.d("zmadetail",response.toString());
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
+                        alertDialog = null;
                     }
-
-                    tvTitle.setText(title);
-                    tvPeople.setText("People "+people);
-                    tvPrice.setText("From "+price+" per day");
-                    tvPlace.setText(place);
-                    tvBirths.setText("Births "+births);
-                    tvBoattype.setText(boattype);
-                    tvSkipper.setText("Skipper "+skipper);
-                    tvCabinets.setText("Cabinets "+cabinets);
-
                 }
-                else
 
-                {
+                @Override
+                public void onFailure(Call<Facility> call, Throwable t) {
                     if (alertDialog != null)
                         alertDialog.dismiss();
+                    alertDialog = null;
+                    Log.d("zmaLoginexp",t.getMessage());
                 }
-            }
+            });
+        }
 
-            @Override
-            public void onFailure(Call<BoatDetailsResponseModel> call, Throwable t) {
-                if (alertDialog != null)
-                    alertDialog.dismiss();
-            }
-        });
 
+
+    private void setGroupChild(List<Data> facilitiesModels) {
+        for(int i =0; i<facilitiesModels.size(); i++) {
+            FacilitiesGroupModel facilitiesGroupModel = new FacilitiesGroupModel();
+            facilitiesGroupModel.setHeading(facilitiesModels.get(i).getFacilities().get(i).getHeading());
+            facilitiesGroupModels.add(facilitiesGroupModel);
+
+            List<FacilitiesSubItemModel> servicesChild = new ArrayList<>();
+            for (Datum childServices : facilitiesModels.get(i).getFacilities().get(i).getData()) {
+                FacilitiesSubItemModel notaryServicesChildModel = new FacilitiesSubItemModel();
+                notaryServicesChildModel.setName(childServices.getName());
+                servicesChild.add(notaryServicesChildModel);
+
+            }
+            listDataChild.put(facilitiesGroupModel, servicesChild);
+        }
+        facilitiesAdapter.notifyDataSetChanged();
     }
 
 }

@@ -6,145 +6,236 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#fff"
-    tools:context=".Activities.Fragment.ProfileFragment">
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile"
-        android:textSize="25sp"
-        android:textColor="@color/orangecolor"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:layout_marginTop="30sp"/>
-
+    tools:context=".Activities.Fragment.Profile.ProfileFragment">
 
     <LinearLayout
+        android:id="@+id/llProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="20sp">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="100sp"
-            android:layout_height="100sp"
+        android:layout_margin="10sp">
+        <ImageView
+            android:layout_width="80sp"
+            android:layout_height="80sp"
             android:src="@drawable/profi"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#FF000000"
+            android:scaleType="fitXY"
             android:id="@+id/ivProfile"/>
 
         <TextView
             android:id="@+id/tvUsername"
-            android:layout_width="wrap_content"
+            android:layout_width="0sp"
+            android:layout_weight="0.4"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="30sp"
-            android:text="Username"
+            android:text="Username" />
+
+
+        <ImageView
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:layout_gravity="center"
+            android:src="@drawable/forward"
             />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2sp"
+        android:layout_height="1sp"
         android:background="#BDBDBD"
         />
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="20sp">
+        android:orientation="vertical"
+        android:layout_marginTop="40sp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/llMessages"
+        android:layout_marginRight="20sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginBottom="20sp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:src="@drawable/msg"/>
+
         <TextView
-            android:layout_width="0sp"
-            android:layout_weight="0.8"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            />
-        <TextView
-            android:id="@+id/tvEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Adamnoor@gmail.com"
+            android:text="Messages"
             android:textSize="17sp"
-            android:textStyle="bold"
-            />
+            android:layout_gravity="center"
+            android:layout_marginLeft="20sp"/>
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2sp"
+        android:layout_height="1sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginLeft="10sp"
         android:background="#BDBDBD"
         />
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_margin="20sp">-->
-        <!--<TextView-->
-            <!--android:layout_width="0sp"-->
-            <!--android:layout_weight="0.8"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Location"-->
-            <!--android:textSize="17sp"-->
-            <!--android:textStyle="bold"-->
-            <!--/>-->
-        <!--<TextView-->
-            <!--android:id="@+id/tvArea"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Peshawar"-->
-            <!--android:textSize="17sp"-->
-            <!--android:textStyle="bold"-->
-            <!--/>-->
 
-    <!--</LinearLayout>-->
-
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="2sp"-->
-        <!--android:background="#BDBDBD"-->
-        <!--/>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/llChnagePass"
+        android:id="@+id/llBookings"
         android:orientation="horizontal"
-        android:layout_margin="20sp">
+        android:layout_marginTop="20sp"
+        android:layout_marginBottom="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginLeft="20sp">
+
+        <ImageView
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:src="@drawable/bookings"/>
         <TextView
-            android:layout_width="0sp"
-            android:layout_weight="0.8"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change Password"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            />
-       <ImageView
-           android:id="@+id/ivGotoFor"
-           android:layout_width="20sp"
-           android:layout_height="20sp"
-           android:src="@drawable/rightarrow"/>
+            android:text="My Bookings"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20sp"
+            android:textSize="17sp"/>
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2sp"
+        android:layout_height="1sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
         android:background="#BDBDBD"
         />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/llfavourites"
+        android:layout_marginTop="20sp"
+        android:layout_marginBottom="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginLeft="20sp">
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="250sp"
-        android:layout_height="40sp"
-        android:background="@drawable/orangeroundboundry"
-        android:layout_gravity="center"
-        android:layout_marginTop="100sp"
-        android:text="Logout"
-        android:foreground="@drawable/ripple_effect_orange"
-        android:textColor="@color/orangecolor"/>
+        <ImageView
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:src="@drawable/blackheart"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Favourites"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20sp"
+            android:textSize="17sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:background="#BDBDBD"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/llSetting"
+        android:orientation="horizontal"
+        android:layout_marginTop="20sp"
+        android:layout_marginBottom="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginLeft="20sp">
+
+        <ImageView
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:src="@drawable/setting"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20sp"
+            android:textSize="17sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:background="#BDBDBD"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20sp"
+        android:id="@+id/llContactUs"
+        android:layout_marginBottom="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginLeft="20sp">
+
+        <ImageView
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:src="@drawable/mail"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Us"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20sp"
+            android:textSize="17sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:background="#BDBDBD"
+        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/llLogout"
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="60sp"
+            android:layout_marginRight="20sp"
+            android:layout_marginLeft="20sp">
+
+            <ImageView
+                android:layout_width="25sp"
+                android:layout_height="25sp"
+                android:src="@drawable/logout"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20sp"
+                android:textSize="17sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+
 
 </LinearLayout>

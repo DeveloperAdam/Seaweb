@@ -63,7 +63,7 @@ dependencies {
     //multidex
     implementation 'com.android.support:multidex:1.0.3'
     //dotted recyclerview
-    implementation 'com.kingfisherphuoc:easy-recyclerview-indicator:1.2'
+    implementation 'com.ryanjeffreybrooks:indefinitepagerindicator:1.0.10'
     //calendarview
     implementation 'com.archit.calendar:awesome-calendar:1.1.3'
     //bottom navigation
@@ -72,5 +72,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-places:16.0.0'
     //ratingbar
     implementation 'com.github.whinc:ratingbar:1.1.1'
+    //progress bar
+    implementation 'cc.cloudist.acplibrary:library:1.2.1'
+    implementation 'com.github.zjywill:OverwatchProgress:1.5'
 
 }

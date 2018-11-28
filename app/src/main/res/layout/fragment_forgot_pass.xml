@@ -16,10 +16,10 @@
 
         <ImageView
             android:id="@+id/ivbackForgot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20sp"
+            android:layout_height="20sp"
             android:layout_gravity="center"
-            android:src="@drawable/backicon"/>
+            android:src="@drawable/whiteback"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

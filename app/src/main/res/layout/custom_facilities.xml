@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/llFacilitiesCustom"
+    android:background="#fff">
+
+    <TextView
+        android:id="@+id/tvFacilityHeading"
+        android:layout_width="0sp"
+        android:layout_weight="0.8"
+        android:layout_marginLeft="20sp"
+        android:textSize="17sp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:text="Facility name"/>
+    <ImageView
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_gravity="center"
+        android:layout_marginRight="20sp"
+        android:src="@drawable/downarrow"/>
+
+</LinearLayout>

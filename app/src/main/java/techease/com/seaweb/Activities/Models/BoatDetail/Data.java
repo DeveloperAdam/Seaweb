@@ -1,13 +1,11 @@
-package techease.com.seaweb.Activities.Models;
+package techease.com.seaweb.Activities.Models.BoatDetail;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.File;
 import java.util.List;
 
-
-public class BoatDetailsDataModel {
+public class Data {
     @SerializedName("pid")
     @Expose
     private Integer pid;
@@ -38,21 +36,24 @@ public class BoatDetailsDataModel {
     @SerializedName("user_picture")
     @Expose
     private String userPicture;
-    @SerializedName("whole_price")
+    @SerializedName("fullday_price")
     @Expose
-    private String wholePrice;
-    @SerializedName("adult_price")
-    @Expose
-    private String adultPrice;
-    @SerializedName("child_price")
-    @Expose
-    private String childPrice;
+    private String fulldayPrice;
     @SerializedName("is_favorite")
     @Expose
     private String isFavorite;
+    @SerializedName("rating")
+    @Expose
+    private String rating;
     @SerializedName("files")
     @Expose
     private List<File> files = null;
+    @SerializedName("facilities")
+    @Expose
+    private List<Facility> facilities = null;
+    @SerializedName("price_list")
+    @Expose
+    private List<PriceList> priceList = null;
 
     public Integer getPid() {
         return pid;
@@ -134,28 +135,12 @@ public class BoatDetailsDataModel {
         this.userPicture = userPicture;
     }
 
-    public String getWholePrice() {
-        return wholePrice;
+    public String getFulldayPrice() {
+        return fulldayPrice;
     }
 
-    public void setWholePrice(String wholePrice) {
-        this.wholePrice = wholePrice;
-    }
-
-    public String getAdultPrice() {
-        return adultPrice;
-    }
-
-    public void setAdultPrice(String adultPrice) {
-        this.adultPrice = adultPrice;
-    }
-
-    public String getChildPrice() {
-        return childPrice;
-    }
-
-    public void setChildPrice(String childPrice) {
-        this.childPrice = childPrice;
+    public void setFulldayPrice(String fulldayPrice) {
+        this.fulldayPrice = fulldayPrice;
     }
 
     public String getIsFavorite() {
@@ -166,6 +151,14 @@ public class BoatDetailsDataModel {
         this.isFavorite = isFavorite;
     }
 
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
     public List<File> getFiles() {
         return files;
     }
@@ -174,5 +167,19 @@ public class BoatDetailsDataModel {
         this.files = files;
     }
 
-}
+    public List<Facility> getFacilities() {
+        return facilities;
+    }
 
+    public void setFacilities(List<Facility> facilities) {
+        this.facilities = facilities;
+    }
+
+    public List<PriceList> getPriceList() {
+        return priceList;
+    }
+
+    public void setPriceList(List<PriceList> priceList) {
+        this.priceList = priceList;
+    }
+}

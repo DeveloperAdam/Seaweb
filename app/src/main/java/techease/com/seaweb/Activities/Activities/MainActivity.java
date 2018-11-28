@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import java.security.MessageDigest;
 
+import techease.com.seaweb.Activities.Utils.Network;
 import techease.com.seaweb.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     String token;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    Handler mHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,18 +53,44 @@ public class MainActivity extends AppCompatActivity {
                     
                     if (token.equals("login"))
                     {
-                        Log.d("what","if");
-                        startActivity(new Intent(MainActivity.this,BottomActivity.class));
-                        overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
-                        finish();
+                        if ( Network.checkInternetConnection(MainActivity.this)==true)
+                        {
+                            Log.d("what","if");
+                            startActivity(new Intent(MainActivity.this,BottomActivity.class));
+                            overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
+                            finish();
+
+                        }
+                        else {
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(MainActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                    startActivity(getIntent());
+                                }
+                            });
+                        }
+
 
                     }
                     else
                     {
-                        Log.d("what","else");
-                        startActivity(new Intent(MainActivity.this,LoginSignupActivity.class));
-                        overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
-                        finish();
+                        if ( Network.checkInternetConnection(MainActivity.this)==true) {
+                            Log.d("what","else");
+                            startActivity(new Intent(MainActivity.this,LoginSignupActivity.class));
+                            overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
+                            finish();
+                        }
+                        else {
+                            MainActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(MainActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                    startActivity(getIntent());
+                                }
+                            });
+                        }
+
                     }
 
 

@@ -13,12 +13,12 @@
 
       <ImageView
           android:id="@+id/ivBackSignUp"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_width="20sp"
+          android:layout_height="20sp"
           android:layout_marginTop="15sp"
           android:layout_marginLeft="10sp"
           android:layout_gravity="center"
-          android:src="@drawable/backicon"/>
+          android:src="@drawable/whitebackicon"/>
 
       <TextView
           android:layout_width="wrap_content"

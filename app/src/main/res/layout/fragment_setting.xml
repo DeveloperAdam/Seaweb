@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    tools:context=".Activities.Fragment.Profile.SettingFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/backicon"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="100sp"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:background="#BDBDBD"/>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="60sp"
+    android:layout_marginRight="20sp"
+    android:layout_marginTop="40sp"
+    android:gravity="center"
+    android:layout_marginLeft="20sp"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_width="0sp"
+        android:layout_weight="0.4"
+        android:layout_height="wrap_content"
+        android:text="Terms &amp; Conditions"
+        android:textSize="17sp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/forward"
+        />
+</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginLeft="20sp"
+        android:background="#BDBDBD"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Version 1.1"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20sp"
+        android:textSize="17sp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginLeft="20sp"
+        android:background="#BDBDBD"/>
+</LinearLayout>
