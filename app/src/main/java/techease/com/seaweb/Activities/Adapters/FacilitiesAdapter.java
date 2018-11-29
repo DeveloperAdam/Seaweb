@@ -45,8 +45,7 @@ public class FacilitiesAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listDataChild.get(this.listDataHeadings.get(groupPosition))
-                .size();
+        return this.listDataChild.get(listDataHeadings.get(groupPosition)).size();
     }
 
     @Override
@@ -56,8 +55,7 @@ public class FacilitiesAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this.listDataChild.get(this.listDataHeadings.get(groupPosition))
-                .get(childPosititon);
+        return this.listDataChild.get(listDataHeadings.get(groupPosition)).get(childPosititon);
     }
 
     @Override

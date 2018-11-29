@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Data {
+public class BoatDetailDataModel {
     @SerializedName("pid")
     @Expose
     private Integer pid;
@@ -45,15 +45,15 @@ public class Data {
     @SerializedName("rating")
     @Expose
     private String rating;
-    @SerializedName("files")
+    @SerializedName("boatFileModels")
     @Expose
-    private List<File> files = null;
+    private List<BoatFileModel> boatFileModels = null;
     @SerializedName("facilities")
     @Expose
-    private List<Facility> facilities = null;
+    private List<BoatFacilityParentModel> facilities = null;
     @SerializedName("price_list")
     @Expose
-    private List<PriceList> priceList = null;
+    private List<BoatDetailPriceListModel> boatDetailPriceListModel = null;
 
     public Integer getPid() {
         return pid;
@@ -159,27 +159,27 @@ public class Data {
         this.rating = rating;
     }
 
-    public List<File> getFiles() {
-        return files;
+    public List<BoatFileModel> getBoatFileModels() {
+        return boatFileModels;
     }
 
-    public void setFiles(List<File> files) {
-        this.files = files;
+    public void setBoatFileModels(List<BoatFileModel> boatFileModels) {
+        this.boatFileModels = boatFileModels;
     }
 
-    public List<Facility> getFacilities() {
+    public List<BoatFacilityParentModel> getFacilities() {
         return facilities;
     }
 
-    public void setFacilities(List<Facility> facilities) {
+    public void setFacilities(List<BoatFacilityParentModel> facilities) {
         this.facilities = facilities;
     }
 
-    public List<PriceList> getPriceList() {
-        return priceList;
+    public List<BoatDetailPriceListModel> getBoatDetailPriceListModel() {
+        return boatDetailPriceListModel;
     }
 
-    public void setPriceList(List<PriceList> priceList) {
-        this.priceList = priceList;
+    public void setBoatDetailPriceListModel(List<BoatDetailPriceListModel> boatDetailPriceListModel) {
+        this.boatDetailPriceListModel = boatDetailPriceListModel;
     }
 }

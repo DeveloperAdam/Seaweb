@@ -6,8 +6,8 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import techease.com.seaweb.Activities.Models.AddToFavrtResponseModel;
-import techease.com.seaweb.Activities.Models.Trip.AllTripsResponseModel;
 import techease.com.seaweb.Activities.Models.BoatBookingResponseModel;
+import techease.com.seaweb.Activities.Models.BoatDetail.BoatDetailResponseModel;
 import techease.com.seaweb.Activities.Models.BoatDetail.Facility;
 import techease.com.seaweb.Activities.Models.BoatTypeResponseModel;
 import techease.com.seaweb.Activities.Models.BookedBoatsResponseModel;
@@ -21,7 +21,6 @@ import techease.com.seaweb.Activities.Models.ResetPassResponseModel;
 import techease.com.seaweb.Activities.Models.SearchedBoatsResponseModel;
 import techease.com.seaweb.Activities.Models.SocialLoginResponseModel;
 import techease.com.seaweb.Activities.Models.SuggestedPlacesResponseModel;
-import techease.com.seaweb.Activities.Models.Trip.TripDetailResponseModel;
 
 public interface ApiService {
 
@@ -113,15 +112,6 @@ public interface ApiService {
     @POST("App/getBoatDetails")
     Call<Facility> getBoatDetail(@Field("id") String id,
                                  @Field("userid") String userid);
-
-
-    @FormUrlEncoded
-    @POST("App/getTripDetails")
-    Call<TripDetailResponseModel> getTripDetails(@Field("id") String id,
-                                                 @Field("userid") String userid);
-
-    @GET("App/getTripData")
-    Call<AllTripsResponseModel> getAllTrips();
 
 
 

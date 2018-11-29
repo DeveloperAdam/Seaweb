@@ -16,7 +16,7 @@ public class BoatDetailResponseModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private Data data;
+    private BoatDetailDataModel boatDetailDataModel;
 
     public Boolean getSuccess() {
         return success;
@@ -42,11 +42,11 @@ public class BoatDetailResponseModel {
         this.message = message;
     }
 
-    public Data getData() {
-        return data;
+    public BoatDetailDataModel getBoatDetailDataModel() {
+        return boatDetailDataModel;
     }
 
-    public void setData(Data data) {
-        this.data = data;
+    public void setBoatDetailDataModel(BoatDetailDataModel boatDetailDataModel) {
+        this.boatDetailDataModel = boatDetailDataModel;
     }
 }
