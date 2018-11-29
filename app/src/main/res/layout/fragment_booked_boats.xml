@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/backimg"
+    android:background="#fff"
     tools:context=".Activities.Fragment.BookedBoatsFragment">
 
    <LinearLayout
@@ -26,7 +26,7 @@
           android:layout_height="wrap_content"
           android:text="Booked Boats"
           android:textStyle="bold"
-          android:textColor="@color/color_white"
+          android:textColor="#BDBDBD"
           android:textSize="17sp"
           android:layout_gravity="center"
           android:layout_marginLeft="20sp"/>
@@ -35,9 +35,6 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:id="@+id/rvBooking"
-
-       android:layout_marginLeft="10sp"
-       android:layout_marginRight="10sp"
        android:layout_marginTop="10sp"
        android:layout_marginBottom="60sp"></android.support.v7.widget.RecyclerView>
 

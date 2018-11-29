@@ -17,6 +17,7 @@ import techease.com.seaweb.Activities.Fragment.BookedBoatsFragment;
 import techease.com.seaweb.Activities.Fragment.FavoriteFragment;
 import techease.com.seaweb.Activities.Fragment.ListOfPlacesFragment;
 import techease.com.seaweb.Activities.Fragment.Profile.ProfileFragment;
+import techease.com.seaweb.Activities.Fragment.Trips.TripsFragment;
 import techease.com.seaweb.Activities.Utils.BottomNavigationHelper;
 import techease.com.seaweb.R;
 
@@ -56,12 +57,13 @@ public class BottomActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
                     return true;
                 case R.id.trips:
-//                    fragment = new ProfileFragment();
-//                    fragment.setEnterTransition(new Slide(Gravity.RIGHT));
-//                    fragment.setExitTransition(new Slide(Gravity.LEFT));
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
-//                    return true;
+                    fragment = new TripsFragment();
+                    fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                    fragment.setExitTransition(new Slide(Gravity.LEFT));
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+                    return true;
             }
+
             return false;
         }
     };

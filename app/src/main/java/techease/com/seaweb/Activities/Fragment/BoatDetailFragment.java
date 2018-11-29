@@ -189,7 +189,7 @@ public class BoatDetailFragment extends Fragment  {
                         alertDialog = null;
                         Log.d("zma detail",response.toString());
 
-                    setGroupChild(response.body().getData());
+              //      setGroupChild(response.body().getData());
                     }
                     else
                     {
@@ -209,7 +209,6 @@ public class BoatDetailFragment extends Fragment  {
                 }
             });
         }
-
 
 
     private void setGroupChild(List<Data> facilitiesModels) {

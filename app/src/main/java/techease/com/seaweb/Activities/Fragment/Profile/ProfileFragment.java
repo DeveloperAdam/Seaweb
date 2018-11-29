@@ -30,6 +30,7 @@ import techease.com.seaweb.Activities.Activities.FullscreenActivity;
 import techease.com.seaweb.Activities.Activities.LoginSignupActivity;
 import techease.com.seaweb.Activities.Fragment.BookedBoatsFragment;
 import techease.com.seaweb.Activities.Fragment.DatePickerFragment;
+import techease.com.seaweb.Activities.Fragment.FavoriteFragment;
 import techease.com.seaweb.Activities.Fragment.ListOfPlacesFragment;
 import techease.com.seaweb.R;
 
@@ -135,8 +136,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 getActivity().finish();
                 break;
             case R.id.llfavourites:
+
                 BottomActivity.whichOne = "Favourite";
-                startActivity(new Intent(getActivity(), BookedBoatsFragment.class));
+                startActivity(new Intent(getActivity(), BottomActivity.class));
                 getActivity().finish();
                 break;
         }
