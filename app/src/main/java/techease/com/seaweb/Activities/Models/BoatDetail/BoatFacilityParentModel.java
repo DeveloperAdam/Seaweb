@@ -5,14 +5,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Facility {
+public class BoatFacilityParentModel {
 
     @SerializedName("heading")
     @Expose
     private String heading;
     @SerializedName("data")
     @Expose
-    private List<Datum> data = null;
+    private List<BoatDetailChildModel> data = null;
 
     public String getHeading() {
         return heading;
@@ -22,11 +22,11 @@ public class Facility {
         this.heading = heading;
     }
 
-    public List<Datum> getData() {
+    public List<BoatDetailChildModel> getData() {
         return data;
     }
 
-    public void setData(List<Datum> data) {
+    public void setData(List<BoatDetailChildModel> data) {
         this.data = data;
     }
 }

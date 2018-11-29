@@ -8,7 +8,6 @@ import retrofit2.http.POST;
 import techease.com.seaweb.Activities.Models.AddToFavrtResponseModel;
 import techease.com.seaweb.Activities.Models.BoatBookingResponseModel;
 import techease.com.seaweb.Activities.Models.BoatDetail.BoatDetailResponseModel;
-import techease.com.seaweb.Activities.Models.BoatDetail.Facility;
 import techease.com.seaweb.Activities.Models.BoatTypeResponseModel;
 import techease.com.seaweb.Activities.Models.BookedBoatsResponseModel;
 import techease.com.seaweb.Activities.Models.CodeResponseModel;
@@ -110,8 +109,8 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("App/getBoatDetails")
-    Call<Facility> getBoatDetail(@Field("id") String id,
-                                 @Field("userid") String userid);
+    Call<BoatDetailResponseModel> getBoatDetail(@Field("id") String id,
+                             @Field("userid") String userid);
 
 
 

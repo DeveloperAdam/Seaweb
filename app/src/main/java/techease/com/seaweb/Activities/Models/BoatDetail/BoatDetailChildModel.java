@@ -3,7 +3,7 @@ package techease.com.seaweb.Activities.Models.BoatDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Datum {
+public class BoatDetailChildModel {
 
 
     @SerializedName("name")
