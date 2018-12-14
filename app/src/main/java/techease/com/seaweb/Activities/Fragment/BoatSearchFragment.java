@@ -77,7 +77,7 @@ public class BoatSearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-               Fragment fragment = new BoatTypeFragment();
+               Fragment fragment = new DatePickerFilterFragment();
                 fragment.setEnterTransition(new Slide(Gravity.RIGHT));
                 fragment.setExitTransition(new Slide(Gravity.LEFT));
                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
@@ -90,7 +90,7 @@ public class BoatSearchFragment extends Fragment {
 
     private void apiCall() {
         ApiService services = ApiClient.getClient().create(ApiService.class);
-        Log.d("zmaParamsss",location+" "+type+" "+startDate+" "+endDate);
+        Log.d("zmaFilterParams",location+" "+type+" "+startDate+" "+endDate);
         Call<SearchedBoatsResponseModel> call = services.getSearchedBoats(location,type,startDate,endDate);
         call.enqueue(new Callback<SearchedBoatsResponseModel>() {
             @Override
@@ -107,14 +107,14 @@ public class BoatSearchFragment extends Fragment {
                         searchedBoatsDataModelList.addAll(response.body().getData()) ;
                         if (searchedBoatsDataModelList.size()<1)
                         {
-                            Toast.makeText(getActivity(), "No Suggestion", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
                         adapter.notifyDataSetChanged();
                     }
                     else
                     {
-                        Toast.makeText(getActivity(), "No Boat Found", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -125,7 +125,7 @@ public class BoatSearchFragment extends Fragment {
                     if (alertDialog != null)
                         alertDialog.dismiss();
                     alertDialog = null;
-                    Toast.makeText(getActivity(), "Unsuccessful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }

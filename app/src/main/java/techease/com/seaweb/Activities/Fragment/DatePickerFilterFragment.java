@@ -1,5 +1,6 @@
 package techease.com.seaweb.Activities.Fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView;
@@ -25,7 +27,7 @@ import techease.com.seaweb.Activities.Activities.BottomActivity;
 import techease.com.seaweb.R;
 
 
-public class DatePickerFragment extends Fragment {
+public class DatePickerFilterFragment extends Fragment {
 
     DateRangeCalendarView  dateRangeCalendarView;
     Button btnSave;
@@ -33,6 +35,7 @@ public class DatePickerFragment extends Fragment {
     ImageView ivBack;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    TextView tvCheckIn,tvCheckOut;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +47,8 @@ public class DatePickerFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        tvCheckIn = view.findViewById(R.id.tvcheckInFilterDate);
+        tvCheckOut = view.findViewById(R.id.tvCheckoutFilterDate);
         btnSave = view.findViewById(R.id.btnSaveDate);
         ivBack = view.findViewById(R.id.ivBackDate);
         dateRangeCalendarView = view.findViewById(R.id.calendar);
@@ -53,22 +58,36 @@ public class DatePickerFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Fragment fragment = new BoatTypeFragment();
+                Fragment fragment = new BoatSearchFragment();
                 fragment.setEnterTransition(new Slide(Gravity.RIGHT));
                 fragment.setExitTransition(new Slide(Gravity.LEFT));
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
             }
         });
+
+
         dateRangeCalendarView.setCalendarListener(new DateRangeCalendarView.CalendarListener() {
             @Override
             public void onFirstDateSelected(Calendar startDate) {
                 convertStartDateToString(startDate);
+                eDate = sDate;
+
+                tvCheckIn.setText(sDate);
+                tvCheckOut.setText(eDate);
+                editor.putString("startdate",sDate).commit();
+                editor.putString("enddate",eDate).commit();
             }
 
             @Override
             public void onDateRangeSelected(Calendar startDate, Calendar endDate) {
 
                 convertEndDateToString(endDate);
+
+                tvCheckIn.setText(sDate);
+                tvCheckOut.setText(eDate);
+
+                editor.putString("startdate",sDate).commit();
+                editor.putString("enddate",eDate).commit();
 
             }
         });
@@ -78,10 +97,8 @@ public class DatePickerFragment extends Fragment {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ListOfPlacesFragment.searchFlag = false;
-                startActivity(new Intent(getActivity(), BottomActivity.class));
-                getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
-                getActivity().finish();
+               Fragment fragment = new BoatTypeFragment();
+               getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             }
         });
         return view;

@@ -1,10 +1,12 @@
-package techease.com.seaweb.Activities.Models;
+package techease.com.seaweb.Activities.Models.Chat;
 
+
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class AddToFavrtResponseModel {
+public class MessageDetailResponseModel {
 
     @SerializedName("success")
     @Expose
@@ -15,6 +17,9 @@ public class AddToFavrtResponseModel {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("data")
+    @Expose
+    private List<MessageDetailDataModel> data = null;
 
     public Boolean getSuccess() {
         return success;
@@ -39,4 +44,13 @@ public class AddToFavrtResponseModel {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public List<MessageDetailDataModel> getData() {
+        return data;
+    }
+
+    public void setData(List<MessageDetailDataModel> data) {
+        this.data = data;
+    }
+
 }

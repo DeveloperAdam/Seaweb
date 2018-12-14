@@ -1,6 +1,5 @@
 package techease.com.seaweb.Activities.Fragment;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,7 +21,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import techease.com.seaweb.Activities.Activities.BottomActivity;
 import techease.com.seaweb.Activities.Adapters.BoatTypesAdapter;
 import techease.com.seaweb.Activities.Models.BoatTypeDataModel;
 import techease.com.seaweb.Activities.Models.BoatTypeResponseModel;
@@ -69,7 +67,7 @@ public class BoatTypeFragment extends Fragment {
 
                 if (BoatTypesAdapter.boatType != null)
                 {
-                    Fragment fragment = new BoatSearchFragment();
+                    Fragment fragment = new DatePickerFilterFragment();
                     fragment.setEnterTransition(new Slide(Gravity.RIGHT));
                     fragment.setExitTransition(new Slide(Gravity.LEFT));
                     getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
@@ -85,7 +83,7 @@ public class BoatTypeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-               Fragment  fragment = new DatePickerFragment();
+               Fragment  fragment = new SearchFragment();
                 fragment.setEnterTransition(new Slide(Gravity.RIGHT));
                 fragment.setExitTransition(new Slide(Gravity.LEFT));
                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();

@@ -19,9 +19,9 @@ public class FavrtDataModel {
     @SerializedName("user_picture")
     @Expose
     private String userPicture;
-    @SerializedName("price")
+    @SerializedName("price_day")
     @Expose
-    private String price;
+    private String priceDay;
     @SerializedName("boat_image")
     @Expose
     private String boatImage;
@@ -61,12 +61,12 @@ public class FavrtDataModel {
         this.userPicture = userPicture;
     }
 
-    public String getPrice() {
-        return price;
+    public String getPriceDay() {
+        return priceDay;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setPriceDay(String priceDay) {
+        this.priceDay = priceDay;
     }
 
     public String getBoatImage() {

@@ -35,7 +35,7 @@ public class FacilitiesAdapter extends BaseExpandableListAdapter {
         this.listDataHeadings = listDataHeadings;
         this.listDataChild = listDataChild;
 
-        }
+    }
 
 
     @Override

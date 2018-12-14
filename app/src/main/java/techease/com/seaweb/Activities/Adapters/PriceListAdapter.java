@@ -35,7 +35,7 @@ public class PriceListAdapter extends RecyclerView.Adapter<PriceListAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PriceListModel model = priceListModelList.get(position);
 
-        holder.tvPrice.setText(model.getPrice());
+        holder.tvPrice.setText(model.getPrice()+"$");
         holder.tvFromTo.setText(model.getFrom()+" - "+model.getTo());
     }
 

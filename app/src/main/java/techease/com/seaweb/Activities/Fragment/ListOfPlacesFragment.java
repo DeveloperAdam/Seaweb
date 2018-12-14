@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -44,7 +45,7 @@ import techease.com.seaweb.Activities.Utils.ApiService;
 import techease.com.seaweb.R;
 
 
-public class ListOfPlacesFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener{
+public class ListOfPlacesFragment extends Fragment{
 
 
     public  static RecyclerView recyclerView,rvNames;
@@ -56,10 +57,9 @@ public class ListOfPlacesFragment extends Fragment implements GoogleApiClient.On
     ArrayList<String> svSuggestions;
     ListOfPlacesNamesAdapter namesAdapter;
     AutoCompleteTextView etSearch;
-    public static boolean searchFlag = false ;
+    public static boolean searchFlag;
     HiveProgressView hiveProgressView;
-    GoogleApiClient googleApiClient;
-    PlacesAdapter placesAdapter;
+
     private static final LatLngBounds latlng = new LatLngBounds( new LatLng(-40,-168),new LatLng(71,136));
 
     @Override
@@ -68,34 +68,16 @@ public class ListOfPlacesFragment extends Fragment implements GoogleApiClient.On
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_listofplaces, container, false);
 
-//        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-//        if (view != null) {
-//            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-//        }
-
-        googleApiClient = new GoogleApiClient
-                .Builder(getActivity())
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(getActivity(),this)
-                .build();
-
-        placesAdapter = new PlacesAdapter(getActivity(), googleApiClient,latlng,null);
-
-
-
-        alertDialog = null;
-
 
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         hiveProgressView = view.findViewById(R.id.progress);
         etSearch = view.findViewById(R.id.autoCompleteTextView1);
-        etSearch.setSelection(0);
         recyclerView=view.findViewById(R.id.rvPlaces);
         rvNames=view.findViewById(R.id.rvListOfPlaces);
+
+        searchFlag = false;
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -111,12 +93,6 @@ public class ListOfPlacesFragment extends Fragment implements GoogleApiClient.On
         dataModelList=new ArrayList<>();
         svSuggestions=new ArrayList<>();
 
-        etSearch.setAdapter(placesAdapter);
-
-//        if (alertDialog == null) {
-//            alertDialog = AlertsUtils.createProgressDialog(getActivity());
-//            alertDialog.show();
-//        }
         hiveProgressView.showContextMenu();
         getAllPlacesAdapter=new GetAllPlacesAdapter(getActivity(),dataModelList);
         recyclerView.setAdapter(getAllPlacesAdapter);
@@ -125,38 +101,52 @@ public class ListOfPlacesFragment extends Fragment implements GoogleApiClient.On
         rvNames.setAdapter(namesAdapter);
         apiCall();
 
+//
+//        etSearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                View decorView = getActivity().getWindow().getDecorView();
+//                int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                        | View.SYSTEM_UI_FLAG_FULLSCREEN;
+//                decorView.setSystemUiVisibility(uiOptions);
+//
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence query, int start, int before, int count) {
+//
+//                query = query.toString().toLowerCase();
+//                List<GetAllPlacesDataModel> newData = new ArrayList<>();
+//                for (int j = 0; j < dataModelList.size(); j++) {
+//                    final String test2 = dataModelList.get(j).getName().toLowerCase();
+//                    if (test2.startsWith(String.valueOf(query))) {
+//                        newData.add(dataModelList.get(j));
+//                        searchFlag = true;
+//                    }
+//                }
+//                ListOfPlacesFragment.getAllPlacesAdapter = new GetAllPlacesAdapter(getActivity(), newData);
+//                ListOfPlacesFragment.recyclerView.setAdapter(ListOfPlacesFragment.getAllPlacesAdapter);
+//                ListOfPlacesFragment.getAllPlacesAdapter.notifyDataSetChanged();
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
 
-        etSearch.addTextChangedListener(new TextWatcher() {
+
+        etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                View decorView = getActivity().getWindow().getDecorView();
-                int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN;
-                decorView.setSystemUiVisibility(uiOptions);
+            public void onClick(View view) {
 
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence query, int start, int before, int count) {
-
-                query = query.toString().toLowerCase();
-                List<GetAllPlacesDataModel> newData = new ArrayList<>();
-                for (int j = 0; j < dataModelList.size(); j++) {
-                    final String test2 = dataModelList.get(j).getName().toLowerCase();
-                    if (test2.startsWith(String.valueOf(query))) {
-                        newData.add(dataModelList.get(j));
-                        searchFlag = true;
-                    }
-                }
-                ListOfPlacesFragment.getAllPlacesAdapter = new GetAllPlacesAdapter(getActivity(), newData);
-                ListOfPlacesFragment.recyclerView.setAdapter(ListOfPlacesFragment.getAllPlacesAdapter);
-                ListOfPlacesFragment.getAllPlacesAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+                searchFlag = true;
+                Fragment fragment = new SearchFragment();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.animator.slide_in_up, R.animator.slide_out_up, R.animator.slide_out_up, R.animator.slide_in_up);
+                transaction.replace(R.id.nav_container, fragment).addToBackStack("back").commit();
 
             }
         });
@@ -164,12 +154,7 @@ public class ListOfPlacesFragment extends Fragment implements GoogleApiClient.On
         return view;
 
     }
-    @Override
-    public void onPause() {
-        super.onPause();
-        googleApiClient.stopAutoManage(getActivity());
-        googleApiClient.disconnect();
-    }
+
 
     private void apiCall() {
         ApiService services = ApiClient.getClient().create(ApiService.class);
@@ -212,8 +197,5 @@ public class ListOfPlacesFragment extends Fragment implements GoogleApiClient.On
         });
     }
 
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
 }

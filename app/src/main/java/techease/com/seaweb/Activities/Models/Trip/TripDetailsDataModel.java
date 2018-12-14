@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 
 public class TripDetailsDataModel {
-
     @SerializedName("pid")
     @Expose
     private Integer pid;
@@ -39,9 +38,21 @@ public class TripDetailsDataModel {
     @SerializedName("user_picture")
     @Expose
     private String userPicture;
+    @SerializedName("seats")
+    @Expose
+    private String seats;
+    @SerializedName("owner_id")
+    @Expose
+    private String ownerId;
     @SerializedName("location")
     @Expose
     private String location;
+    @SerializedName("ratings")
+    @Expose
+    private String ratings;
+    @SerializedName("is_favorite")
+    @Expose
+    private String isFavorite;
     @SerializedName("image")
     @Expose
     private String image;
@@ -134,12 +145,44 @@ public class TripDetailsDataModel {
         this.userPicture = userPicture;
     }
 
+    public String getSeats() {
+        return seats;
+    }
+
+    public void setSeats(String seats) {
+        this.seats = seats;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
     public String getLocation() {
         return location;
     }
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(String ratings) {
+        this.ratings = ratings;
+    }
+
+    public String getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(String isFavorite) {
+        this.isFavorite = isFavorite;
     }
 
     public String getImage() {
@@ -149,5 +192,4 @@ public class TripDetailsDataModel {
     public void setImage(String image) {
         this.image = image;
     }
-
 }

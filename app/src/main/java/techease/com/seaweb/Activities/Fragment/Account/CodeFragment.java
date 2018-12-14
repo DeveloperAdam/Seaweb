@@ -1,4 +1,4 @@
-package techease.com.seaweb.Activities.Fragment;
+package techease.com.seaweb.Activities.Fragment.Account;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,9 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.comix.overwatch.HiveProgressView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import techease.com.seaweb.Activities.Fragment.Account.ForgotPassFragment;
+import techease.com.seaweb.Activities.Fragment.Account.ResetPassFragment;
 import techease.com.seaweb.Activities.Models.CodeResponseModel;
 import techease.com.seaweb.Activities.Utils.AlertsUtils;
 import techease.com.seaweb.Activities.Utils.ApiClient;
@@ -35,7 +39,7 @@ public class CodeFragment extends Fragment {
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-
+    HiveProgressView hiveProgressView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,11 +50,14 @@ public class CodeFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        hiveProgressView = view.findViewById(R.id.progressCode);
         ivBack=view.findViewById(R.id.ivBackCode);
         etCode=view.findViewById(R.id.etCode);
         btnVerify=view.findViewById(R.id.btnVerify);
         alertDialog = null;
 
+
+        hiveProgressView.setVisibility(View.GONE);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,10 +80,7 @@ public class CodeFragment extends Fragment {
                 }
                 else
                 {
-                    if (alertDialog == null) {
-                        alertDialog = AlertsUtils.createProgressDialog(getActivity());
-                        alertDialog.show();
-                    }
+                    hiveProgressView.setVisibility(View.VISIBLE);
                     apiCall();
                 }
             }
@@ -94,9 +98,7 @@ public class CodeFragment extends Fragment {
 
                 if (response.isSuccessful())
                 {
-                    if (alertDialog != null)
-                        alertDialog.dismiss();
-                    alertDialog = null;
+                    hiveProgressView.setVisibility(View.GONE);
                     Log.d("zmaForgotResp",response.toString());
 
                     message=response.body().getMessage();
@@ -121,17 +123,13 @@ public class CodeFragment extends Fragment {
                 }
                 else
                 {
-                    if (alertDialog != null)
-                        alertDialog.dismiss();
-                    alertDialog = null;
+                    hiveProgressView.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<CodeResponseModel> call, Throwable t) {
-                if (alertDialog != null)
-                    alertDialog.dismiss();
-                alertDialog = null;
+                hiveProgressView.setVisibility(View.GONE);
             }
         });
 

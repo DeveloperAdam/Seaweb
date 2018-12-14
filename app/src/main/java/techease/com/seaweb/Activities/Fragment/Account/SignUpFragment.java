@@ -1,4 +1,4 @@
-package techease.com.seaweb.Activities.Fragment;
+package techease.com.seaweb.Activities.Fragment.Account;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,16 +14,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.comix.overwatch.HiveProgressView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import techease.com.seaweb.Activities.Activities.BottomActivity;
-import techease.com.seaweb.Activities.Activities.LoginSignupActivity;
 import techease.com.seaweb.Activities.Models.RegisterResponseModel;
 import techease.com.seaweb.Activities.Utils.AlertsUtils;
 import techease.com.seaweb.Activities.Utils.ApiClient;
@@ -47,6 +46,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     String email,fname,lname,area,pass,fullName,token,cpass;
     String user_id;
     android.support.v7.app.AlertDialog alertDialog;
+    HiveProgressView hiveProgressView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,10 +69,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         etEmail=view.findViewById(R.id.etEmail);
         etCpass=view.findViewById(R.id.etCpass);
         etPass=view.findViewById(R.id.etPass);
+        hiveProgressView = view.findViewById(R.id.progressSignup);
         tvAlreadyHaveAnAccount.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
 
 
+
+        hiveProgressView.setVisibility(View.GONE);
         ivback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,10 +149,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                   //  radioSexButton = view.findViewById(selectedId);
                   //  type = radioSexButton.getText().toString();
 
-                    if (alertDialog == null) {
-                        alertDialog = AlertsUtils.createProgressDialog(getActivity());
-                        alertDialog.show();
-                    }
+                    hiveProgressView.setVisibility(View.VISIBLE);
                     apiCall();
                 }
 
@@ -169,9 +169,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
                 if (response.isSuccessful())
                 {
-                    if (alertDialog != null)
-                    alertDialog.dismiss();
-                    alertDialog = null;
+                    hiveProgressView.setVisibility(View.GONE);
                     Log.d("zmaRegisterResp",response.toString());
 
                     message = response.body().getMessage();
@@ -203,17 +201,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                 }
                 else
                 {
-                    if (alertDialog != null)
-                    alertDialog.dismiss();
-                    alertDialog = null;
+                    hiveProgressView.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<RegisterResponseModel> call, Throwable t) {
-                if (alertDialog != null)
-                    alertDialog.dismiss();
-                alertDialog = null;
+                hiveProgressView.setVisibility(View.GONE);
             }
         });
 

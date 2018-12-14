@@ -1,4 +1,4 @@
-package techease.com.seaweb.Activities.Fragment;
+package techease.com.seaweb.Activities.Fragment.Account;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,10 +16,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.comix.overwatch.HiveProgressView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import techease.com.seaweb.Activities.Activities.BottomActivity;
 import techease.com.seaweb.Activities.Activities.LoginSignupActivity;
 import techease.com.seaweb.Activities.Models.ResetPassResponseModel;
 import techease.com.seaweb.Activities.Utils.AlertsUtils;
@@ -37,6 +38,7 @@ public class ResetPassFragment extends Fragment {
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    HiveProgressView hiveProgressView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class ResetPassFragment extends Fragment {
         etCnewPass=view.findViewById(R.id.etCnewPass);
         btnReset=view.findViewById(R.id.btnReset);
 
+        hiveProgressView = view.findViewById(R.id.progressReset);
+        hiveProgressView.setVisibility(View.GONE);
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,10 +86,7 @@ public class ResetPassFragment extends Fragment {
                     }
                     else
                     {
-                        if (alertDialog == null) {
-                            alertDialog = AlertsUtils.createProgressDialog(getActivity());
-                            alertDialog.show();
-                        }
+                       hiveProgressView.setVisibility(View.VISIBLE);
                         apiCall();
                     }
             }
@@ -103,8 +104,7 @@ public class ResetPassFragment extends Fragment {
 
                 if (response.isSuccessful())
                 {
-                                    if (alertDialog != null)
-                    alertDialog.dismiss();
+                    hiveProgressView.setVisibility(View.GONE);
                     Log.d("zmaResetResp",response.toString());
 
                     code=response.body().getMessage();
@@ -119,15 +119,13 @@ public class ResetPassFragment extends Fragment {
                 else
 
                 {
-                    if (alertDialog != null)
-                    alertDialog.dismiss();
+                    hiveProgressView.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<ResetPassResponseModel> call, Throwable t) {
-                if (alertDialog != null)
-                    alertDialog.dismiss();
+                hiveProgressView.setVisibility(View.GONE);
             }
         });
 

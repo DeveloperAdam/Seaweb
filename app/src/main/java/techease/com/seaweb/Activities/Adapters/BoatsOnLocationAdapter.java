@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Slide;
 import android.util.Log;
@@ -16,38 +14,47 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import techease.com.seaweb.Activities.Fragment.BoatDetailFragment;
-import techease.com.seaweb.Activities.Models.AddToFavrtResponseModel;
+import techease.com.seaweb.Activities.Fragment.BoatsOnLocationFragment;
 import techease.com.seaweb.Activities.Models.BoatOnLocationModel;
-import techease.com.seaweb.Activities.Utils.AlertsUtils;
-import techease.com.seaweb.Activities.Utils.ApiClient;
-import techease.com.seaweb.Activities.Utils.ApiService;
 import techease.com.seaweb.R;
 
 public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocationAdapter.ViewHolder> {
 
     android.support.v7.app.AlertDialog alertDialog;
     String boatid,isFvrt;
-    boolean flag=false;
+    String message;
+
     String userid;
     Activity activity;
+    String type;
+    Context context;
     List<BoatOnLocationModel> boatsOnLocationDataModels;
-
 
     public BoatsOnLocationAdapter(Activity activity, List<BoatOnLocationModel> boatOnLocationModel) {
         this.activity = activity;
+        context = activity;
         this.boatsOnLocationDataModels = boatOnLocationModel;
-
     }
 
 
@@ -63,10 +70,15 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         final BoatOnLocationModel model=boatsOnLocationDataModels.get(i);
         viewHolder.tvLocation.setText(model.getLocation());
-        Picasso.get().load(model.getFile()).into(viewHolder.ivPlaceImage);
-        Picasso.get().load(model.getUserImg()).into(viewHolder.ivUserImage);
 
-        viewHolder.tvPrice.setText(model.getFullPrice());
+        Picasso.get().load(model.getFile()).into(viewHolder.ivPlaceImage);
+        if (!model.getUserImg().equals(""))
+        {
+            Picasso.get().load(model.getUserImg()).into(viewHolder.ivUserImage);
+        }
+
+
+        viewHolder.tvPrice.setText(model.getFullPrice()+"$");
         viewHolder.tvTitle.setText(model.getTitle());
         isFvrt=model.getIs_fvrt();
         if (isFvrt.equals("true"))
@@ -77,10 +89,10 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
         {
             viewHolder.ivFavrt.setBackgroundResource(R.drawable.white_heart);
         }
-        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boatid=model.getPid().toString();
+                boatid=model.getPid();
                 viewHolder.editor.putString("boatid",boatid).commit();
                 Fragment fragment = new BoatDetailFragment();
                 fragment.setEnterTransition(new Slide(Gravity.RIGHT));
@@ -95,22 +107,32 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
         viewHolder.ivFavrt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isFvrt=model.getIs_fvrt();
+
                 userid=viewHolder.sharedPreferences.getString("userid","");
-                boatid=model.getPid().toString();
-                if (alertDialog == null) {
-                   alertDialog = AlertsUtils.createProgressDialog(activity);
-                    alertDialog.show();
-                }
+                type = "Boat";
+                boatid=model.getPid();
+                isFvrt=model.getIs_fvrt();
+
                 apicall();
-                if (isFvrt.equals("true"))
-                {
-                    viewHolder.ivFavrt.setBackgroundResource(R.drawable.white_heart);
-                }
-                else
-                {
-                    viewHolder.ivFavrt.setBackgroundResource(R.drawable.fillheart);
-                }
+
+//                if (isFvrt.equals("true"))
+//                {
+//                    Toast.makeText(activity, "if", Toast.LENGTH_SHORT).show();
+//                    viewHolder.ivFavrt.setBackgroundResource(R.drawable.white_heart);
+//                    apicall();
+//
+//                    isFvrt = "false";
+//                }
+//                else
+//                    if (isFvrt.equals("false"))
+//                {
+//                    Toast.makeText(activity, "else", Toast.LENGTH_SHORT).show();
+//                    viewHolder.ivFavrt.setBackgroundResource(R.drawable.fillheart);
+//                    apicall();
+//                    isFvrt = "true";
+//                }
+
+
 
             }
         });
@@ -118,35 +140,58 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
     }
 
     private void apicall() {
-
-        ApiService services = ApiClient.getClient().create(ApiService.class);
-        Call<AddToFavrtResponseModel> call = services.addToFavrt(boatid,String.valueOf(userid));
-        call.enqueue(new Callback<AddToFavrtResponseModel>() {
+        Log.d("zma",boatid+type+userid);
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://divergense.com/boat/App/favorite_boat"
+                , new com.android.volley.Response.Listener<String>() {
             @Override
-            public void onResponse(Call<AddToFavrtResponseModel> call, Response<AddToFavrtResponseModel> response) {
+            public void onResponse(String response) {
 
-                if (response.isSuccessful())
-                {
-                    if (alertDialog != null)
-                        alertDialog.dismiss();
-                    Log.d("zmaAddFavrtBoats",response.toString());
-                    Toast.makeText(activity, response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                Log.d("zmaAddFvrt", response);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    message = jsonObject.getString("message");
+
+                    Fragment fragment = new BoatsOnLocationFragment();
+                    ((AppCompatActivity)activity).getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+                    Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
 
                 }
-                else
 
-                {
-                    if (alertDialog != null)
-                        alertDialog.dismiss();
-                }
+            }
+
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.d("error", String.valueOf(error.getCause()));
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded;charset=UTF-8";
             }
 
             @Override
-            public void onFailure(Call<AddToFavrtResponseModel> call, Throwable t) {
-                if (alertDialog != null)
-                    alertDialog.dismiss();
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("userid",userid);
+                params.put("pro_id",boatid);
+                params.put("type",type);
+                Log.d("zmaParm",params.toString());
+                return params;
             }
-        });
+        };
+        RequestQueue mRequestQueue = Volley.newRequestQueue(activity);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        mRequestQueue.add(stringRequest);
+
+
     }
 
     @Override
@@ -157,8 +202,9 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
     public class ViewHolder extends RecyclerView.ViewHolder {
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
-        CardView cardView;
-        ImageView ivPlaceImage,ivUserImage,ivFavrt;
+        LinearLayout linearLayout;
+        ImageView ivPlaceImage,ivUserImage;
+        ImageView ivFavrt;
         TextView tvTitle,tvPrice,tvLocation;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -167,7 +213,7 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
             tvTitle=itemView.findViewById(R.id.tvTitle);
             tvPrice=itemView.findViewById(R.id.tvPrice);
             tvLocation=itemView.findViewById(R.id.tvLoc);
-            cardView=itemView.findViewById(R.id.cvBoat);
+            linearLayout = itemView.findViewById(R.id.llBookedBoats);
             ivFavrt= itemView.findViewById(R.id.ivFvrt);
             ivUserImage= itemView.findViewById(R.id.ivUserImageBoatonLocation);
             sharedPreferences = activity.getSharedPreferences("abc", Context.MODE_PRIVATE);

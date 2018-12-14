@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.comix.overwatch.HiveProgressView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +34,6 @@ import techease.com.seaweb.R;
 
 public class FavoriteFragment extends Fragment {
 
-    ImageView ivBack;
     RecyclerView recyclerView;
     List<FavrtDataModel> dataModelList;
     FavrtAdapter favrtAdapter;
@@ -40,6 +41,7 @@ public class FavoriteFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String userId;
+    HiveProgressView hiveProgressView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,33 +51,19 @@ public class FavoriteFragment extends Fragment {
 
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        ivBack=view.findViewById(R.id.ivBackFvrtBoats);
         userId=sharedPreferences.getString("userid","");
         recyclerView=view.findViewById(R.id.rvFavrt);
+        hiveProgressView = view.findViewById(R.id.progressFvrtBoat);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         dataModelList=new ArrayList<>();
 
-        alertDialog = null;
-
-
-        if (alertDialog == null) {
-            alertDialog = AlertsUtils.createProgressDialog(getActivity());
-            alertDialog.show();
-        }
+        hiveProgressView.setVisibility(View.VISIBLE);
         favrtAdapter=new FavrtAdapter(getActivity(),dataModelList);
         recyclerView.setAdapter(favrtAdapter);
         apiCall();
 
 
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                startActivity(new Intent(getActivity(), BottomActivity.class));
-                getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
-                getActivity().finish();
-            }
-        });
 
         return view;
     }
@@ -87,16 +75,23 @@ public class FavoriteFragment extends Fragment {
             @Override
             public void onResponse(Call<FavrtResponseModel> call, Response<FavrtResponseModel> response) {
 
+                hiveProgressView.setVisibility(View.GONE);
                 if (response.isSuccessful())
                 {
-                    if (alertDialog != null)
-                        alertDialog.dismiss();
-                    alertDialog = null;
+
                     Log.d("zmaFavrtBoats",response.toString());
 
                     if(response.body().getData() != null)
                     {
                         dataModelList.addAll(response.body().getData());
+                        if (dataModelList.size()>=0)
+                        {
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getActivity(), "No Booked Boats", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     else
                     {
@@ -111,17 +106,13 @@ public class FavoriteFragment extends Fragment {
                 else
 
                 {
-                    if (alertDialog != null)
-                        alertDialog.dismiss();
-                    alertDialog = null;
+                    hiveProgressView.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<FavrtResponseModel> call, Throwable t) {
-                if (alertDialog != null)
-                    alertDialog.dismiss();
-                alertDialog = null;
+                hiveProgressView.setVisibility(View.GONE);
             }
         });
     }

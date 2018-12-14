@@ -33,6 +33,9 @@ public class BoatDetailDataModel {
     @SerializedName("location")
     @Expose
     private String location;
+    @SerializedName("owner_id")
+    @Expose
+    private String ownerId;
     @SerializedName("user_picture")
     @Expose
     private String userPicture;
@@ -45,15 +48,15 @@ public class BoatDetailDataModel {
     @SerializedName("rating")
     @Expose
     private String rating;
-    @SerializedName("boatFileModels")
+    @SerializedName("files")
     @Expose
-    private List<BoatFileModel> boatFileModels = null;
+    private List<BoatFileModel> files = null;
     @SerializedName("facilities")
     @Expose
     private List<BoatFacilityParentModel> facilities = null;
     @SerializedName("price_list")
     @Expose
-    private List<BoatDetailPriceListModel> boatDetailPriceListModel = null;
+    private List<BoatDetailPriceListModel> priceList = null;
 
     public Integer getPid() {
         return pid;
@@ -127,6 +130,14 @@ public class BoatDetailDataModel {
         this.location = location;
     }
 
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
     public String getUserPicture() {
         return userPicture;
     }
@@ -159,12 +170,12 @@ public class BoatDetailDataModel {
         this.rating = rating;
     }
 
-    public List<BoatFileModel> getBoatFileModels() {
-        return boatFileModels;
+    public List<BoatFileModel> getFiles() {
+        return files;
     }
 
-    public void setBoatFileModels(List<BoatFileModel> boatFileModels) {
-        this.boatFileModels = boatFileModels;
+    public void setFiles(List<BoatFileModel> files) {
+        this.files = files;
     }
 
     public List<BoatFacilityParentModel> getFacilities() {
@@ -175,11 +186,11 @@ public class BoatDetailDataModel {
         this.facilities = facilities;
     }
 
-    public List<BoatDetailPriceListModel> getBoatDetailPriceListModel() {
-        return boatDetailPriceListModel;
+    public List<BoatDetailPriceListModel> getPriceList() {
+        return priceList;
     }
 
-    public void setBoatDetailPriceListModel(List<BoatDetailPriceListModel> boatDetailPriceListModel) {
-        this.boatDetailPriceListModel = boatDetailPriceListModel;
+    public void setPriceList(List<BoatDetailPriceListModel> priceList) {
+        this.priceList = priceList;
     }
 }

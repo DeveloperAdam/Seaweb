@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    
+
+                    Log.d("zmatoken",token);
                     if (token.equals("login"))
                     {
                         if ( Network.checkInternetConnection(MainActivity.this)==true)

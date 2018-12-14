@@ -15,6 +15,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import techease.com.seaweb.Activities.Models.BoatDetail.BoatDetailDataModel;
+import techease.com.seaweb.Activities.Models.BoatDetail.BoatFileModel;
 import techease.com.seaweb.Activities.Models.ImageModelBoatDetails;
 import techease.com.seaweb.R;
 
@@ -42,6 +44,7 @@ public class BoatDetailsAdapter extends RecyclerView.Adapter<BoatDetailsAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ImageModelBoatDetails model = boatDetailsDataModelList.get(position);
+
         Glide.with(context).load(model.getFile()).into(holder.iv);
     }
 

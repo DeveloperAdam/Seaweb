@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    tools:context=".Activities.Fragment.BookingFragment">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:layout_alignParentTop="true"
+                android:id="@+id/ll1">
+
+                <ImageView
+                    android:id="@+id/ivBackPriceRequest"
+                    android:layout_width="15sp"
+                    android:layout_height="20sp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20sp"
+                    android:src="@drawable/close" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:text="Price Request"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:id="@+id/v1"
+                android:layout_below="@+id/ll1"
+                android:background="#BDBDBD"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v1"
+                android:layout_margin="20sp"
+                android:id="@+id/ll33"
+                android:layout_gravity="right"
+                android:layout_alignParentRight="true"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Amount"/>
+                <TextView
+                    android:id="@+id/tvAmountPriceRequest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/orangecolor"
+                    android:textSize="17sp"
+                    android:layout_gravity="right"
+                    android:textStyle="bold"
+                    android:text="Price"/>
+            </LinearLayout>
+    <com.comix.overwatch.HiveProgressView
+        android:id="@+id/progressPriceRequest"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:hive_animDuration="5000"
+        android:layout_below="@+id/ll33"
+        android:layout_centerHorizontal="true"
+        app:hive_color="@color/colorAccent"
+        app:hive_maxAlpha="255"
+        app:hive_rainbow="false"
+        app:hive_cornerRadius="20"
+        app:hive_shrink="true"
+        />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/t1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20sp"
+                    android:text="Send Message" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/c1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/t1"
+                    android:layout_margin="10sp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp">
+
+                    <EditText
+                        android:id="@+id/etTextAreaPriceReq"
+                        android:layout_width="match_parent"
+                        android:layout_height="200sp"
+                        android:background="@null"
+                        android:gravity="start"
+                        android:hint="Text Message Here"
+                        android:padding="10sp" />
+                </android.support.v7.widget.CardView>
+                <Button
+                    android:id="@+id/btnSentRequest"
+                    android:layout_width="250sp"
+                    android:layout_height="40sp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10sp"
+                    android:foreground="@drawable/ripple_effect_orange"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="20sp"
+                    android:background="@drawable/orangeroundboundry"
+                    android:text="Sent"
+                    android:textAllCaps="false"
+                    />
+            </LinearLayout>
+
+
+</RelativeLayout>

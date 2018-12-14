@@ -45,7 +45,7 @@ public class FavrtAdapter extends RecyclerView.Adapter<FavrtAdapter.ViewHolder> 
 
         holder.tvLocation.setText(model.getLocation());
         Glide.with(activity).load(model.getBoatImage()).into(holder.ivPlaceImage);
-        holder.tvPrice.setText(model.getPrice());
+        holder.tvPrice.setText(model.getPriceDay());
         holder.tvTitle.setText(model.getTitle());
 
         isFvrt=model.getIsFavorite();

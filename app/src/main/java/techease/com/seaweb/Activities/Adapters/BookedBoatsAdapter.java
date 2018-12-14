@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,12 +54,13 @@ public class BookedBoatsAdapter extends RecyclerView.Adapter<BookedBoatsAdapter.
         final BookedBoatsDataModel model = bookedBoatsDataModelList.get(position);
 
         holder.tvLocation.setText(model.getLocation());
-        Glide.with(context).load(model.getBoatImage()).into(holder.ivPlaceImage);
-        holder.tvPrice.setText(model.getPrice());
+        Glide.with(context).load(model.getImage()).into(holder.ivPlaceImage);
+        // Glide.with(context).load(model.getUserPicture()).into(holder.ivUserImage);
+        holder.tvPrice.setText(model.getPrice()+"$");
         holder.tvTitle.setText(model.getTitle());
 
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -91,7 +93,7 @@ public class BookedBoatsAdapter extends RecyclerView.Adapter<BookedBoatsAdapter.
 
         ImageView ivPlaceImage,ivUserImage,ivFvrt;
         TextView tvTitle,tvPrice,tvLocation;
-        CardView cardView;
+        LinearLayout linearLayout;
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
 
@@ -102,8 +104,8 @@ public class BookedBoatsAdapter extends RecyclerView.Adapter<BookedBoatsAdapter.
             tvTitle=itemView.findViewById(R.id.tvTitle);
             tvPrice=itemView.findViewById(R.id.tvPrice);
             tvLocation=itemView.findViewById(R.id.tvLoc);
+            linearLayout = itemView.findViewById(R.id.llBookedBoats);
             ivFvrt=itemView.findViewById(R.id.ivBoatOnLocImage);
-            cardView=itemView.findViewById(R.id.cvBoat);
             sharedPreferences = activity.getSharedPreferences("abc", Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
          //   ivFvrt.setVisibility(View.INVISIBLE);

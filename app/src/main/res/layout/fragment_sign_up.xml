@@ -5,11 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/backimg"
-    tools:context=".Activities.Fragment.SignUpFragment">
+    tools:context=".Activities.Fragment.Account.SignUpFragment">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
   <RelativeLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="match_parent">
 
       <ImageView
           android:id="@+id/ivBackSignUp"
@@ -172,4 +175,16 @@
 
   </RelativeLayout>
 
+        <com.comix.overwatch.HiveProgressView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/progressSignup"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            app:hive_animDuration="5000"
+            app:hive_color="@color/colorAccent"
+            app:hive_cornerRadius="20"
+            app:hive_maxAlpha="255"
+            app:hive_rainbow="false"
+            app:hive_shrink="true" />
+    </FrameLayout>
 </ScrollView>

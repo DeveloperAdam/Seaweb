@@ -1,4 +1,4 @@
-package techease.com.seaweb.Activities.Fragment;
+package techease.com.seaweb.Activities.Fragment.Account;
 
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.comix.overwatch.HiveProgressView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +44,7 @@ public class LoginFragment extends Fragment {
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    HiveProgressView hiveProgressView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,12 +58,17 @@ public class LoginFragment extends Fragment {
         alertDialog = null;
 
 
+
+        hiveProgressView = view.findViewById(R.id.progressLogin);
         tvForgetPass=view.findViewById(R.id.tvForgotPass);
         tvGotoSignUp=view.findViewById(R.id.tvGotoSignUp);
         btnsignIn=view.findViewById(R.id.btnSignIn);
         etEmail=view.findViewById(R.id.etEmailLogin);
         etPass=view.findViewById(R.id.etPassLogin);
         ivBack=view.findViewById(R.id.ivBack);
+
+
+        hiveProgressView.setVisibility(View.GONE);
 
 
         tvGotoSignUp.setOnClickListener(new View.OnClickListener() {
@@ -118,10 +126,7 @@ public class LoginFragment extends Fragment {
                 }
                 else
                     {
-                        if (alertDialog == null) {
-                            alertDialog = AlertsUtils.createProgressDialog(getActivity());
-                            alertDialog.show();
-                        }
+                        hiveProgressView.setVisibility(View.VISIBLE);
                         apiCall();
                     }
             }
@@ -147,9 +152,7 @@ public class LoginFragment extends Fragment {
 
                 if (response.isSuccessful())
                 {
-                    if (alertDialog != null)
-                    alertDialog.dismiss();
-                    alertDialog = null;
+                    hiveProgressView.setVisibility(View.GONE);
                     Log.d("zmaLoginResp",response.toString());
                     message = response.body().getMessage().toString();
                     if (message.equals("Logged in"))
@@ -179,17 +182,13 @@ public class LoginFragment extends Fragment {
                 }
                 else
                 {
-                    if (alertDialog != null)
-                    alertDialog.dismiss();
-                    alertDialog = null;
+                    hiveProgressView.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponseModel> call, Throwable t) {
-                if (alertDialog != null)
-                    alertDialog.dismiss();
-                alertDialog = null;
+                hiveProgressView.setVisibility(View.GONE);
                 Log.d("zmaLoginexp",t.getMessage());
             }
         });

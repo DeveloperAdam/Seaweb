@@ -28,8 +28,7 @@ public class GetAllPlacesAdapter extends RecyclerView.Adapter<GetAllPlacesAdapte
 
     Activity activity;
     List<GetAllPlacesDataModel> dataModelList;
-
-
+    public static boolean boatOnLoc ;
 
     public GetAllPlacesAdapter(Activity activity, List<GetAllPlacesDataModel> dataModelList) {
         this.activity=activity;
@@ -54,10 +53,12 @@ public class GetAllPlacesAdapter extends RecyclerView.Adapter<GetAllPlacesAdapte
         viewHolder.tvPlacename.setText(model.getName());
          viewHolder.placeId=model.getId();
 
+         boatOnLoc = false;
         viewHolder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                boatOnLoc = true;
                 viewHolder.placeId=model.getId();
                 viewHolder.editor.putString("placeid",viewHolder.placeId).commit();
 

@@ -1,5 +1,6 @@
 package techease.com.seaweb.Activities.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -57,10 +58,13 @@ public class BottomActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
                     return true;
                 case R.id.trips:
-                    fragment = new TripsFragment();
-                    fragment.setEnterTransition(new Slide(Gravity.RIGHT));
-                    fragment.setExitTransition(new Slide(Gravity.LEFT));
-                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+//                    fragment = new TripsFragment();
+//                    fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+//                    fragment.setExitTransition(new Slide(Gravity.LEFT));
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+                    startActivity(new Intent(BottomActivity.this,TripBottomNavigationActivity.class));
+                    overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
+                    finish();
                     return true;
             }
 
@@ -85,30 +89,13 @@ public class BottomActivity extends AppCompatActivity {
         BottomNavigationHelper.disableShiftMode(navigation);
 
 
-//        AHBottomNavigationItem item1 = new AHBottomNavigationItem("", R.drawable.home);
-//        AHBottomNavigationItem item2 = new AHBottomNavigationItem("", R.drawable.hrt);
-//        AHBottomNavigationItem item3 = new AHBottomNavigationItem("", R.drawable.label);
-//        AHBottomNavigationItem item4 = new AHBottomNavigationItem("", R.drawable.profi);
-//
-//        ahBottomNavigation.setBehaviorTranslationEnabled(false);
-//
-//
-//        ahBottomNavigation.addItem(item1);
-//        ahBottomNavigation.addItem(item2);
-//        ahBottomNavigation.addItem(item3);
-//        ahBottomNavigation.addItem(item4);
-//
-//        ahBottomNavigation.setDefaultBackgroundColor(Color.WHITE);
-//        ahBottomNavigation.setAccentColor(fetchColor(R.color.orangecolor));
-//        ahBottomNavigation.setInactiveColor(fetchColor(R.color.graycolor));
-
-
         if (whichOne.equals("Bookings"))
         {
             fragment = new BookedBoatsFragment();
             fragment.setEnterTransition(new Slide(Gravity.RIGHT));
             fragment.setExitTransition(new Slide(Gravity.LEFT));
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+            whichOne = "";
         }
         else
             if (whichOne.equals("Favourite"))
@@ -117,6 +104,7 @@ public class BottomActivity extends AppCompatActivity {
                 fragment.setEnterTransition(new Slide(Gravity.RIGHT));
                 fragment.setExitTransition(new Slide(Gravity.LEFT));
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+                whichOne ="";
             }
             else
             if (whichOne.equals(""))
@@ -125,41 +113,18 @@ public class BottomActivity extends AppCompatActivity {
                 fragment.setEnterTransition(new Slide(Gravity.RIGHT));
                 fragment.setExitTransition(new Slide(Gravity.LEFT));
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
+                whichOne = "";
             }
+            else
+                if (whichOne.equals("Profile"))
+                {
+                    fragment = new ProfileFragment();
+                    fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                    fragment.setExitTransition(new Slide(Gravity.LEFT));
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
 
-     //   ahBottomNavigation.setCurrentItem(0);
-
-
-//        ahBottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(int position, boolean wasSelected) {
-//
-//                if (position == 0)
-//                {
-//                    fragment = new ListOfPlacesFragment();
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
-//                }
-//                else
-//                    if (position == 1)
-//                    {
-//
-//                        fragment = new FavoriteFragment();
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
-//                    }
-//                    else
-//                    if (position == 2)
-//                    {
-//                        fragment = new BookedBoatsFragment();
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
-//                    }
-//                    else
-//                    if (position == 3)
-//                    {
-//                        fragment = new ProfileFragment();
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
-//                    }
-//            }
-//        });
+                    whichOne = "";
+                }
 
 
     }

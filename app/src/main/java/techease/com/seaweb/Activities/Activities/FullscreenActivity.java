@@ -3,7 +3,6 @@ package techease.com.seaweb.Activities.Activities;
 import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,16 +12,18 @@ import android.transition.Slide;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Toast;
 
+import techease.com.seaweb.Activities.Adapters.Chat.InboxAdapter;
+import techease.com.seaweb.Activities.Adapters.GetAllPlacesAdapter;
 import techease.com.seaweb.Activities.Fragment.BoatDetailFragment;
+import techease.com.seaweb.Activities.Fragment.BoatTypeFragment;
 import techease.com.seaweb.Activities.Fragment.BoatsOnLocationFragment;
-import techease.com.seaweb.Activities.Fragment.DatePickerFragment;
+import techease.com.seaweb.Activities.Fragment.Chatting.InboxFragment;
+import techease.com.seaweb.Activities.Fragment.Chatting.MessagesListFragment;
+import techease.com.seaweb.Activities.Fragment.DatePickerFilterFragment;
 import techease.com.seaweb.Activities.Fragment.ListOfPlacesFragment;
-import techease.com.seaweb.Activities.Fragment.LoginFragment;
-import techease.com.seaweb.Activities.Fragment.TabFragment;
+import techease.com.seaweb.Activities.Fragment.Account.LoginFragment;
+import techease.com.seaweb.Activities.Fragment.Profile.ProfileFragment;
 import techease.com.seaweb.R;
 
 /**
@@ -106,10 +107,11 @@ public class FullscreenActivity extends AppCompatActivity {
         String token=sharedPreferences.getString("login","");
         if (ListOfPlacesFragment.searchFlag == true)
         {
-            android.support.v4.app.Fragment fragment=new DatePickerFragment();
-            fragment.setEnterTransition(new Slide(Gravity.RIGHT));
-            fragment.setExitTransition(new Slide(Gravity.LEFT));
+            android.support.v4.app.Fragment fragment=new BoatTypeFragment();
+            fragment.setEnterTransition(new Slide(Gravity.LEFT));
+            fragment.setExitTransition(new Slide(Gravity.RIGHT));
             getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
+            ListOfPlacesFragment.searchFlag = false;
         }
         else
         if (flag == true)
@@ -120,13 +122,15 @@ public class FullscreenActivity extends AppCompatActivity {
             bundle.putString("boatid",boatid);
             android.support.v4.app.Fragment fragment=new BoatDetailFragment();
             fragment.setArguments(bundle);
-            fragment.setEnterTransition(new Slide(Gravity.RIGHT));
-            fragment.setExitTransition(new Slide(Gravity.LEFT));
+            fragment.setEnterTransition(new Slide(Gravity.LEFT));
+            fragment.setExitTransition(new Slide(Gravity.RIGHT));
             getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+
+            flag = false;
 
         }
         else
-        if (token.equals("login"))
+        if (GetAllPlacesAdapter.boatOnLoc == true)
         {
             String placeid=sharedPreferences.getString("placeid","");
             Bundle bundle=new Bundle();
@@ -137,7 +141,32 @@ public class FullscreenActivity extends AppCompatActivity {
             fragment.setExitTransition(new Slide(Gravity.LEFT));
             getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
 
+            GetAllPlacesAdapter.boatOnLoc = true;
+
+
         }
+        else
+        if (ProfileFragment.messages == true)
+        {
+            Fragment fragment = new InboxFragment();
+            fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+            fragment.setExitTransition(new Slide(Gravity.LEFT));
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+
+            ProfileFragment.messages = false;
+
+        }
+        else
+            if (InboxAdapter.inbox == true)
+            {
+                Fragment fragment = new MessagesListFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+
+                InboxAdapter.inbox = false;
+
+            }
         else
         {
 

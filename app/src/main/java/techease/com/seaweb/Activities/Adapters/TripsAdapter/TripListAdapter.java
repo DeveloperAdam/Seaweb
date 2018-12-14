@@ -1,14 +1,13 @@
-package techease.com.seaweb.Activities.Adapters;
+package techease.com.seaweb.Activities.Adapters.TripsAdapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Slide;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import techease.com.seaweb.Activities.Fragment.BoatDetailFragment;
+import techease.com.seaweb.Activities.Activities.FullscreenActivityTrip;
 import techease.com.seaweb.Activities.Fragment.Trips.TripDetailsFragment;
 import techease.com.seaweb.Activities.Models.Trip.AllTripsDataModel;
 import techease.com.seaweb.R;
@@ -28,7 +27,7 @@ import techease.com.seaweb.R;
 public class TripListAdapter extends RecyclerView.Adapter<TripListAdapter.ViewHolder> {
     Activity activity;
     List<AllTripsDataModel> tripListModels;
-
+    public  static boolean tripDetail;
     public TripListAdapter(Activity activity, List<AllTripsDataModel> tripListModels) {
         this.activity = activity;
         this.tripListModels = tripListModels;
@@ -57,12 +56,13 @@ public class TripListAdapter extends RecyclerView.Adapter<TripListAdapter.ViewHo
         holder.llTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tripDetail = true;
                 holder.editor.putString("tripid",model.getPid().toString()).commit();
-                Fragment fragment = new TripDetailsFragment();
-                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
-                fragment.setExitTransition(new Slide(Gravity.LEFT));
-                ((AppCompatActivity)activity).getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).addToBackStack("back").commit();
+
+                Intent intent=new Intent(activity, FullscreenActivityTrip.class);
+                activity.overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
+                activity.startActivity(intent);
+                activity.finish();
             }
         });
     }

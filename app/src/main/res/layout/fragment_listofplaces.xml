@@ -25,7 +25,7 @@
         android:paddingLeft="20sp"
         android:drawablePadding="20sp"
         android:layout_marginLeft="20sp"
-        android:focusable="true"
+        android:focusable="false"
         android:focusableInTouchMode="true"
         android:layout_marginRight="20sp"
         android:layout_marginTop="20sp"

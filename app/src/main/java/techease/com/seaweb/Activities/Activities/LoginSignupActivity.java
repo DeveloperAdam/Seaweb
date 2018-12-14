@@ -269,7 +269,6 @@ public class LoginSignupActivity extends AppCompatActivity {
         return null;
     }
     private void socialLoginApiCall() {
-        Toast.makeText(LoginSignupActivity.this, "aya", Toast.LENGTH_SHORT).show();
         ApiService services = ApiClient.getClient().create(ApiService.class);
         Call<SocialLoginResponseModel> call = services.socialLogin(email,name,device_id,socialToken,provider);
         call.enqueue(new Callback<SocialLoginResponseModel>() {

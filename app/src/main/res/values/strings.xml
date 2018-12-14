@@ -19,4 +19,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_activity_trip_bottom_navigation">TripBottomNavigationActivity</string>
+
+    <string name="title_activity_fullscreen_trip">FullscreenActivityTrip</string>
 </resources>

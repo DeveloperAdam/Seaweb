@@ -21,9 +21,9 @@ public class BookedBoatsDataModel {
     @SerializedName("price")
     @Expose
     private String price;
-    @SerializedName("boat_image")
+    @SerializedName("image")
     @Expose
-    private String boatImage;
+    private String image;
 
     public Integer getPid() {
         return pid;
@@ -65,11 +65,11 @@ public class BookedBoatsDataModel {
         this.price = price;
     }
 
-    public String getBoatImage() {
-        return boatImage;
+    public String getImage() {
+        return image;
     }
 
-    public void setBoatImage(String boatImage) {
-        this.boatImage = boatImage;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

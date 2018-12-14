@@ -3,6 +3,7 @@ package techease.com.seaweb.Activities.Adapters;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.text.style.CharacterStyle;
 import android.text.style.StyleSpan;
 import android.util.Log;
@@ -25,7 +26,10 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import techease.com.seaweb.Activities.Models.SuggestedPlaceModel;
 
 public class PlacesAdapter  extends ArrayAdapter<AutocompletePrediction> implements Filterable {
 

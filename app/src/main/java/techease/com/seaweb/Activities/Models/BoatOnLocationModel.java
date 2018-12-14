@@ -48,6 +48,16 @@ public class BoatOnLocationModel {
     String location;
     String fullPrice;
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    String type;
+
     public String getIs_fvrt() {
         return is_fvrt;
     }

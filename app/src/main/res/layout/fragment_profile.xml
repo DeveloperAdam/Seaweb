@@ -17,8 +17,8 @@
         <ImageView
             android:layout_width="80sp"
             android:layout_height="80sp"
-            android:src="@drawable/profi"
             android:scaleType="fitXY"
+            android:src="@drawable/inboxprofile"
             android:id="@+id/ivProfile"/>
 
         <TextView
@@ -26,6 +26,8 @@
             android:layout_width="0sp"
             android:layout_weight="0.4"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:layout_gravity="center"
             android:layout_marginLeft="30sp"
             android:text="Username" />
@@ -52,37 +54,36 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="40sp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/llMessages"
-        android:layout_marginRight="20sp"
-        android:layout_marginLeft="20sp"
-        android:layout_marginBottom="20sp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="25sp"
-            android:layout_height="25sp"
-            android:src="@drawable/msg"/>
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Messages"
-            android:textSize="17sp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20sp"/>
+            android:id="@+id/llMessages"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20sp"
+            android:layout_marginRight="20sp"
+            android:layout_marginLeft="20sp">
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="25sp"
+                android:layout_height="25sp"
+                android:src="@drawable/msg"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Inbox"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20sp"
+                android:textSize="17sp"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1sp"
-        android:layout_marginRight="10sp"
-        android:layout_marginLeft="10sp"
-        android:background="#BDBDBD"
-        />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:background="#BDBDBD"
+            />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -101,7 +102,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Bookings"
+            android:text="My Boat Bookings"
+            android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_marginLeft="20sp"
             android:textSize="17sp"/>
@@ -133,7 +135,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Favourites"
+            android:text="My Boat Favourites"
+            android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_marginLeft="20sp"
             android:textSize="17sp"/>
@@ -166,6 +169,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Settings"
+            android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_marginLeft="20sp"
             android:textSize="17sp"/>
@@ -197,6 +201,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Contact Us"
+            android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_marginLeft="20sp"
             android:textSize="17sp"/>
@@ -229,6 +234,7 @@
                 android:layout_height="wrap_content"
                 android:text="Logout"
                 android:layout_gravity="center"
+                android:textStyle="bold"
                 android:layout_marginLeft="20sp"
                 android:textSize="17sp"/>
 

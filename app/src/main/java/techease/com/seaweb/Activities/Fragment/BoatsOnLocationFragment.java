@@ -46,7 +46,7 @@ public class BoatsOnLocationFragment extends Fragment {
 
     RecyclerView recyclerView;
     ImageView ivback;
-    BoatsOnLocationAdapter boatsOnLocationAdapter;
+   public static BoatsOnLocationAdapter boatsOnLocationAdapter;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -81,7 +81,7 @@ public class BoatsOnLocationFragment extends Fragment {
         locId=sharedPreferences.getString("placeid","");
         userId=sharedPreferences.getString("userid","");
 
-        hiveProgressView.showContextMenu();
+        hiveProgressView.setVisibility(View.VISIBLE);
         boatsOnLocationAdapter=new BoatsOnLocationAdapter(getActivity(),boatOnLocationModel);
         recyclerView.setAdapter(boatsOnLocationAdapter);
 
@@ -102,9 +102,15 @@ public class BoatsOnLocationFragment extends Fragment {
         });
 
 
+
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                View decorView = getActivity().getWindow().getDecorView();
+                int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN;
+                decorView.setSystemUiVisibility(uiOptions);
+
 
             }
 
@@ -117,10 +123,11 @@ public class BoatsOnLocationFragment extends Fragment {
                     final String test2 = boatOnLocationModel.get(j).getTitle().toLowerCase();
                     if (test2.startsWith(String.valueOf(query))) {
                         newData.add(boatOnLocationModel.get(j));
+
                     }
                 }
                 boatsOnLocationAdapter = new BoatsOnLocationAdapter(getActivity(), newData);
-                ListOfPlacesFragment.recyclerView.setAdapter(boatsOnLocationAdapter);
+                recyclerView.setAdapter(boatsOnLocationAdapter);
                 boatsOnLocationAdapter.notifyDataSetChanged();
 
             }
@@ -158,6 +165,7 @@ public class BoatsOnLocationFragment extends Fragment {
                         model.setPid(object.getString("pid"));
                         model.setFile(object.getString("files"));
                         model.setUserImg(object.getString("user_picture"));
+                        model.setType(object.getString("boat_type"));
                         boatOnLocationModel.add(model);
 
                     }
@@ -166,9 +174,7 @@ public class BoatsOnLocationFragment extends Fragment {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    if (alertDialog != null)
-                        alertDialog.dismiss();
-                    alertDialog = null;
+                    hiveProgressView.setVisibility(View.GONE);
                 }
 
             }
@@ -176,9 +182,7 @@ public class BoatsOnLocationFragment extends Fragment {
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (alertDialog != null)
-                    alertDialog.dismiss();
-                alertDialog = null;
+                hiveProgressView.setVisibility(View.GONE);
                 Log.d("error", String.valueOf(error.getCause()));
             }
         }) {
@@ -206,6 +210,19 @@ public class BoatsOnLocationFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        boatsOnLocationAdapter=new BoatsOnLocationAdapter(getActivity(),boatOnLocationModel);
+        recyclerView.setAdapter(boatsOnLocationAdapter);
         boatsOnLocationAdapter.notifyDataSetChanged();
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        boatsOnLocationAdapter.notifyDataSetChanged();
+    }
+
+
 }

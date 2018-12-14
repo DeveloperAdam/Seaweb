@@ -18,20 +18,19 @@
             android:layout_height="wrap_content"
             android:text="From and to"
             android:layout_marginLeft="20sp"/>
-        <ImageView
-            android:layout_width="20sp"
-            android:layout_height="20sp"
+        <TextView
+            android:id="@+id/tvPricePriceList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
             android:layout_marginRight="20sp"
-            android:src="@drawable/forward"/>
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="10sp"
+            android:text="Price"
+            android:textColor="@color/orangecolor" />
     </LinearLayout>
-    <TextView
-        android:id="@+id/tvPricePriceList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Price"
-        android:layout_marginTop="5sp"
-        android:layout_marginBottom="10sp"
-        android:layout_marginLeft="20sp"/>
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1sp"

@@ -32,7 +32,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
             android:theme="@style/FullscreenTheme"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Activities.Activities.LoginSignupActivity" />
 
         <meta-data
@@ -71,6 +71,14 @@
             android:name=".Activities.Activities.BottomActivity"
             android:label="@string/title_activity_bottom"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Activities.Activities.TripBottomNavigationActivity"
+            android:label="@string/title_activity_trip_bottom_navigation" />
+        <activity
+            android:name=".Activities.Activities.FullscreenActivityTrip"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_fullscreen_trip"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

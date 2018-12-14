@@ -29,8 +29,7 @@
             android:layout_marginRight="20sp"
             android:layout_height="wrap_content"
             android:text="Save"
-            android:layout_gravity="center"
-            android:textColor="#000"/>
+            android:layout_gravity="center" />
     </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
@@ -94,6 +93,8 @@
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:id="@+id/etFnameAccount"
+        android:layout_marginLeft="20sp"
+        android:textSize="15sp"
         android:cursorVisible="false"
         android:background="@null"/>
 
@@ -114,6 +115,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50sp"
+        android:layout_marginLeft="20sp"
+        android:textSize="15sp"
         android:id="@+id/etLnameAccount"
         android:cursorVisible="false"
         android:background="@null"/>
@@ -136,6 +139,8 @@
             android:layout_width="match_parent"
             android:layout_height="50sp"
             android:cursorVisible="false"
+            android:layout_marginLeft="20sp"
+            android:textSize="15sp"
             android:id="@+id/etEmailAccount"
             android:background="@null"/>
 
@@ -143,6 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="1sp"
             android:background="#BDBDBD"
+            android:layout_marginBottom="60sp"
             android:layout_marginLeft="20sp"
             android:layout_marginRight="20sp"/>
 

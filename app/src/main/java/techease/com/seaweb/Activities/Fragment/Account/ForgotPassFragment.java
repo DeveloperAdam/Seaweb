@@ -1,4 +1,4 @@
-package techease.com.seaweb.Activities.Fragment;
+package techease.com.seaweb.Activities.Fragment.Account;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.comix.overwatch.HiveProgressView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,6 +37,7 @@ public class ForgotPassFragment extends Fragment {
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    HiveProgressView hiveProgressView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,10 +49,12 @@ public class ForgotPassFragment extends Fragment {
 
         alertDialog = null;
 
-
+        hiveProgressView = view.findViewById(R.id.progressForgot);
         ivBack=view.findViewById(R.id.ivbackForgot);
         etEmail=view.findViewById(R.id.etEmailForgot);
         btnSentCode=view.findViewById(R.id.btnSentCode);
+
+        hiveProgressView.setVisibility(View.GONE);
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,10 +79,7 @@ public class ForgotPassFragment extends Fragment {
                 }
                 else
                 {
-                    if (alertDialog == null) {
-                        alertDialog = AlertsUtils.createProgressDialog(getActivity());
-                        alertDialog.show();
-                    }
+                   hiveProgressView.setVisibility(View.VISIBLE);
                     apiCall();
                 }
             }
@@ -96,9 +98,7 @@ public class ForgotPassFragment extends Fragment {
 
                 if (response.isSuccessful())
                 {
-                    if (alertDialog != null)
-                    alertDialog.dismiss();
-                    alertDialog = null;
+                    hiveProgressView.setVisibility(View.GONE);
                     Log.d("zmaForgotResp",response.toString());
 
                     success = response.body().getSuccess();
@@ -123,17 +123,13 @@ public class ForgotPassFragment extends Fragment {
                 }
                 else
                 {
-                    if (alertDialog != null)
-                    alertDialog.dismiss();
-                    alertDialog = null;
+                    hiveProgressView.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<ForgotPassResponseModel> call, Throwable t) {
-                if (alertDialog != null)
-                    alertDialog.dismiss();
-                alertDialog = null;
+                hiveProgressView.setVisibility(View.GONE);
             }
         });
 

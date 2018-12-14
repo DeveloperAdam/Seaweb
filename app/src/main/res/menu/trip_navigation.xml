@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <item
+        android:id="@+id/trips2"
+        android:icon="@drawable/trip"
+        android:title="Trips" />
+    <item
+        android:id="@+id/home2"
+        android:icon="@drawable/boat"
+        android:title="Boats" />
+    <item
+        android:id="@+id/favrt2"
+        android:icon="@drawable/hrt"
+        android:title="Favourites" />
+
+    <item
+        android:id="@+id/booked2"
+        android:icon="@drawable/label"
+        android:title="Booked" />
+
+    <item
+        android:id="@+id/profile2"
+        android:icon="@drawable/profi"
+        android:title="Profile" />
+
+
+</menu>

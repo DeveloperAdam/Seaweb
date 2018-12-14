@@ -2,8 +2,6 @@ package techease.com.seaweb.Activities.Fragment.Profile;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.transition.Slide;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import techease.com.seaweb.Activities.Fragment.DatePickerFragment;
 import techease.com.seaweb.R;
 
 public class AccountDetailFragment extends Fragment {
@@ -67,7 +64,7 @@ public class AccountDetailFragment extends Fragment {
                 Fragment fragment=new ProfileFragment();
                 fragment.setEnterTransition(new Slide(Gravity.RIGHT));
                 fragment.setExitTransition(new Slide(Gravity.LEFT));
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack("back").commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).addToBackStack("back").commit();
             }
         });
 

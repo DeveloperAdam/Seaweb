@@ -1,0 +1,124 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".Activities.Fragment.Chatting.MessagesListFragment">
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivBackMesgDet"
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:src="@drawable/backicon"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20sp"/>
+        <TextView
+            android:id="@+id/tvUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Messages"
+            android:layout_margin="20sp"
+            android:textSize="20sp"
+            android:textColor="#757575"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:id="@+id/v1"
+        android:layout_below="@+id/ll1"
+        android:background="#BDBDBD"/>
+    <FrameLayout
+        android:layout_below="@+id/v1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10sp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvMessageList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="60sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#BDBDBD"
+                android:layout_marginBottom="2sp"
+                android:layout_alignTop="@+id/layout_chatbox" />
+
+            <LinearLayout
+                android:id="@+id/layout_chatbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#fff"
+                android:minHeight="48dp"
+                android:layout_alignParentBottom="true">
+
+                <EditText
+                    android:id="@+id/edittext_chatbox"
+                    android:hint="Enter message"
+                    android:background="@null"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+
+                    android:layout_height="wrap_content"
+                    android:maxLines="6"/>
+
+                <Button
+                    android:id="@+id/button_chatbox_send"
+                    android:text="SEND"
+                    android:textSize="14dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:layout_width="64dp"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:layout_gravity="bottom" />
+
+            </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+        <com.comix.overwatch.HiveProgressView
+            android:id="@+id/progressMsgList"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            app:hive_animDuration="5000"
+            app:hive_color="@color/colorAccent"
+            app:hive_maxAlpha="255"
+            app:hive_rainbow="false"
+            app:hive_cornerRadius="20"
+            app:hive_shrink="true"
+            />
+    </FrameLayout>
+
+
+</RelativeLayout>

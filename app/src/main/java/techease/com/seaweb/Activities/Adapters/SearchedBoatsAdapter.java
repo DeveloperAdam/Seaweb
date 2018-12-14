@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -58,7 +59,7 @@ public class SearchedBoatsAdapter extends RecyclerView.Adapter<SearchedBoatsAdap
         viewHolder.tvPrice.setText(model.getPrice());
         viewHolder.tvTitle.setText(model.getTitle());
 
-        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boatid=model.getPid().toString();
@@ -83,7 +84,7 @@ public class SearchedBoatsAdapter extends RecyclerView.Adapter<SearchedBoatsAdap
     public class Holder extends RecyclerView.ViewHolder {
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
-        CardView cardView;
+        LinearLayout linearLayout;
         ImageView ivPlaceImage,ivUserImage,ivFavrt;
         TextView tvTitle,tvPrice,tvLocation;
 
@@ -95,7 +96,7 @@ public class SearchedBoatsAdapter extends RecyclerView.Adapter<SearchedBoatsAdap
             tvTitle=itemView.findViewById(R.id.tvTitle);
             tvPrice=itemView.findViewById(R.id.tvPrice);
             tvLocation=itemView.findViewById(R.id.tvLoc);
-            cardView=itemView.findViewById(R.id.cvBoat);
+            linearLayout = itemView.findViewById(R.id.llBookedBoats);
             ivFavrt= itemView.findViewById(R.id.ivFvrt);
             sharedPreferences = activity.getSharedPreferences("abc", Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();

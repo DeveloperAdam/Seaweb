@@ -19,7 +19,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import techease.com.seaweb.Activities.Adapters.TripListAdapter;
+import techease.com.seaweb.Activities.Adapters.TripsAdapter.TripListAdapter;
 import techease.com.seaweb.Activities.Models.Trip.AllTripsDataModel;
 import techease.com.seaweb.Activities.Models.Trip.AllTripsResponseModel;
 import techease.com.seaweb.Activities.Utils.ApiClient;
@@ -90,4 +90,11 @@ public class TripsFragment extends Fragment {
 
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        tripListAdapter.notifyDataSetChanged();
+    }
 }

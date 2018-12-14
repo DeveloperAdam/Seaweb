@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.comix.overwatch.HiveProgressView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +38,13 @@ import techease.com.seaweb.R;
 public class BookedBoatsFragment extends Fragment {
 
     RecyclerView recyclerView;
-    ImageView ivBack;
     List<BookedBoatsDataModel> bookedBoatsDataModelList;
     BookedBoatsAdapter adapter;
     android.support.v7.app.AlertDialog alertDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String userId;
+    HiveProgressView hiveProgressView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,30 +54,16 @@ public class BookedBoatsFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         userId=sharedPreferences.getString("userid","");
-        alertDialog = null;
+        hiveProgressView = view.findViewById(R.id.progressBookedBoat);
         recyclerView=view.findViewById(R.id.rvBooking);
-        ivBack=view.findViewById(R.id.ivBackBookedBoats);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         bookedBoatsDataModelList = new ArrayList<>();
 
-        if (alertDialog == null) {
-            alertDialog = AlertsUtils.createProgressDialog(getActivity());
-            alertDialog.show();
-        }
+        hiveProgressView.setVisibility(View.VISIBLE);
         adapter=new BookedBoatsAdapter(getActivity(),bookedBoatsDataModelList);
         recyclerView.setAdapter(adapter);
         apiCall();
 
-
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                startActivity(new Intent(getActivity(), BottomActivity.class));
-                getActivity().overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
-                getActivity().finish();
-            }
-        });
 
         return view;
     }
@@ -83,21 +71,22 @@ public class BookedBoatsFragment extends Fragment {
     private void apiCall() {
 
         ApiService services = ApiClient.getClient().create(ApiService.class);
-        Call<BookedBoatsResponseModel> call = services.getBookedBoats(userId);
+        Call<BookedBoatsResponseModel> call = services.getBookedBoats(userId,"Boat");
         call.enqueue(new Callback<BookedBoatsResponseModel>() {
             @Override
             public void onResponse(Call<BookedBoatsResponseModel> call, Response<BookedBoatsResponseModel> response) {
 
+                hiveProgressView.setVisibility(View.GONE);
                 if (response.isSuccessful())
                 {
-                    if (alertDialog != null)
-                        alertDialog.dismiss();
-                    alertDialog = null;
-                    Log.d("zmaFavrtBoats",response.toString());
+
+                    Log.d("zmaBookedBoats",response.toString());
+
 
                     if (response.body().getData() !=null)
                     {
                         bookedBoatsDataModelList.addAll(response.body().getData());
+
                     }
                     else
                     {
@@ -107,23 +96,20 @@ public class BookedBoatsFragment extends Fragment {
                         adapter.notifyDataSetChanged();
 
 
-
-
                 }
                 else
 
                 {
-                    if (alertDialog != null)
-                        alertDialog.dismiss();
-                    alertDialog = null;
+                    Log.d("zmaBookedBoats",response.toString());
+
                 }
             }
 
             @Override
             public void onFailure(Call<BookedBoatsResponseModel> call, Throwable t) {
-                if (alertDialog != null)
-                    alertDialog.dismiss();
-                alertDialog = null;
+
+                Log.d("zmaBookedBoats",t.getCause().toString());
+                hiveProgressView.setVisibility(View.GONE);
             }
         });
     }
