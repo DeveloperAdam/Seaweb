@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -47,10 +55,24 @@ public class TripListAdapter extends RecyclerView.Adapter<TripListAdapter.ViewHo
         final AllTripsDataModel model = tripListModels.get(position);
 
         holder.tvTitle.setText(model.getTitle());
-       // holder.tvDuration.setText(model.getDuration());
-      //  holder.tvLocation.setText(model.getLocation());
-        Picasso.get().load(model.getImage()).into(holder.imageView);
-      //  Picasso.get().load(model.getUserPicture()).into(holder.ivUser);
+
+        if (!model.getImage().equals(""))
+        {
+            Glide.with(activity).load(model.getImage()).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    holder.progressBar.setVisibility(View.GONE);
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                   holder.progressBar.setVisibility(View.GONE);
+                    return false;
+                }
+            }).into(holder.imageView);
+        }
+
 
 
         holder.llTrip.setOnClickListener(new View.OnClickListener() {
@@ -73,23 +95,21 @@ public class TripListAdapter extends RecyclerView.Adapter<TripListAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView,ivUser;
-        TextView tvTitle,tvLocation,tvDuration;
+        ImageView imageView;
+        TextView tvTitle;
         LinearLayout llTrip;
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
-
+        ProgressBar progressBar;
         public ViewHolder(View itemView) {
             super(itemView);
 
             sharedPreferences = activity.getSharedPreferences("abc", Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
             imageView = itemView.findViewById(R.id.ivTrip);
-           // ivUser = itemView.findViewById(R.id.ivTripUser);
             tvTitle = itemView.findViewById(R.id.tvTripTitle);
-           // tvLocation = itemView.findViewById(R.id.tvTripLocation);
-           // tvDuration = itemView.findViewById(R.id.tvTripDuration);
             llTrip = itemView.findViewById(R.id.llTrip);
+            progressBar = itemView.findViewById(R.id.innerProgressTripList);
 
         }
     }

@@ -27,7 +27,15 @@
        android:layout_height="match_parent"
        android:id="@+id/rvBooking"
        android:layout_marginTop="20sp"
-       android:layout_marginBottom="60sp"></android.support.v7.widget.RecyclerView>
+       android:layout_marginBottom="60sp"/>
+
+        <TextView
+            android:id="@+id/tvNoboakedboats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="No booked boats"
+            android:layout_gravity="center"/>
 
         <com.comix.overwatch.HiveProgressView
             android:id="@+id/progressBookedBoat"

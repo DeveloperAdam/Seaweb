@@ -10,6 +10,7 @@ import techease.com.seaweb.Activities.Models.BookingBoatResponseModel;
 import techease.com.seaweb.Activities.Models.Chat.InboxResponseModel;
 import techease.com.seaweb.Activities.Models.Chat.MessageDetailResponseModel;
 import techease.com.seaweb.Activities.Models.Chat.PriceRequestResponseModel;
+import techease.com.seaweb.Activities.Models.SearchBoatsFileModel;
 import techease.com.seaweb.Activities.Models.Trip.AllTripsResponseModel;
 import techease.com.seaweb.Activities.Models.BoatTypeResponseModel;
 import techease.com.seaweb.Activities.Models.BookedBoatsResponseModel;
@@ -104,11 +105,13 @@ public interface ApiService {
 
 
     @FormUrlEncoded
-    @POST("App/searchBoat")
+        @POST("App/searchBoat")
     Call<SearchedBoatsResponseModel> getSearchedBoats(@Field("location") String location,
                                                       @Field("type") String type,
                                                       @Field("start_date") String start_date,
                                                       @Field("end_date") String end_date);
+
+
 
 
 

@@ -1,15 +1,23 @@
 package techease.com.seaweb.Activities.Adapters.TripsAdapter;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -39,13 +47,32 @@ public class FavrtTripsAdapter extends RecyclerView.Adapter<FavrtTripsAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
         FavrtTripsDataModel model = favrtTripsDataModels.get(position);
 
+        if (!model.getBoatImage().equals(""))
+        {
+            holder.progressBar.setVisibility(View.VISIBLE);
+            Glide.with(activity).load(model.getBoatImage()).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    holder.progressBar.setVisibility(View.GONE);
+                    return false;
+                }
 
-        Picasso.get().load(model.getBoatImage()).into(holder.ivFvrt);
-        Picasso.get().load(model.getUserPicture()).into(holder.ivUser);
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    holder.progressBar.setVisibility(View.VISIBLE);
+                    return false;
+                }
+            }).into(holder.ivFvrt);
+        }
+        if (!model.getUserPicture().equals(""))
+        {
+            Picasso.get().load(model.getUserPicture()).into(holder.ivUser);
+        }
+
 
         String fvrt = model.getIsFavorite();
         if (fvrt.equals("true"))
@@ -68,6 +95,7 @@ public class FavrtTripsAdapter extends RecyclerView.Adapter<FavrtTripsAdapter.Vi
 
         ImageView ivFvrt,ivUser,ivHeart;
         TextView tvUsername,tvTitle,tvPrice;
+        ProgressBar progressBar;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -77,6 +105,7 @@ public class FavrtTripsAdapter extends RecyclerView.Adapter<FavrtTripsAdapter.Vi
             ivHeart = itemView.findViewById(R.id.ivFvrtTripsHeart);
             tvUsername = itemView.findViewById(R.id.tvUsernameFvrtTrips);
             tvTitle = itemView.findViewById(R.id.tvFvrtTripTitle);
+            progressBar = itemView.findViewById(R.id.innerProgressBookedBoats);
             tvPrice = itemView.findViewById(R.id.tvFvrttripPrice);
 
         }

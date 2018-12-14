@@ -71,6 +71,7 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
         final BoatOnLocationModel model=boatsOnLocationDataModels.get(i);
         viewHolder.tvLocation.setText(model.getLocation());
 
+        viewHolder.ownername.setText(model.getOwnerName());
         Picasso.get().load(model.getFile()).into(viewHolder.ivPlaceImage);
         if (!model.getUserImg().equals(""))
         {
@@ -205,7 +206,7 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
         LinearLayout linearLayout;
         ImageView ivPlaceImage,ivUserImage;
         ImageView ivFavrt;
-        TextView tvTitle,tvPrice,tvLocation;
+        TextView tvTitle,tvPrice,tvLocation,ownername;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -215,6 +216,7 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
             tvLocation=itemView.findViewById(R.id.tvLoc);
             linearLayout = itemView.findViewById(R.id.llBookedBoats);
             ivFavrt= itemView.findViewById(R.id.ivFvrt);
+            ownername = itemView.findViewById(R.id.tvOwnerNameBoatsonLo);
             ivUserImage= itemView.findViewById(R.id.ivUserImageBoatonLocation);
             sharedPreferences = activity.getSharedPreferences("abc", Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();

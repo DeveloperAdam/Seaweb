@@ -33,16 +33,14 @@
             android:textColor="@color/color_white"
             android:layout_margin="50sp"/>
 
-
-        <!--<Button-->
-            <!--android:layout_width="180sp"-->
-            <!--android:layout_height="80sp"-->
-            <!--android:layout_margin="20sp"-->
-            <!--android:textSize="20sp"-->
-            <!--android:textColor="@color/color_white"-->
-            <!--android:gravity="center"-->
-            <!--android:background="@drawable/bluebtn"-->
-            <!--android:layout_gravity="bottom"/>-->
+        <ProgressBar
+            android:id="@+id/pbHeaderProgress"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </ProgressBar>
 
     </FrameLayout>
     </android.support.v7.widget.CardView>

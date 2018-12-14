@@ -67,21 +67,18 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.ViewHolder> 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 GetAllPlacesAdapter.boatOnLoc = false;
                 id = model.getId();
                 proid = model.getProId();
                 holder.editor.putString("proid",proid).commit();
                 holder.editor.putString("ownerid",id).commit();
                 inbox = true;
+
                 Intent intent=new Intent(activity, FullscreenActivity.class);
                 activity.overridePendingTransition(R.animator.slide_out_up,R.animator.slide_in_up);
                 activity.startActivity(intent);
                 activity.finish();
-
-//                Fragment fragment = new MessagesListFragment();
-//                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
-//                fragment.setExitTransition(new Slide(Gravity.LEFT));
-//                ((AppCompatActivity)activity).getSupportFragmentManager().beginTransaction().replace(R.id.container_trip,fragment).addToBackStack("abc").commit();
 
 
             }

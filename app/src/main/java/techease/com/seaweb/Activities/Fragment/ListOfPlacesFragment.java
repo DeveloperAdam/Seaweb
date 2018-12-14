@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comix.overwatch.HiveProgressView;
@@ -59,7 +60,7 @@ public class ListOfPlacesFragment extends Fragment{
     AutoCompleteTextView etSearch;
     public static boolean searchFlag;
     HiveProgressView hiveProgressView;
-
+    TextView tvNoLoc;
     private static final LatLngBounds latlng = new LatLngBounds( new LatLng(-40,-168),new LatLng(71,136));
 
     @Override
@@ -75,7 +76,8 @@ public class ListOfPlacesFragment extends Fragment{
         hiveProgressView = view.findViewById(R.id.progress);
         etSearch = view.findViewById(R.id.autoCompleteTextView1);
         recyclerView=view.findViewById(R.id.rvPlaces);
-        rvNames=view.findViewById(R.id.rvListOfPlaces);
+        tvNoLoc = view.findViewById(R.id.tvNoLocation);
+      //  rvNames=view.findViewById(R.id.rvListOfPlaces);
 
         searchFlag = false;
 
@@ -84,10 +86,10 @@ public class ListOfPlacesFragment extends Fragment{
         linearLayoutManager.setStackFromEnd(false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity());
-        linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
-        linearLayoutManager2.setStackFromEnd(false);
-        rvNames.setLayoutManager(linearLayoutManager2);
+//        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity());
+//        linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        linearLayoutManager2.setStackFromEnd(false);
+//        rvNames.setLayoutManager(linearLayoutManager2);
 
 
         dataModelList=new ArrayList<>();
@@ -97,8 +99,8 @@ public class ListOfPlacesFragment extends Fragment{
         getAllPlacesAdapter=new GetAllPlacesAdapter(getActivity(),dataModelList);
         recyclerView.setAdapter(getAllPlacesAdapter);
 
-        namesAdapter = new ListOfPlacesNamesAdapter(getActivity(),dataModelList);
-        rvNames.setAdapter(namesAdapter);
+      //  namesAdapter = new ListOfPlacesNamesAdapter(getActivity(),dataModelList);
+      //  rvNames.setAdapter(namesAdapter);
         apiCall();
 
 //
@@ -163,21 +165,32 @@ public class ListOfPlacesFragment extends Fragment{
             @Override
             public void onResponse(Call<GetAllPlacesResponseModel> call, Response<GetAllPlacesResponseModel> response) {
 
+                hiveProgressView.clearAnimation();
+                hiveProgressView.setVisibility(View.GONE);
                 if (response.isSuccessful())
                 {
-                    hiveProgressView.clearAnimation();
-                    hiveProgressView.setVisibility(View.GONE);
+
                     if (alertDialog != null)
                         alertDialog.dismiss();
                     alertDialog = null;
+
+                    if (response.body().getData()!=null)
+                    {
+
+                        dataModelList.addAll(response.body().getData());
+
+                        getAllPlacesAdapter.notifyDataSetChanged();
+
+
+//                      namesAdapter.notifyDataSetChanged();
+                    }
+                    else
+                    {
+                        tvNoLoc.setVisibility(View.VISIBLE);
+                    }
                     Log.d("zmagetAllPlace",response.toString());
 
-                    dataModelList.addAll(response.body().getData());
 
-                    getAllPlacesAdapter.notifyDataSetChanged();
-                    namesAdapter.notifyDataSetChanged();
-                    if (alertDialog != null)
-                        alertDialog.dismiss();
                 }
                 else
                 {
@@ -190,9 +203,8 @@ public class ListOfPlacesFragment extends Fragment{
 
             @Override
             public void onFailure(Call<GetAllPlacesResponseModel> call, Throwable t) {
-                if (alertDialog != null)
-                    alertDialog.dismiss();
-                alertDialog = null;
+                hiveProgressView.clearAnimation();
+                hiveProgressView.setVisibility(View.GONE);
             }
         });
     }

@@ -58,10 +58,6 @@ public class BottomActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
                     return true;
                 case R.id.trips:
-//                    fragment = new TripsFragment();
-//                    fragment.setEnterTransition(new Slide(Gravity.RIGHT));
-//                    fragment.setExitTransition(new Slide(Gravity.LEFT));
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).commit();
                     startActivity(new Intent(BottomActivity.this,TripBottomNavigationActivity.class));
                     overridePendingTransition(R.animator.fade_out,R.animator.fade_in);
                     finish();

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comix.overwatch.HiveProgressView;
@@ -44,6 +45,7 @@ public class BookedBoatsFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String userId;
+    TextView tvNoBoats;
     HiveProgressView hiveProgressView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +58,7 @@ public class BookedBoatsFragment extends Fragment {
         userId=sharedPreferences.getString("userid","");
         hiveProgressView = view.findViewById(R.id.progressBookedBoat);
         recyclerView=view.findViewById(R.id.rvBooking);
+        tvNoBoats = view.findViewById(R.id.tvNoboakedboats);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         bookedBoatsDataModelList = new ArrayList<>();
 
@@ -90,7 +93,7 @@ public class BookedBoatsFragment extends Fragment {
                     }
                     else
                     {
-                        Toast.makeText(getActivity(), "NO BOOKED BOATS", Toast.LENGTH_SHORT).show();
+                        tvNoBoats.setVisibility(View.VISIBLE);
                     }
 
                         adapter.notifyDataSetChanged();

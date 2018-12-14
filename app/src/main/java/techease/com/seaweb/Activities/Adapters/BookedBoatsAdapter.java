@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +19,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -54,8 +62,32 @@ public class BookedBoatsAdapter extends RecyclerView.Adapter<BookedBoatsAdapter.
         final BookedBoatsDataModel model = bookedBoatsDataModelList.get(position);
 
         holder.tvLocation.setText(model.getLocation());
-        Glide.with(context).load(model.getImage()).into(holder.ivPlaceImage);
-        // Glide.with(context).load(model.getUserPicture()).into(holder.ivUserImage);
+        holder.progressBar.setVisibility(View.VISIBLE);
+        if (!model.getImage().equals(""))
+        {
+            Glide.with(context).load(model.getImage()).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+
+                    holder.progressBar.setVisibility(View.GONE);
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    holder.progressBar.setVisibility(View.GONE);
+                    return false;
+                }
+            }).into(holder.ivPlaceImage);
+        }
+
+
+
+        if (!model.getUserPicture().equals(""))
+        {
+            Picasso.get().load(model.getUserPicture()).into(holder.ivUserImage);
+        }
+
         holder.tvPrice.setText(model.getPrice()+"$");
         holder.tvTitle.setText(model.getTitle());
 
@@ -71,13 +103,6 @@ public class BookedBoatsAdapter extends RecyclerView.Adapter<BookedBoatsAdapter.
                 fragment.setExitTransition(new Slide(Gravity.LEFT));
                 ((AppCompatActivity)activity).getSupportFragmentManager().beginTransaction().replace(R.id.nav_container,fragment).addToBackStack("abc").commit();
 
-//
-//                FullscreenActivity.flag = true;
-//
-//
-//                Intent intent = new Intent(activity,FullscreenActivity.class);
-//                intent.putExtra("boatid",boatid);
-//                activity.startActivity(intent);
 
             }
         });
@@ -96,19 +121,21 @@ public class BookedBoatsAdapter extends RecyclerView.Adapter<BookedBoatsAdapter.
         LinearLayout linearLayout;
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
-
+        ProgressBar progressBar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             ivPlaceImage=itemView.findViewById(R.id.ivBoatOnLocImage);
             tvTitle=itemView.findViewById(R.id.tvTitle);
+            ivUserImage = itemView.findViewById(R.id.ivUserImageBoatonLocation);
             tvPrice=itemView.findViewById(R.id.tvPrice);
             tvLocation=itemView.findViewById(R.id.tvLoc);
+            progressBar = itemView.findViewById(R.id.innerProgressBookedBoats);
             linearLayout = itemView.findViewById(R.id.llBookedBoats);
-            ivFvrt=itemView.findViewById(R.id.ivBoatOnLocImage);
+            ivFvrt=itemView.findViewById(R.id.ivFvrt);
             sharedPreferences = activity.getSharedPreferences("abc", Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
-         //   ivFvrt.setVisibility(View.INVISIBLE);
+            ivFvrt.setVisibility(View.GONE);
 
         }
     }

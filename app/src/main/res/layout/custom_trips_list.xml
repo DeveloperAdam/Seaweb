@@ -7,12 +7,16 @@
     android:background="#fff">
 <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10sp">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="250sp"
         android:scaleType="fitXY"
         android:id="@+id/ivTrip"/>
+
+
+
     <TextView
         android:id="@+id/tvTripTitle"
         android:layout_width="wrap_content"
@@ -23,64 +27,16 @@
         android:textColor="#fff"
         android:textStyle="bold"
         android:text="Title"/>
-    <!--<FrameLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:layout_margin="10sp">-->
-        <!--<TextView-->
-            <!--android:layout_width="150sp"-->
-            <!--android:layout_height="25sp"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginLeft="10sp"-->
-            <!--android:text="Professional"-->
-            <!--android:gravity="center"-->
 
-            <!--android:paddingLeft="15sp"-->
-            <!--android:textColor="@color/color_white"-->
-            <!--android:background="@drawable/orangefill"-->
-            <!--/>-->
-        <!--<de.hdodenhof.circleimageview.CircleImageView-->
-            <!--android:id="@+id/ivTripUser"-->
-            <!--android:layout_width="50sp"-->
-            <!--android:layout_height="50sp"-->
-            <!--android:src="@drawable/profile" />-->
+    <ProgressBar
+        android:id="@+id/innerProgressTripList"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </ProgressBar>
 
-    <!--</FrameLayout>-->
     </FrameLayout>
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_margin="10sp"-->
-        <!--android:orientation="horizontal">-->
-  <!---->
-        <!--<TextView-->
-            <!--android:id="@+id/tvTripLocation"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Location"-->
-            <!--android:textSize="17sp"-->
-            <!--android:layout_marginRight="20sp"/>-->
-    <!--</LinearLayout>-->
-   <!--<LinearLayout-->
-       <!--android:layout_width="match_parent"-->
-       <!--android:layout_height="wrap_content"-->
-       <!--android:layout_marginBottom="5sp"-->
-       <!--android:orientation="horizontal">-->
-       <!--<TextView-->
-           <!--android:layout_width="wrap_content"-->
-           <!--android:layout_height="wrap_content"-->
-           <!--android:text="Duration:"-->
-           <!--android:textSize="15sp"-->
-           <!--android:textStyle="bold"-->
-           <!--android:layout_marginLeft="20sp"/>-->
-       <!--<TextView-->
-           <!--android:id="@+id/tvTripDuration"-->
-           <!--android:layout_width="wrap_content"-->
-           <!--android:layout_height="wrap_content"-->
-           <!--android:text="4"-->
-           <!--android:textSize="15sp"-->
-           <!--android:textStyle="bold"-->
-           <!--android:layout_marginLeft="20sp"/>-->
-   <!--</LinearLayout>-->
+
 </LinearLayout>

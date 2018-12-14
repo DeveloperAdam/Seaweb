@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView1"
@@ -35,12 +35,12 @@
         android:background="@drawable/grayroundedboundry"
         android:hint="Type Here The Location" />
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layoutDirection="ltr"
-        android:id="@+id/rvListOfPlaces">
-    </android.support.v7.widget.RecyclerView>
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50sp"-->
+        <!--android:layoutDirection="ltr"-->
+        <!--android:id="@+id/rvListOfPlaces">-->
+    <!--</android.support.v7.widget.RecyclerView>-->
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -50,7 +50,13 @@
         android:layout_marginBottom="55sp"
         android:id="@+id/rvPlaces"></android.support.v7.widget.RecyclerView>
         </LinearLayout>
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Location found"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:id="@+id/tvNoLocation"/>
         <com.comix.overwatch.HiveProgressView
             android:id="@+id/progress"
             xmlns:app="http://schemas.android.com/apk/res-auto"

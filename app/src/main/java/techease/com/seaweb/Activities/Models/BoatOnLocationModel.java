@@ -48,6 +48,16 @@ public class BoatOnLocationModel {
     String location;
     String fullPrice;
 
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    String ownerName;
+
     public String getType() {
         return type;
     }

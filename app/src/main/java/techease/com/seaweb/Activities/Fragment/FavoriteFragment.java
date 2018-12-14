@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comix.overwatch.HiveProgressView;
@@ -41,6 +42,7 @@ public class FavoriteFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String userId;
+    TextView tvNoFvrtBoats;
     HiveProgressView hiveProgressView;
 
     @Override
@@ -52,6 +54,8 @@ public class FavoriteFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         userId=sharedPreferences.getString("userid","");
+        Toast.makeText(getActivity(), userId, Toast.LENGTH_SHORT).show();
+        tvNoFvrtBoats = view.findViewById(R.id.tvNofavrtboats);
         recyclerView=view.findViewById(R.id.rvFavrt);
         hiveProgressView = view.findViewById(R.id.progressFvrtBoat);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -90,7 +94,7 @@ public class FavoriteFragment extends Fragment {
                         }
                         else
                         {
-                            Toast.makeText(getActivity(), "No Booked Boats", Toast.LENGTH_SHORT).show();
+                            tvNoFvrtBoats.setVisibility(View.VISIBLE);
                         }
                     }
                     else

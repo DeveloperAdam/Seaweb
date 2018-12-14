@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import retrofit2.Response;
 import techease.com.seaweb.Activities.Activities.BottomActivity;
 import techease.com.seaweb.Activities.Adapters.SearchedBoatsAdapter;
 import techease.com.seaweb.Activities.Models.BoatTypeResponseModel;
+import techease.com.seaweb.Activities.Models.SearchBoatsFileModel;
 import techease.com.seaweb.Activities.Models.SearchedBoatsDataModel;
 import techease.com.seaweb.Activities.Models.SearchedBoatsResponseModel;
 import techease.com.seaweb.Activities.Utils.AlertsUtils;
@@ -43,7 +45,7 @@ public class BoatSearchFragment extends Fragment {
     String type,location,startDate,endDate;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-
+    TextView tvNoFilter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class BoatSearchFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         ivBack = view.findViewById(R.id.ivBackSearchedBoats);
+        tvNoFilter = view.findViewById(R.id.tvNoFilter);
         recyclerView = view.findViewById(R.id.rvSearchedBoats);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         searchedBoatsDataModelList = new ArrayList<>();
@@ -71,7 +74,6 @@ public class BoatSearchFragment extends Fragment {
         adapter = new SearchedBoatsAdapter(getActivity(),searchedBoatsDataModelList);
         recyclerView.setAdapter(adapter);
         apiCall();
-
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +100,7 @@ public class BoatSearchFragment extends Fragment {
 
                 if (response.isSuccessful())
                 {
-                    if (alertDialog != null)
+                    if (alertDialog!=null)
                         alertDialog.dismiss();
                     alertDialog = null;
                     Log.d("zmaSearchedBoats",response.toString());
@@ -114,7 +116,7 @@ public class BoatSearchFragment extends Fragment {
                     }
                     else
                     {
-                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        tvNoFilter.setVisibility(View.VISIBLE);
                     }
 
 
@@ -122,7 +124,7 @@ public class BoatSearchFragment extends Fragment {
                 }
                 else
                 {
-                    if (alertDialog != null)
+                    if (alertDialog!=null)
                         alertDialog.dismiss();
                     alertDialog = null;
                     Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -140,6 +142,9 @@ public class BoatSearchFragment extends Fragment {
             }
         });
     }
+
+
+
 
 
 }

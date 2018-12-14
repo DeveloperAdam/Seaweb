@@ -1,17 +1,25 @@
 package techease.com.seaweb.Activities.Adapters;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,12 +47,34 @@ public class FavrtAdapter extends RecyclerView.Adapter<FavrtAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int i) {
 
         FavrtDataModel model=dataModelList.get(i);
 
         holder.tvLocation.setText(model.getLocation());
-        Glide.with(activity).load(model.getBoatImage()).into(holder.ivPlaceImage);
+        if (!model.getBoatImage().equals(""))
+        {
+            holder.progressBar.setVisibility(View.VISIBLE);
+            Glide.with(activity).load(model.getBoatImage()).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    holder.progressBar.setVisibility(View.GONE);
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    holder.progressBar.setVisibility(View.GONE);
+                    return false;
+                }
+            }).into(holder.ivPlaceImage);
+        }
+
+        if (!model.getUserPicture().equals(""))
+        {
+            Picasso.get().load(model.getUserPicture()).into(holder.ivUserImage);
+        }
+
         holder.tvPrice.setText(model.getPriceDay());
         holder.tvTitle.setText(model.getTitle());
 
@@ -70,6 +100,7 @@ public class FavrtAdapter extends RecyclerView.Adapter<FavrtAdapter.ViewHolder> 
 
         ImageView ivPlaceImage,ivUserImage,ivFvrt;
         TextView tvTitle,tvPrice,tvLocation;
+        ProgressBar progressBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,7 +109,9 @@ public class FavrtAdapter extends RecyclerView.Adapter<FavrtAdapter.ViewHolder> 
             tvTitle=itemView.findViewById(R.id.tvTitle);
             tvPrice=itemView.findViewById(R.id.tvPrice);
             tvLocation=itemView.findViewById(R.id.tvLoc);
+            ivUserImage = itemView.findViewById(R.id.ivUserImageBoatonLocation);
             ivFvrt=itemView.findViewById(R.id.ivFvrt);
+            progressBar = itemView.findViewById(R.id.innerProgressBookedBoats);
 
         }
     }

@@ -17,12 +17,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import techease.com.seaweb.Activities.Fragment.BoatDetailFragment;
+import techease.com.seaweb.Activities.Models.SearchBoatsFileModel;
 import techease.com.seaweb.Activities.Models.SearchedBoatsDataModel;
 import techease.com.seaweb.R;
 
@@ -31,7 +33,6 @@ public class SearchedBoatsAdapter extends RecyclerView.Adapter<SearchedBoatsAdap
     Context context;
     Activity activity;
     String boatid,isFvrt;
-
     List<SearchedBoatsDataModel> searchedBoatsDataModelList;
 
     public SearchedBoatsAdapter(Activity activity, List<SearchedBoatsDataModel> searchedBoatsDataModelList) {
@@ -55,10 +56,14 @@ public class SearchedBoatsAdapter extends RecyclerView.Adapter<SearchedBoatsAdap
      final    SearchedBoatsDataModel model = searchedBoatsDataModelList.get(position);
 
         viewHolder.tvLocation.setText(model.getLocation());
-        Picasso.get().load(model.getBoatImage()).into(viewHolder.ivPlaceImage);
-        viewHolder.tvPrice.setText(model.getPrice());
+        Picasso.get().load(model.getFiles().get(0).getFile()).into(viewHolder.ivPlaceImage);
+        viewHolder.tvPrice.setText(model.getPriceDay());
         viewHolder.tvTitle.setText(model.getTitle());
 
+        if (!model.getUserPicture().equals(""))
+        {
+            Picasso.get().load(model.getUserPicture()).into(viewHolder.ivUserImage);
+        }
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +100,7 @@ public class SearchedBoatsAdapter extends RecyclerView.Adapter<SearchedBoatsAdap
             ivPlaceImage=itemView.findViewById(R.id.ivBoatOnLocImage);
             tvTitle=itemView.findViewById(R.id.tvTitle);
             tvPrice=itemView.findViewById(R.id.tvPrice);
+            ivUserImage = itemView.findViewById(R.id.ivUserImageBoatonLocation);
             tvLocation=itemView.findViewById(R.id.tvLoc);
             linearLayout = itemView.findViewById(R.id.llBookedBoats);
             ivFavrt= itemView.findViewById(R.id.ivFvrt);

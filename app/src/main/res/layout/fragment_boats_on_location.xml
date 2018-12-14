@@ -57,14 +57,30 @@
             android:textColorHint="#BDBDBD"
             android:background="@drawable/grayroundedboundry"
             android:hint="Type Here The Name" />
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="20sp"
-        android:layout_marginTop="5sp"
+        android:layout_marginTop="10sp"
         android:id="@+id/rvBoatsOnLocation">
 
     </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tvNoBoatsOnLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No Boats Available"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                />
+        </FrameLayout>
 
 </LinearLayout>
         <com.comix.overwatch.HiveProgressView

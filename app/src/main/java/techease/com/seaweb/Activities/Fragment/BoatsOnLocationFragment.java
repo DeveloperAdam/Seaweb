@@ -17,6 +17,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -52,6 +54,8 @@ public class BoatsOnLocationFragment extends Fragment {
     SharedPreferences.Editor editor;
     String locId;
     String userId;
+    TextView tvNoBoats;
+    boolean success;
     HiveProgressView hiveProgressView;
     AutoCompleteTextView etSearch;
     List<BoatOnLocationModel> boatOnLocationModel;
@@ -73,6 +77,7 @@ public class BoatsOnLocationFragment extends Fragment {
         editor = sharedPreferences.edit();
         etSearch = view.findViewById(R.id.svBoatsList);
         etSearch.setSelection(0);
+        tvNoBoats = view.findViewById(R.id.tvNoBoatsOnLocation);
         ivback=view.findViewById(R.id.ivBackListofBoats);
         recyclerView=view.findViewById(R.id.rvBoatsOnLocation);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -153,23 +158,32 @@ public class BoatsOnLocationFragment extends Fragment {
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    for (int i = 0; i<jsonArray.length(); i++)
+                    success = jsonObject.getBoolean("success");
+                    if (success == false)
                     {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        BoatOnLocationModel model = new BoatOnLocationModel();
-                        model.setTitle(object.getString("title"));
-                        model.setLocation(object.getString("location"));
-                        model.setFullPrice(object.getString("fullday_price"));
-                        model.setIs_fvrt(object.getString("is_favorite"));
-                        model.setPid(object.getString("pid"));
-                        model.setFile(object.getString("files"));
-                        model.setUserImg(object.getString("user_picture"));
-                        model.setType(object.getString("boat_type"));
-                        boatOnLocationModel.add(model);
-
+                        tvNoBoats.setVisibility(View.VISIBLE);
                     }
-                    boatsOnLocationAdapter.notifyDataSetChanged();
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+
+                        tvNoBoats.setVisibility(View.GONE);
+                        for (int i = 0; i<jsonArray.length(); i++)
+                        {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            BoatOnLocationModel model = new BoatOnLocationModel();
+                            model.setTitle(object.getString("title"));
+                            model.setLocation(object.getString("location"));
+                            model.setFullPrice(object.getString("fullday_price"));
+                            model.setIs_fvrt(object.getString("is_favorite"));
+                            model.setPid(object.getString("pid"));
+                            model.setFile(object.getString("files"));
+                            model.setOwnerName(object.getString("username"));
+                            model.setUserImg(object.getString("user_picture"));
+                            model.setType(object.getString("boat_type"));
+                            boatOnLocationModel.add(model);
+                        }
+                        boatsOnLocationAdapter.notifyDataSetChanged();
+
 
 
                 } catch (JSONException e) {
