@@ -166,10 +166,13 @@ public interface ApiService {
                                             @Field("pro_id") String proid,
                                             @Field("start_date") String sdate,
                                             @Field("end_date") String edate,
-                                            @Field("trans_code") String code,
                                             @Field("price_total") String total,
                                             @Field("type") String boat,
-                                            @Field("message") String msg);
+                                            @Field("message") String msg,
+                                            @Field("card_no") String cardNumber,
+                                            @Field("ccExpiryMonth") String expMonth,
+                                            @Field("ccExpiryYear") String expYear,
+                                            @Field("cvvNumber") String cvvNumber);
 
 
     @FormUrlEncoded

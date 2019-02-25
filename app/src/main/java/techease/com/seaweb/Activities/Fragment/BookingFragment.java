@@ -144,7 +144,8 @@ public class BookingFragment extends Fragment {
     private void apiCall() {
 
         ApiService services = ApiClient.getClient().create(ApiService.class);
-        Call<BookingBoatResponseModel> call = services.bookBoat(user_id,proid,sDate,eDate,code,price,type,message);
+        Call<BookingBoatResponseModel> call = services.bookBoat(user_id,proid,sDate,eDate,price,type,message,
+                "5555555555554444", "03", "2023", "123");
         call.enqueue(new Callback<BookingBoatResponseModel>() {
             @Override
             public void onResponse(Call<BookingBoatResponseModel> call, Response<BookingBoatResponseModel> response) {
@@ -161,9 +162,9 @@ public class BookingFragment extends Fragment {
                     getActivity().finish();
 
                 }
-                else
+                else if (response.body() == null)
                 {
-                    Toast.makeText(getActivity(), String.valueOf(response.body().getMessage()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "something went wrong!", Toast.LENGTH_SHORT).show();
                 }
             }
 

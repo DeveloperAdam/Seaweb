@@ -139,13 +139,20 @@ public class BoatDetailFragment extends Fragment {
         btnMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                editor.putString("proid",proid).commit();
                 editor.putString("perday",pricePerDay).commit();
-                editor.putString("ownerid",owenerid).commit();
-                Fragment fragment = new MessagesListFragment();
+                Fragment fragment = new DatePickerBookingFragment();
                 fragment.setEnterTransition(new Slide(Gravity.RIGHT));
                 fragment.setExitTransition(new Slide(Gravity.LEFT));
                 getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+
+
+//                editor.putString("perday",pricePerDay).commit();
+//                editor.putString("ownerid",owenerid).commit();
+//                Fragment fragment = new MessagesListFragment();
+//                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+//                fragment.setExitTransition(new Slide(Gravity.LEFT));
+//                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
 
             }
         });

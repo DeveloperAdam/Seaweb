@@ -105,7 +105,7 @@ public class FullscreenActivity extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences("abc", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         String token=sharedPreferences.getString("login","");
-        if (ListOfPlacesFragment.searchFlag == true)
+        if (ListOfPlacesFragment.searchFlag)
         {
             android.support.v4.app.Fragment fragment=new BoatTypeFragment();
             fragment.setEnterTransition(new Slide(Gravity.LEFT));
@@ -114,7 +114,7 @@ public class FullscreenActivity extends AppCompatActivity {
             ListOfPlacesFragment.searchFlag = false;
         }
         else
-        if (flag == true)
+        if (flag)
         {
 
             String boatid=getIntent().getExtras().getString("boatid");

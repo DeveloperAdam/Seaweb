@@ -53,6 +53,8 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:layout_marginRight="20sp"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
             android:textColor="#BDBDBD"
             android:textColorHint="#BDBDBD"
             android:background="@drawable/grayroundedboundry"

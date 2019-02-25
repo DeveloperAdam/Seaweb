@@ -29,7 +29,8 @@
         android:layout_marginTop="10sp"
         android:textColor="#BDBDBD"
         android:textColorHint="#BDBDBD"
-        android:imeOptions="actionSearch"
+        android:imeOptions="actionDone"
+        android:singleLine="true"
         android:background="@null"
         android:hint="Type Here The Location" />
 
