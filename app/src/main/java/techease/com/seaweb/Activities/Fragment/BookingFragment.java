@@ -44,7 +44,7 @@ public class BookingFragment extends Fragment {
     ImageView ivBack;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    String price,sDate,eDate,message,user_id,proid,code="B234B3B34",type;
+    String price,sDate,eDate,message,user_id,proid,type;
     SimpleDateFormat sdf;
     Date date1,date2;
     String totalDays;

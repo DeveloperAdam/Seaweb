@@ -79,5 +79,7 @@ dependencies {
     //progress bar
     implementation 'cc.cloudist.acplibrary:library:1.2.1'
     implementation 'com.github.zjywill:OverwatchProgress:1.5'
+    //rating bar
+    implementation 'com.iarcuschin:simpleratingbar:0.1.5'
 
 }

@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import techease.com.seaweb.Activities.Models.Reviews;
+
 public class BoatDetailDataModel {
     @SerializedName("pid")
     @Expose
@@ -57,6 +59,18 @@ public class BoatDetailDataModel {
     @SerializedName("price_list")
     @Expose
     private List<BoatDetailPriceListModel> priceList = null;
+
+    public Reviews getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Reviews reviews) {
+        this.reviews = reviews;
+    }
+
+    @SerializedName("reviews")
+    @Expose
+    private Reviews reviews;
 
     public Integer getPid() {
         return pid;

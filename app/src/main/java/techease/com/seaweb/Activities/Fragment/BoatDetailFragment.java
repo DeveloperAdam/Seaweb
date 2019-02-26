@@ -29,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.comix.overwatch.HiveProgressView;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.rbrooks.indefinitepagerindicator.IndefinitePagerIndicator;
 import com.squareup.picasso.Picasso;
 
@@ -81,6 +82,7 @@ public class BoatDetailFragment extends Fragment {
     SharedPreferences.Editor editor;
     HiveProgressView hiveProgressView;
     ScrollView scrollView;
+    SimpleRatingBar rbComfort, rbCleaning, rbStaff, rbMoney, rbService;
 
     List<FacilitiesGroupModel> facilitiesGroupModels;
     HashMap<FacilitiesGroupModel, List<FacilitiesSubItemModel>> listDataChild;
@@ -115,6 +117,11 @@ public class BoatDetailFragment extends Fragment {
         tvPlace=view.findViewById(R.id.tvBoatDetailsPlace);
         tvPeople =view.findViewById(R.id.tvPeopleBoatDetails);
         btnGotoAddBookDetail=view.findViewById(R.id.btnGotoAddBookDetail);
+        rbComfort = view.findViewById(R.id.rb_comfort);
+        rbCleaning = view.findViewById(R.id.rb_cleaning);
+        rbStaff = view.findViewById(R.id.rb_staff);
+        rbMoney = view.findViewById(R.id.rb_money);
+        rbService = view.findViewById(R.id.rb_services);
 
 
 
@@ -305,6 +312,13 @@ public class BoatDetailFragment extends Fragment {
                         isFvrt = response.body().getBoatDetailDataModel().getIsFavorite();
                         pricePerDay = response.body().getBoatDetailDataModel().getFulldayPrice();
                         tvPerDayPrice.setText(pricePerDay+"$");
+
+                        rbComfort.setRating(response.body().getBoatDetailDataModel().getReviews().getComfort()/2);
+                        rbCleaning.setRating(response.body().getBoatDetailDataModel().getReviews().getCleaning()/2);
+                        rbService.setRating(response.body().getBoatDetailDataModel().getReviews().getServices()/2);
+                        rbMoney.setRating(response.body().getBoatDetailDataModel().getReviews().getMoney()/2);
+                        rbStaff.setRating(response.body().getBoatDetailDataModel().getReviews().getStaff()/2);
+
 
                         if (!response.body().getBoatDetailDataModel().getUserPicture().equals(""))
                         {
