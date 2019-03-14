@@ -129,7 +129,17 @@
             </FrameLayout>
 
         </LinearLayout>
-
+        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+            android:id="@+id/ratingbar"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            app:srb_starSize="10dp"
+            app:srb_numberOfStars="5"
+            app:srb_rating="0"
+            app:srb_stepSize="0.5"
+            android:layout_marginRight="25dp"
+            android:layout_gravity="end|bottom"
+            />
     </android.support.v7.widget.CardView>
 
 </LinearLayout>

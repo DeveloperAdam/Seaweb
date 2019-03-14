@@ -84,5 +84,18 @@
         app:hive_cornerRadius="20"
         app:hive_shrink="true"
         />
+    <Button
+        android:id="@+id/btnMessageScreen"
+        android:layout_width="120sp"
+        android:layout_height="40sp"
+        android:layout_gravity="center"
+        android:layout_marginRight="10sp"
+        android:background="@drawable/orangefill"
+        android:foreground="@drawable/ripple_effect_orange"
+        android:text="Price Request"
+        android:textAllCaps="false"
+        android:textColor="#fff" />
+
 </FrameLayout>
+
 </LinearLayout>

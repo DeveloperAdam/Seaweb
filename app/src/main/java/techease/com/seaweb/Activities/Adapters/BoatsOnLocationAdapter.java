@@ -25,6 +25,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -73,6 +74,7 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
 
         viewHolder.ownername.setText(model.getOwnerName());
         Picasso.get().load(model.getFile()).into(viewHolder.ivPlaceImage);
+        viewHolder.ratingbar.setRating(model.getRating());
         if (!model.getUserImg().equals(""))
         {
             Picasso.get().load(model.getUserImg()).into(viewHolder.ivUserImage);
@@ -207,6 +209,7 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
         ImageView ivPlaceImage,ivUserImage;
         ImageView ivFavrt;
         TextView tvTitle,tvPrice,tvLocation,ownername;
+        SimpleRatingBar ratingbar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -218,6 +221,7 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
             ivFavrt= itemView.findViewById(R.id.ivFvrt);
             ownername = itemView.findViewById(R.id.tvOwnerNameBoatsonLo);
             ivUserImage= itemView.findViewById(R.id.ivUserImageBoatonLocation);
+            ratingbar = itemView.findViewById(R.id.ratingbar);
             sharedPreferences = activity.getSharedPreferences("abc", Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
         }

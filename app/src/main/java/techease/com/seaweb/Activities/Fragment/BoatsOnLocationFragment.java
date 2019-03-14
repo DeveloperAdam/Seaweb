@@ -180,6 +180,7 @@ public class BoatsOnLocationFragment extends Fragment {
                             model.setOwnerName(object.getString("username"));
                             model.setUserImg(object.getString("user_picture"));
                             model.setType(object.getString("boat_type"));
+                            model.setRating(Float.parseFloat(object.getString("ratings")));
                             boatOnLocationModel.add(model);
                         }
                         boatsOnLocationAdapter.notifyDataSetChanged();

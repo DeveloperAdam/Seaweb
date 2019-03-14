@@ -8,10 +8,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -71,7 +74,17 @@ public class PriceListFragment extends Fragment {
         recyclerView.setAdapter(priceListAdapter);
         hiveProgressView.showContextMenu();
         apicall();
+        Button llPriceList = view.findViewById(R.id.btnMessageScreen);
+        llPriceList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new DatePickerBookingFragment();
+                fragment.setEnterTransition(new Slide(Gravity.RIGHT));
+                fragment.setExitTransition(new Slide(Gravity.LEFT));
+                getFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
 
+            }
+        });
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,17 @@ package techease.com.seaweb.Activities.Models;
 
 public class BoatOnLocationModel {
 
+    String userImg;
+    String file;
+    String title;
+    String location;
+    String fullPrice;
+    float rating;
+    String ownerName;
+    String type;
+    String is_fvrt;
+    String pid;
+
     public String getUserImg() {
         return userImg;
     }
@@ -42,11 +53,13 @@ public class BoatOnLocationModel {
         this.fullPrice = fullPrice;
     }
 
-    String userImg;
-    String file;
-    String title;
-    String location;
-    String fullPrice;
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
 
     public String getOwnerName() {
         return ownerName;
@@ -56,8 +69,6 @@ public class BoatOnLocationModel {
         this.ownerName = ownerName;
     }
 
-    String ownerName;
-
     public String getType() {
         return type;
     }
@@ -65,8 +76,6 @@ public class BoatOnLocationModel {
     public void setType(String type) {
         this.type = type;
     }
-
-    String type;
 
     public String getIs_fvrt() {
         return is_fvrt;
@@ -76,8 +85,6 @@ public class BoatOnLocationModel {
         this.is_fvrt = is_fvrt;
     }
 
-    String is_fvrt;
-
     public String getPid() {
         return pid;
     }
@@ -85,6 +92,4 @@ public class BoatOnLocationModel {
     public void setPid(String pid) {
         this.pid = pid;
     }
-
-    String pid;
 }
