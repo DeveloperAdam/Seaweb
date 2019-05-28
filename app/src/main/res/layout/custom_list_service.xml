@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#fff"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
         android:layout_marginBottom="10sp"
-        android:layout_height="250dp"
         card_view:cardCornerRadius="4dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
             android:id="@+id/llBookedBoats"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="250sp">
@@ -38,71 +38,76 @@
                     android:id="@+id/ivFvrt"
                     android:layout_width="22dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/white_heart"
                     android:layout_gravity="right"
-                    android:layout_margin="20sp" />
+                    android:layout_margin="20sp"
+                    android:src="@drawable/white_heart" />
+
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10sp"
-                    android:layout_gravity="top">
+                    android:layout_gravity="top"
+                    android:layout_margin="10sp">
+
                     <TextView
                         android:id="@+id/tvOwnerNameBoatsonLo"
                         android:layout_width="150sp"
                         android:layout_height="25sp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10sp"
-                        android:text="Professional"
+                        android:background="@drawable/orangefill"
                         android:gravity="center"
                         android:paddingLeft="15sp"
-                        android:textColor="@color/color_white"
-                        android:background="@drawable/orangefill"
-                        />
-                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:text="Professional"
+                        android:textColor="@color/color_white" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/ivUserImageBoatonLocation"
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:layout_width="50sp"
                         android:layout_height="50sp"
                         android:src="@drawable/inboxprofile" />
                     <!--app:civ_border_width="2dp"-->
-                        <!--&lt;!&ndash;app:civ_border_color="#FF000000"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;app:civ_border_color="#FF000000"/>&ndash;&gt;-->
 
                 </FrameLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:orientation="horizontal">
+
                     <LinearLayout
                         android:layout_width="0sp"
-                        android:layout_weight="0.7"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5sp"
                         android:layout_marginBottom="10sp"
+                        android:layout_weight="0.7"
                         android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10sp"
                             android:text="Title"
                             android:textColor="#fff"
-                            android:layout_marginLeft="10sp"
-                            android:textSize="17sp"/>
+                            android:textSize="17sp" />
+
                         <TextView
                             android:id="@+id/tvPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="From 25$ per day"
-                            android:layout_marginTop="5sp"
                             android:layout_marginLeft="10sp"
-                            android:textColor="@color/orangecolor"/>
+                            android:layout_marginTop="5sp"
+                            android:text="From 25$ per day"
+                            android:textColor="@color/orangecolor" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0sp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10sp"
                         android:layout_marginTop="5sp"
+                        android:layout_marginRight="10sp"
                         android:layout_weight="0.3"
                         android:orientation="vertical">
 
@@ -111,35 +116,78 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
-                            android:textColor="#fff"
-                            android:text="Place" />
-
-
+                            android:text="Place"
+                            android:textColor="#fff" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <ProgressBar
                     android:id="@+id/innerProgressBookedBoats"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
                     style="?android:attr/progressBarStyle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                </ProgressBar>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="horizontal"
+                    android:textSize="15sp">
+
+                    <TextView
+                        android:id="@+id/rating_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="123"
+                        android:textColor="@color/golden_stars"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_rating_adj"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Exceptional"
+                        android:visibility="gone"
+                        android:textColor="@color/golden_stars"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tv_no_of_ratee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:visibility="gone"
+                        android:textSize="10sp"
+                        android:textColor="@color/color_white"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </FrameLayout>
 
         </LinearLayout>
-        <com.iarcuschin.simpleratingbar.SimpleRatingBar
-            android:id="@+id/ratingbar"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            app:srb_starSize="10dp"
-            app:srb_numberOfStars="5"
-            app:srb_rating="0"
-            app:srb_stepSize="0.5"
-            android:layout_marginRight="25dp"
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            />
+            android:orientation="horizontal">
+
+
+            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                android:id="@+id/ratingbar"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="25dp"
+                android:visibility="gone"
+                app:srb_numberOfStars="5"
+                app:srb_rating="0"
+                app:srb_starSize="10dp"
+                app:srb_stepSize="0.5" />
+        </LinearLayout>
     </android.support.v7.widget.CardView>
+
 
 </LinearLayout>

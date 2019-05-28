@@ -70,7 +70,7 @@ public class PriceListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rvPriceList);
         priceListModelList = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        priceListAdapter = new PriceListAdapter(getActivity(),priceListModelList);
+        priceListAdapter = new PriceListAdapter(getActivity(),priceListModelList, getActivity());
         recyclerView.setAdapter(priceListAdapter);
         hiveProgressView.showContextMenu();
         apicall();

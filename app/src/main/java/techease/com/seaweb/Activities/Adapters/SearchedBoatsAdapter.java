@@ -60,6 +60,7 @@ public class SearchedBoatsAdapter extends RecyclerView.Adapter<SearchedBoatsAdap
         viewHolder.tvPrice.setText(model.getPriceDay());
         viewHolder.tvTitle.setText(model.getTitle());
 
+
         if (!model.getUserPicture().equals(""))
         {
             Picasso.get().load(model.getUserPicture()).into(viewHolder.ivUserImage);

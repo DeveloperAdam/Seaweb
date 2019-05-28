@@ -74,7 +74,34 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
 
         viewHolder.ownername.setText(model.getOwnerName());
         Picasso.get().load(model.getFile()).into(viewHolder.ivPlaceImage);
-        viewHolder.ratingbar.setRating(model.getRating());
+        viewHolder.tvRatingValue.setText(""+model.getRating());
+        if (model.getRating() != 0.0) {
+            int noOfRatee = Integer.parseInt(model.getNoOfRatees());
+            if (noOfRatee>1){
+                viewHolder.tvNoOfRatee.setText(model.getNoOfRatees()+" reviews");
+            }else {
+                viewHolder.tvNoOfRatee.setText(model.getNoOfRatees()+" review");
+            }
+            viewHolder.tvNoOfRatee.setVisibility(View.VISIBLE);
+
+            viewHolder.tvRatingAdjective.setVisibility(View.VISIBLE);
+            float rating = model.getRating();
+            if (rating>9.5){
+                viewHolder.tvRatingAdjective.setText("Exeptional");
+            }else if (rating>9){
+                viewHolder.tvRatingAdjective.setText("Superb");
+            }else if (rating>8.5){
+                viewHolder.tvRatingAdjective.setText("Fabulous");
+            }else if (rating>8){
+                viewHolder.tvRatingAdjective.setText("Very good");
+            }else if (rating>7){
+                viewHolder.tvRatingAdjective.setText("Good");
+            }
+            viewHolder.ratingbar.setRating(model.getRating() / 2);
+            viewHolder.tvRatingValue.setText(String.valueOf(model.getRating()));
+        }else {
+            viewHolder.tvRatingValue.setVisibility(View.GONE);
+        }
         if (!model.getUserImg().equals(""))
         {
             Picasso.get().load(model.getUserImg()).into(viewHolder.ivUserImage);
@@ -208,7 +235,7 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
         LinearLayout linearLayout;
         ImageView ivPlaceImage,ivUserImage;
         ImageView ivFavrt;
-        TextView tvTitle,tvPrice,tvLocation,ownername;
+        TextView tvTitle,tvPrice,tvLocation,ownername, tvRatingValue, tvRatingAdjective, tvNoOfRatee;
         SimpleRatingBar ratingbar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -222,6 +249,9 @@ public class BoatsOnLocationAdapter extends RecyclerView.Adapter<BoatsOnLocation
             ownername = itemView.findViewById(R.id.tvOwnerNameBoatsonLo);
             ivUserImage= itemView.findViewById(R.id.ivUserImageBoatonLocation);
             ratingbar = itemView.findViewById(R.id.ratingbar);
+            tvRatingValue = itemView.findViewById(R.id.rating_value);
+            tvRatingAdjective = itemView.findViewById(R.id.tv_rating_adj);
+            tvNoOfRatee = itemView.findViewById(R.id.tv_no_of_ratee);
             sharedPreferences = activity.getSharedPreferences("abc", Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
         }

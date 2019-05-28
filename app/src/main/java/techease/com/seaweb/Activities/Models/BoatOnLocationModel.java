@@ -13,6 +13,15 @@ public class BoatOnLocationModel {
     String is_fvrt;
     String pid;
 
+    public String getNoOfRatees() {
+        return noOfRatees;
+    }
+
+    public void setNoOfRatees(String noOfRatees) {
+        this.noOfRatees = noOfRatees;
+    }
+
+    String noOfRatees;
     public String getUserImg() {
         return userImg;
     }
